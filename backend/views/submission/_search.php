@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'SubmissionID') ?>
 
-    <?= $form->field($model, 'assignmentID') ?>
+    <?= $form->field($model, 'AssignmentID') ?>
 
     <?= $form->field($model, 'groupID') ?>
 
@@ -31,6 +31,10 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'submissionDate') ?>
 
     <?php // echo $form->field($model, 'fileURL') ?>
+
+    <?php // echo $form->field($model, 'status') ?>
+
+    <?php // echo $form->field($model, 'score') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

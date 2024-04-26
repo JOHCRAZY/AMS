@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="programme-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <!-- <h1>< ?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Programme'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+        < ?= Html::a(Yii::t('app', 'Create Programme'), ['create'], ['class' => 'btn btn-success']) ?>
+    </p> -->
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

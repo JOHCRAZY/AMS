@@ -13,6 +13,7 @@ class SignupForm extends Model
 {
     public $username;
     public $email;
+    public $role;
     public $password;
 
 
@@ -25,7 +26,7 @@ class SignupForm extends Model
             ['username', 'trim'],
             ['username', 'required'],
             ['username', 'unique', 'targetClass' => '\frontend\models\User', 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+            ['username', 'string', 'min' => 5, 'max' => 255],
 
             ['email', 'trim'],
             ['email', 'required'],
@@ -51,12 +52,13 @@ class SignupForm extends Model
         
         $user = new User();
         $user->username = $this->username;
+        $user->role = $this->role;
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
-
-        return $user->save() && $this->sendEmail($user);
+        $user->created_at = $user->updated_at =  time();
+        return $user->save();// && $this->sendEmail($user);
     }
 
     /**
@@ -77,4 +79,4 @@ class SignupForm extends Model
             ->setSubject('Account registration at ' . Yii::$app->name)
             ->send();
     }
-}
+} 

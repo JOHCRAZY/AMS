@@ -4,7 +4,7 @@
 // ];
 return [
     'adminEmail' => 'johcrazy.magiha@gmail.com',
-    'supportEmail' => 'joseph.magiha@eastc.ac.tz',
+    'supportEmail' => 'johcrazy.magiha@gmail.com',
     'senderEmail' => 'johcrazy.magiha@gmail.com',
     'senderName' => 'Assignment Management System',
     'user.passwordResetTokenExpire' => 3600,

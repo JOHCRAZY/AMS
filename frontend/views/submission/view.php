@@ -30,12 +30,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'SubmissionID',
-            'assignmentID',
+            'AssignmentID',
+            [
+                'attribute' => 'assignment.courseCode',
+                'label' => 'Assignment', // Optionally, you can specify a custom label for the attribute
+            ],
             'groupID',
             'StudentID',
             'content:ntext',
             'submissionDate',
             'fileURL',
+            'status',
+            'score',
         ],
     ]) ?>
 

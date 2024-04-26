@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'assignmentID')->textInput() ?>
+    <?= $form->field($model, 'AssignmentID')->textInput() ?>
 
     <?= $form->field($model, 'groupID')->textInput() ?>
 
@@ -23,6 +23,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'submissionDate')->textInput() ?>
 
     <?= $form->field($model, 'fileURL')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'status')->dropDownList([ 'Marked' => 'Marked', 'Not Marked' => 'Not Marked', ], ['prompt' => '']) ?>
+
+    <?= $form->field($model, 'score')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

@@ -8,9 +8,9 @@ use yii\bootstrap4\Breadcrumbs;
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
+                <!-- <div class="col-sm-6">
                     <h1 class="m-0">
-                        <?php
+                        <<i class="bi bi-123" style="font-size: 2em; color: #007bff;"></i>?php
                         if (!is_null($this->title)) {
                             echo \yii\helpers\Html::encode($this->title);
                         } else {
@@ -18,7 +18,7 @@ use yii\bootstrap4\Breadcrumbs;
                         }
                         ?>
                     </h1>
-                </div><!-- /.col -->
+                </div>/.col -->
                 <div class="col-sm-6">
                     <?php
                     echo Breadcrumbs::widget([

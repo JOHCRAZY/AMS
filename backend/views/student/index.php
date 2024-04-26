@@ -7,7 +7,7 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /** @var yii\web\View $this */
-/** @var backend\models\StudentSearch $searchModel */
+/** @var backend\models\students $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = Yii::t('app', 'Students');
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="student-index">
 
-    <!-- <h1>< ?= Html::encode($this->title) ?></h1> -->
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a(Yii::t('app', 'Create Student'), ['create'], ['class' => 'btn btn-success']) ?>
@@ -30,24 +30,24 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            //'StudentID',
+            'StudentID',
             'fname',
             'mname',
             'lname',
-            //'userID',
-            'section',
-            'regNo',
+            'userID',
+            //'session',
+            //'regNo',
             //'phoneNumber',
             //'emailAddress:email',
-            'gender',
+            //'gender',
             //'profileImage',
-            'groupID',
-            'courseCode',
-            'programmeCode',
-            'year',
+            //'groupID',
+            //'courseCode',
+            //'programmeCode',
+            //'year',
             //'semester',
             [
-                'class' => ActionColumn::class,
+                'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Student $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'StudentID' => $model->StudentID]);
                  }

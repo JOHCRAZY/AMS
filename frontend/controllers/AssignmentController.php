@@ -14,7 +14,7 @@ use yii;
  */
 class AssignmentController extends Controller
 {
-    public $layout = "student";
+    //public $layout = "student";
     /**
      * @inheritDoc
      */
@@ -27,6 +27,19 @@ class AssignmentController extends Controller
                     'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
+                    ],
+                ],
+                'access' => [
+                    'class' => \yii\filters\AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                            'allow' => true,
+                            'matchCallback' => function ($rule, $action) {
+                                // Custom logic to determine access
+                                return !Yii::$app->user->isGuest; // Allow if user is authenticated
+                            },
+                        ],
                     ],
                 ],
             ]
@@ -63,6 +76,27 @@ class AssignmentController extends Controller
         ]);
     }
 
+    public function actionIndividual(){
+        $searchModel = new AssignmentSearch();
+        $dataProvider = $searchModel->searchIndividualAssignmentPending(Yii::$app->request->queryParams);
+
+        return $this->render('/assignment/@assignment',[
+           'dataProvider'=>$dataProvider,
+           'searchModel'=>$searchModel,
+           'title' =>  "Individual Assignments"
+        ]);
+    }
+
+    public function actionGroup(){
+        $searchModel = new AssignmentSearch();
+        $dataProvider = $searchModel->searchGroupAssignmentPending(Yii::$app->request->queryParams);
+
+        return $this->render('/assignment/@assignment',[
+           'dataProvider'=>$dataProvider,
+           'searchModel'=>$searchModel,
+           'title' =>  "Group Assignments"
+        ]);
+    }
     /**
      * Creates a new Assignment model.
      * If creation is successful, the browser will be redirected to the 'view' page.

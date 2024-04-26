@@ -74,4 +74,79 @@ class AssignmentSearch extends Assignment
 
         return $dataProvider;
     }
+
+
+    public function searchIndividualAssignmentPending($params)
+    {
+        $query = Assignment::find()->where(['assignment'  => 'Individual Assignment','status' => 'pending']);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'AssignmentID' => $this->AssignmentID,
+            'assignedDate' => $this->assignedDate,
+            'submissionDate' => $this->submissionDate,
+            'marks' => $this->marks,
+        ]);
+
+        $query->andFilterWhere(['like', 'courseCode', $this->courseCode])
+            ->andFilterWhere(['like', 'assignment', $this->assignment])
+            ->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'content', $this->content])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'fileURL', $this->fileURL])
+            ->andFilterWhere(['like', 'status', $this->status]);
+
+        return $dataProvider;
+    }
+
+    public function searchGroupAssignmentPending($params)
+    {
+        $query = Assignment::find()->where(['assignment' => 'Group Assignment','status' => 'pending']);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'AssignmentID' => $this->AssignmentID,
+            'assignedDate' => $this->assignedDate,
+            'submissionDate' => $this->submissionDate,
+            'marks' => $this->marks,
+        ]);
+
+        $query->andFilterWhere(['like', 'courseCode', $this->courseCode])
+            ->andFilterWhere(['like', 'assignment', $this->assignment])
+            ->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'content', $this->content])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'fileURL', $this->fileURL])
+            ->andFilterWhere(['like', 'status', $this->status]);
+
+        return $dataProvider;
+    }
 }

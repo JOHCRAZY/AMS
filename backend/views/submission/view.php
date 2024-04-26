@@ -30,12 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'SubmissionID',
-            'assignmentID',
+            'AssignmentID',
             'groupID',
             'StudentID',
             'content:ntext',
             'submissionDate',
             'fileURL',
+            'status',
+            'score',
         ],
     ]) ?>
 

@@ -2,12 +2,12 @@
 
 namespace backend\controllers;
 
+use yii;
 use backend\models\Student;
-use backend\models\Students;
+use backend\models\students;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii;
 
 /**
  * StudentController implements the CRUD actions for Student model.
@@ -39,7 +39,7 @@ class StudentController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new Students();
+        $searchModel = new students();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [

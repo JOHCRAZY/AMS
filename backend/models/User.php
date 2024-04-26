@@ -17,11 +17,18 @@ use yii\web\IdentityInterface;
  * @property string $password_reset_token
  * @property string $verification_token
  * @property string $email
+ * @property string $email_verified
+ * @property string $role
  * @property string $auth_key
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * 
+ * 
+ * @property Instructor[] $instructors
+ * @property Student[] $students
+ * @property Submission[] $submissions
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -62,6 +69,35 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+                [['username', 'role', 'password_hash', 'email', 'auth_key', 'status', 'created_at', 'updated_at'], 'required'],
+                [['role'], 'string'],
+                [['email_verified', 'status', 'created_at', 'updated_at'], 'integer'],
+                [['username', 'password', 'password_hash', 'password_reset_token', 'verification_token', 'email', 'auth_key'], 'string', 'max' => 255],
+                [['username'], 'unique'],
+                [['email'], 'unique'],
+        ];
+    }
+
+
+     /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'UserID' => Yii::t('app', 'User ID'),
+            'username' => Yii::t('app', 'Username'),
+            'password' => Yii::t('app', 'Password'),
+            'role' => Yii::t('app', 'Role'),
+            'password_hash' => Yii::t('app', 'Password Hash'),
+            'password_reset_token' => Yii::t('app', 'Password Reset Token'),
+            'verification_token' => Yii::t('app', 'Verification Token'),
+            'email' => Yii::t('app', 'Email'),
+            'email_verified' => Yii::t('app', 'Email Verified'),
+            'auth_key' => Yii::t('app', 'Auth Key'),
+            'status' => Yii::t('app', 'Status'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
         ];
     }
 
@@ -215,5 +251,36 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+   
+
+    /**
+     * Gets query for [[Instructors]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInstructors()
+    {
+        return $this->hasMany(Instructor::class, ['UserID' => 'UserID'])->inverseOf('user');
+    }
+
+    /**
+     * Gets query for [[Students]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStudents()
+    {
+        return $this->hasMany(Student::class, ['userID' => 'UserID'])->inverseOf('user');
+    }
+
+    /**
+     * Gets query for [[Submissions]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubmissions()
+    {
+        return $this->hasMany(Submission::class, ['StudentID' => 'UserID'])->inverseOf('student');
     }
 }

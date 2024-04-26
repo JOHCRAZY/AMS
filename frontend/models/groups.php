@@ -40,7 +40,9 @@ class groups extends Group
      */
     public function search($params)
     {
-        $query = Group::find();
+        $query = Group::find()
+        ->joinWith('students');
+        //->where(['Student.groupID' => 1]);
 
         // add conditions that should always apply here
 

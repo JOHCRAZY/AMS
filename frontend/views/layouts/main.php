@@ -29,25 +29,32 @@ AppAsset::register($this);
     <?php
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
+        'brandUrl' => '#',
         'options' => [
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
         ],
     ]);
+    $menu = [
+        ['label' => 'Home', 'url' => ['/site/index']],
+    ];
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'About', 'url' => ['/site/about']],
         ['label' => 'Contact', 'url' => ['/site/contact']],
-        ['label' => 'Student', 'url' => ['/assignment/']],
+        ['label' => 'Signup', 'url' => ['/site/signup']],
 
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-    }
+       // $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+       echo Nav::widget([
+        'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
+        'items' => $menuItems,
+    ]);
+    }else
 
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
-        'items' => $menuItems,
+        'items' => $menu,
     ]);
     if (Yii::$app->user->isGuest) {
         echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
@@ -62,21 +69,36 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 </header>
+<div class="d-flex flex-column align-items-stretch mt-4">
+<div class="row">
+<div class="col-md-1 order-0 p-3 position-sticky fixed">
+    <?php if(!\yii::$app->user->isGuest): ?>
+<?=frontend\models\User::findByUsername(Yii::$app->user->identity->username)->role == 'student' ? 
+$this->render('StudentSideNav') : $this->render('InstructorSideNav') ?>
+<?php endif;?>
+</div>
 
+<div class="col order-1">
 <main role="main" class="flex-shrink-0">
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
+
+
+<div class="container">
+    <?= Breadcrumbs::widget([
+        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+    ]) ?>
+    <?= Alert::widget() ?>
+    <?= $content ?>
+</div>
 </main>
+</div>
+</div>
+</div>
+
 
 <footer class="footer mt-auto py-3 text-muted">
     <div class="container">
         <p class="float-start">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-        <p class="float-end"><?= Yii::powered() ?></p>
+        <p class="float-end"><?='Assignment Management System' ?></p>
     </div>
 </footer>
 

@@ -17,8 +17,8 @@ class Courses extends Course
     public function rules()
     {
         return [
-            [['courseCode', 'courseName', 'programmeCode'], 'safe'],
-            [['InstructorID'], 'integer'],
+            [['courseCode', 'courseName', 'semester', 'year', 'programmeCode'], 'safe'],
+            [['courseInstructor'], 'integer'],
         ];
     }
 
@@ -58,13 +58,16 @@ class Courses extends Course
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'InstructorID' => $this->InstructorID,
+            'courseInstructor' => $this->courseInstructor,
         ]);
 
         $query->andFilterWhere(['like', 'courseCode', $this->courseCode])
             ->andFilterWhere(['like', 'courseName', $this->courseName])
+            ->andFilterWhere(['like', 'semester', $this->semester])
+            ->andFilterWhere(['like', 'year', $this->year])
             ->andFilterWhere(['like', 'programmeCode', $this->programmeCode]);
 
         return $dataProvider;
     }
 }
+

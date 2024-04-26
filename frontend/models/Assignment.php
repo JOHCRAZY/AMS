@@ -55,15 +55,15 @@ class Assignment extends \yii\db\ActiveRecord
     {
         return [
             'AssignmentID' => Yii::t('app', 'Assignment ID'),
-            'courseCode' => Yii::t('app', 'Course Code'),
+            'courseCode' => Yii::t('app', 'Module Code'),
             'assignment' => Yii::t('app', 'Assignment'),
             'title' => Yii::t('app', 'Title'),
             'content' => Yii::t('app', 'Content'),
             'description' => Yii::t('app', 'Description'),
-            'fileURL' => Yii::t('app', 'File Url'),
+            'fileURL' => Yii::t('app', 'Attachment'),
             'assignedDate' => Yii::t('app', 'Assigned Date'),
-            'submissionDate' => Yii::t('app', 'Submission Date'),
-            'marks' => Yii::t('app', 'Marks'),
+            'submissionDate' => Yii::t('app', 'Deadline'),
+            'marks' => Yii::t('app', 'Total Marks'),
             'status' => Yii::t('app', 'Status'),
         ];
     }
@@ -79,12 +79,21 @@ class Assignment extends \yii\db\ActiveRecord
     }
 
     /**
+     *  Define the __toString method to represent the model as a string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->assignment; // Assuming "name" is a property of your Assignment model
+    }
+    /**
      * Gets query for [[Submissions]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getSubmissions()
     {
-        return $this->hasMany(Submission::class, ['assignmentID' => 'AssignmentID'])->inverseOf('assignment');
+        return $this->hasMany(Submission::class, ['AssignmentID' => 'AssignmentID'])->inverseOf('assignment');
     }
 }

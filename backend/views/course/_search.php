@@ -22,9 +22,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'courseName') ?>
 
-    <?= $form->field($model, 'InstructorID') ?>
+    <?= $form->field($model, 'semester') ?>
 
-    <?= $form->field($model, 'programmeCode') ?>
+    <?= $form->field($model, 'year') ?>
+
+    <?= $form->field($model, 'courseInstructor') ?>
+
+    <?php // echo $form->field($model, 'programmeCode') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

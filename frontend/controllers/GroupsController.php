@@ -7,6 +7,7 @@ use frontend\models\groups;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii;
 
 /**
  * GroupsController implements the CRUD actions for Group model.
@@ -22,14 +23,27 @@ class GroupsController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
                 ],
+                'access' => [
+                    'class' => \yii\filters\AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                            'allow' => true,
+                            'matchCallback' => function ($rule, $action) {
+                                // Custom logic to determine access
+                                return !Yii::$app->user->isGuest; // Allow if user is authenticated
+                            },
+                        ],
+                    ],
+                ],
             ]
         );
-    }
+        }
 
     /**
      * Lists all Group models.
@@ -129,6 +143,6 @@ class GroupsController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(\Yii::t('app', 'The requested page does not exist.'));
     }
 }

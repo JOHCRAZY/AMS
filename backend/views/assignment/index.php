@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="assignment-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <!-- <h1>< ?= Html::encode($this->title) ?></h1> -->
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Assignment'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <!-- <p>
+        < ?= Html::a(Yii::t('app', 'Create Assignment'), ['create'], ['class' => 'btn btn-success']) ?>
+    </p> -->
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -30,17 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'AssignmentID',
-            'courseCode',
             'assignment',
             'title',
-            'content:ntext',
-            //'description:ntext',
-            //'fileURL',
-            //'assignedDate',
-            //'submissionDate',
-            //'marks',
-            //'status',
+            'assignedDate',
+            'submissionDate',
+            'marks',
+            'courseCode',
+            'status',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Assignment $model, $key, $index, $column) {

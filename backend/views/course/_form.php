@@ -16,7 +16,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'courseName')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'InstructorID')->textInput() ?>
+    <?= $form->field($model, 'semester')->dropDownList([ 'I' => 'I', 'II' => 'II', ], ['prompt' => '']) ?>
+
+    <?= $form->field($model, 'year')->dropDownList([ 'I' => 'I', 'II' => 'II', 'III' => 'III', ], ['prompt' => '']) ?>
+
+    <?= $form->field($model, 'courseInstructor')->textInput() ?>
 
     <?= $form->field($model, 'programmeCode')->textInput(['maxlength' => true]) ?>
 

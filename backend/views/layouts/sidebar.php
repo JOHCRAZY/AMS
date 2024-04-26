@@ -10,10 +10,11 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="<?=$assetDir?>/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+            <?='<img src="'.$assetDir.'/uploads/eastc.png'.'" alt="profile image">'?>
+                <!-- <img src="".Yii::$app->request->baseUrl."/uploads/eastc.png" class="img-circle elevation-2" alt="< ?= Yii::$app->request->baseUrl ?>"> -->
             </div>
             <div class="info">
-                <a href="#" class="d-block">Admin Panel</a>
+                <a class="d-block"><?= Yii::$app->user->identity->username ?></a>
             </div>
         </div>
 
@@ -30,52 +31,76 @@
             </div>
         </div>
 
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
+        <!-- Sidebar Menu  mt-2-->
+        <nav class="d-flex flex-column align-items-stretch mt-5">
             <?php
             echo \hail812\adminlte\widgets\Menu::widget([
                 'items' => [
                     [
-                        'label' => 'Starter Pages',
-                        'icon' => 'tachometer-alt',
-                        'badge' => '<span class="right badge badge-info">2</span>',
+                        'label' => 'Admins',
+                        // 'icon' => 'tachometer-alt',
+                        // 'badge' => '<span class="right badge badge-info">2</span>',
                         'items' => [
-                            ['label' => 'Students', 'url' => ['student/'], 'iconStyle' => 'far'],
-                            ['label' => 'Programmes', 'url' => ['programme/'],'iconStyle' => 'far'],
-                            ['label' => 'Courses', 'url' => ['course/'],'iconStyle' => 'far'],
-                            ['label' => 'Assignments', 'url' => ['course/'],'iconStyle' => 'far'],
+                            ['label' => 'All Admins', 'url' => ['admin/'], 'iconStyle' => 'far'],
+                            ['label' => 'Add Admin', 'url' => ['admin/create'], 'iconStyle' => 'far'],
+
                         ]
                     ],
-                    ['label' => 'Simple Link', 'icon' => 'th', 'badge' => '<span class="right badge badge-danger">New</span>'],
-                    ['label' => 'Yii2 PROVIDED', 'header' => true],
-                    ['label' => 'Login', 'url' => ['site/login'], 'icon' => 'sign-in-alt', 'visible' => Yii::$app->user->isGuest],
-                    ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank'],
-                    ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank'],
-                    ['label' => 'V TYPE','url' =>['v-type/index'] ,'iconStyle' => 'far', 'icon' => 'fa fa-file'],
-                    ['label' => 'Vipodozi','url' =>['vipodoz/index'] ,'iconStyle' => 'far', 'icon' => 'fas fa-users'],
-                    ['label' => 'MULTI LEVEL EXAMPLE', 'header' => true],
-                    ['label' => 'Level1'],
                     [
-                        'label' => 'Level1',
+                        'label' => 'Students',
+                        // 'icon' => 'tachometer-alt',
+                        // 'badge' => '<span class="right badge badge-info">2</span>',
                         'items' => [
-                            ['label' => 'Level2', 'iconStyle' => 'far'],
-                            [
-                                'label' => 'Level2',
-                                'iconStyle' => 'far',
-                                'items' => [
-                                    ['label' => 'Level3','url' =>['v-type/index'] ,'iconStyle' => 'far', 'icon' => 'dot-circle'],
-                                    ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle'],
-                                    ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle']
-                                ]
-                            ],
-                            ['label' => 'Level2', 'iconStyle' => 'far']
+                            ['label' => 'All Students', 'url' => ['student/'], 'iconStyle' => 'far'],
                         ]
                     ],
-                    ['label' => 'Level1'],
-                    ['label' => 'LABELS', 'header' => true],
-                    ['label' => 'Important', 'iconStyle' => 'far', 'iconClassAdded' => 'text-danger'],
-                    ['label' => 'Warning', 'iconClass' => 'nav-icon far fa-circle text-warning'],
-                    ['label' => 'Informational', 'iconStyle' => 'far', 'iconClassAdded' => 'text-info'],
+                    [
+                        'label' => 'Instructors',
+                        // 'icon' => 'tachometer-alt',
+                        // 'badge' => '<span class="right badge badge-info">2</span>',
+                        'items' => [
+                            ['label' => 'All Instructors', 'url' => ['instructor/'], 'iconStyle' => 'far'],
+                        ]
+                    ],
+                    [
+                        'label' => 'Programmes',
+                        // 'icon' => 'tachometer-alt',
+                        // 'badge' => '<span class="right badge badge-info">2</span>',
+                        'items' => [
+                            ['label' => 'All Programmes', 'url' => ['programme/'], 'iconStyle' => 'far'],
+                            ['label' => 'New Programme', 'url' => ['programme/create'], 'iconStyle' => 'far'],
+
+                        ]
+                    ],
+                    [
+                        'label' => 'Courses',
+                        // 'icon' => 'tachometer-alt',
+                        // 'badge' => '<span class="right badge badge-info">2</span>',
+                        'items' => [
+                            ['label' => 'All Courses', 'url' => ['course/'], 'iconStyle' => 'far'],
+                            ['label' => 'Add New Coarse', 'url' => ['course/create'], 'iconStyle' => 'far'],
+
+                        ]
+                    ],
+                    [
+                        'label' => 'Student Groups',
+                        // 'icon' => 'tachometer-alt',
+                        // 'badge' => '<span class="right badge badge-info">2</span>',
+                        'items' => [
+                            ['label' => 'All Groups', 'url' => ['group/'], 'iconStyle' => 'far'],
+                            ['label' => 'create New group', 'url' => ['group/create'], 'iconStyle' => 'far'],
+
+                        ]
+                    ],
+                    [
+                        'label' => 'Assignments',
+                        // 'icon' => 'tachometer-alt',
+                        // 'badge' => '<span class="right badge badge-info">2</span>',
+                        'items' => [
+                            ['label' => 'All Assignments', 'url' => ['assignment/'], 'iconStyle' => 'far'],
+                        ]
+                    ],
+                    
                 ],
             ]);
             ?>

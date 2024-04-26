@@ -13,7 +13,9 @@ use yii\filters\AccessControl;
 use frontend\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
+use frontend\models\User;
+use frontend\models\Instructor;
+use yii\helpers\Html;
 use frontend\models\ContactForm;
 
 /**
@@ -90,8 +92,15 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
+        $username = $model->username;
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            $user = User::findByUsername(Yii::$app->user->identity->username);
+            if($user->role == "student"){
+                return $this->redirect(['/student/profile']);
+            }else{
+                return $this->redirect(['/instructor/profile']);
+            }
+            //return $this->goBack();
         }
 
         $model->password = '';
@@ -145,7 +154,6 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
-
     
     /**
      * Signs user up.
@@ -154,10 +162,27 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
-            return $this->goHome();
+        $model = new User();//SignupForm();
+
+        if ($model->load(Yii::$app->request->post())/* && $model->signup()*/) {
+           // if($model->role  == "student"){
+                $model->setPassword($model->password);
+                $model->generateAuthKey();
+                $model->generateEmailVerificationToken();
+                $model->created_at = $model->updated_at =  time();
+                if($model->validate() && $model->save()) {
+                    Yii::$app->session->setFlash('success', 'You have successfully signup.');
+                //return $this->goHome();
+                    return $this->redirect(['site/login']);
+                }else{
+                    Yii::$app->session->setFlash('error', 'Sorry, Something went wrong, please try again.');
+                   var_dump($model->getErrors());
+
+                }
+            // }else{
+
+            // }
+            
         }
 
         return $this->render('signup', [
@@ -165,6 +190,7 @@ class SiteController extends Controller
         ]);
     }
 
+    
     /**
      * Requests password reset.
      *

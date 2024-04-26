@@ -7,7 +7,6 @@ use backend\models\Courses;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii;
 
 /**
  * CourseController implements the CRUD actions for Course model.
@@ -23,7 +22,7 @@ class CourseController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::class,
+                    'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
                     ],

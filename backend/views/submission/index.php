@@ -31,12 +31,14 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'SubmissionID',
-            'assignmentID',
+            'AssignmentID',
             'groupID',
             'StudentID',
             'content:ntext',
             //'submissionDate',
             //'fileURL',
+            //'status',
+            //'score',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Submission $model, $key, $index, $column) {

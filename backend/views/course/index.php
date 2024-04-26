@@ -14,11 +14,8 @@ $this->title = Yii::t('app', 'Courses');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="course-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
-        <?= Html::a(Yii::t('app', 'Create Course'), ['create'], ['class' => 'btn btn-success']) ?>
+        <!-- < ?= Html::a(Yii::t('app', 'Create Course'), ['create'], ['class' => 'btn btn-success']) ?> -->
     </p>
 
     <?php Pjax::begin(); ?>
@@ -30,12 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'courseCode',
             'courseName',
-            'InstructorID',
+            'courseCode',
+            'semester',
+            'year',
+            'courseInstructor',
             'programmeCode',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Course $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'courseCode' => $model->courseCode]);
                  }

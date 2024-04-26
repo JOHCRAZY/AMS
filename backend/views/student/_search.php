@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var backend\models\StudentSearch $model */
+/** @var backend\models\students $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'StudentID') ?>
+    <?php // $form->field($model, 'StudentID') ?>
 
     <?= $form->field($model, 'fname') ?>
 
@@ -28,9 +28,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'userID') ?>
 
-    <?php // echo $form->field($model, 'section') ?>
+    <?php // echo $form->field($model, 'session') ?>
 
-    <?php // echo $form->field($model, 'regNo') ?>
+    <?php echo $form->field($model, 'regNo') ?>
 
     <?php // echo $form->field($model, 'phoneNumber') ?>
 

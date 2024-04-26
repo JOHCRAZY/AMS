@@ -18,7 +18,7 @@ class Students extends Student
     {
         return [
             [['StudentID', 'userID', 'groupID'], 'integer'],
-            [['fname', 'mname', 'lname', 'section', 'regNo', 'phoneNumber', 'emailAddress', 'gender', 'profileImage', 'courseCode', 'programmeCode', 'year', 'semester'], 'safe'],
+            [['fname', 'mname', 'lname', 'section', 'regNo', 'phoneNumber', 'emailAddress', 'gender', 'profileImage', 'programmeCode', 'year', 'semester'], 'safe'],
         ];
     }
 
@@ -72,7 +72,6 @@ class Students extends Student
             ->andFilterWhere(['like', 'emailAddress', $this->emailAddress])
             ->andFilterWhere(['like', 'gender', $this->gender])
             ->andFilterWhere(['like', 'profileImage', $this->profileImage])
-            ->andFilterWhere(['like', 'courseCode', $this->courseCode])
             ->andFilterWhere(['like', 'programmeCode', $this->programmeCode])
             ->andFilterWhere(['like', 'year', $this->year])
             ->andFilterWhere(['like', 'semester', $this->semester]);

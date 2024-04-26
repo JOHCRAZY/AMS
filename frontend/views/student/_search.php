@@ -13,9 +13,6 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
-        'options' => [
-            'data-pjax' => 1
-        ],
     ]); ?>
 
     <?= $form->field($model, 'StudentID') ?>
@@ -28,7 +25,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'userID') ?>
 
-    <?php // echo $form->field($model, 'section') ?>
+    <?php // echo $form->field($model, 'session') ?>
 
     <?php // echo $form->field($model, 'regNo') ?>
 

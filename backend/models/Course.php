@@ -9,12 +9,14 @@ use Yii;
  *
  * @property string $courseCode
  * @property string|null $courseName
- * @property int|null $InstructorID
+ * @property string $semester
+ * @property string $year
+ * @property int|null $courseInstructor
  * @property string|null $programmeCode
  *
  * @property Assignment[] $assignments
+ * @property Instructor $courseInstructor0
  * @property Group[] $groups
- * @property Instructor $instructor
  * @property Programme $programmeCode0
  * @property Student[] $students
  */
@@ -34,13 +36,14 @@ class Course extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['courseCode'], 'required'],
-            [['InstructorID'], 'integer'],
+            [['courseCode', 'semester', 'year'], 'required'],
+            [['semester', 'year'], 'string'],
+            [['courseInstructor'], 'integer'],
             [['courseCode'], 'string', 'max' => 12],
             [['courseName'], 'string', 'max' => 255],
             [['programmeCode'], 'string', 'max' => 5],
             [['courseCode'], 'unique'],
-            [['InstructorID'], 'exist', 'skipOnError' => true, 'targetClass' => Instructor::class, 'targetAttribute' => ['InstructorID' => 'InstructorID']],
+            [['courseInstructor'], 'exist', 'skipOnError' => true, 'targetClass' => Instructor::class, 'targetAttribute' => ['courseInstructor' => 'InstructorID']],
             [['programmeCode'], 'exist', 'skipOnError' => true, 'targetClass' => Programme::class, 'targetAttribute' => ['programmeCode' => 'programmeCode']],
         ];
     }
@@ -53,7 +56,9 @@ class Course extends \yii\db\ActiveRecord
         return [
             'courseCode' => Yii::t('app', 'Course Code'),
             'courseName' => Yii::t('app', 'Course Name'),
-            'InstructorID' => Yii::t('app', 'Instructor ID'),
+            'semester' => Yii::t('app', 'Semester'),
+            'year' => Yii::t('app', 'Year'),
+            'courseInstructor' => Yii::t('app', 'Course Instructor'),
             'programmeCode' => Yii::t('app', 'Programme Code'),
         ];
     }
@@ -69,6 +74,16 @@ class Course extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[CourseInstructor0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCourseInstructor0()
+    {
+        return $this->hasOne(Instructor::class, ['InstructorID' => 'courseInstructor'])->inverseOf('courses');
+    }
+
+    /**
      * Gets query for [[Groups]].
      *
      * @return \yii\db\ActiveQuery
@@ -76,16 +91,6 @@ class Course extends \yii\db\ActiveRecord
     public function getGroups()
     {
         return $this->hasMany(Group::class, ['courseCode' => 'courseCode'])->inverseOf('courseCode0');
-    }
-
-    /**
-     * Gets query for [[Instructor]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getInstructor()
-    {
-        return $this->hasOne(Instructor::class, ['InstructorID' => 'InstructorID'])->inverseOf('courses');
     }
 
     /**
@@ -108,3 +113,4 @@ class Course extends \yii\db\ActiveRecord
         return $this->hasMany(Student::class, ['courseCode' => 'courseCode'])->inverseOf('courseCode0');
     }
 }
+

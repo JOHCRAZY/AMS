@@ -14,6 +14,7 @@ use Yii;
  *
  * @property Course $courseCode0
  * @property Student[] $students
+ * @property Student $student
  * @property Submission[] $submissions
  */
 class Group extends \yii\db\ActiveRecord

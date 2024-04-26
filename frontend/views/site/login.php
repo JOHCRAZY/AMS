@@ -3,7 +3,7 @@
 <?php
 /** @var yii\web\View $this */
 /** @var yii\bootstrap5\ActiveForm $form */
-/** @var \common\models\LoginForm $model */
+/** @var \frontend\models\LoginForm $model */
 
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
@@ -13,7 +13,7 @@ use yii\bootstrap5\Html;
 
 <div class="container mt-8" style="margin-left: auto" >
     <div class="row justify-content-center">
-        <div class="col-md-5 mt-5">
+        <div class="col-sm-4 mt-5">
              
         <div class="card rounded-5 text-white bg-dark border-success mb-3">
             <?php $form = ActiveForm::begin([
@@ -23,7 +23,7 @@ use yii\bootstrap5\Html;
 
                 <div class="text-center">
                     <h1 class="title">Login</h1>
-                    <p class="lead">Task Management System</p>
+                    <p class="lead">Assignment Management System</p>
                 </div>
 
                 <?= $form->field($model, 'username')->textInput(['id' => 'username','class'=>'form-control', 'placeholder' => 'example.johcrazy@eastc.ac.tz'])->label('Username') ?>
@@ -44,13 +44,13 @@ use yii\bootstrap5\Html;
                 </div>
                 <div class="form-text text-center mb-5 text-dark">
 
-                    <?php 
-                   echo Html::beginForm(['/site/signup'])
+                    <?=
+                   Html::beginForm(['/site/signup'])
                     . Html::submitButton(
-                        'Not Registered? <code> Register here </code>',
+                        'Signup',
                         ['class' => 'btn btn-link fw-bold']
                     )
-                    . Html::endForm();
+                    .Html::endForm();
                     ?>
                 </div>
 </div>

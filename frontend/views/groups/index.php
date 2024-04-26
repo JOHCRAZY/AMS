@@ -10,32 +10,53 @@ use yii\widgets\Pjax;
 /** @var frontend\models\groups $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('app', 'Groups');
+$this->title = Yii::t('app', 'Group Members');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Group'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <!-- <p>
+        < ?= Html::a(Yii::t('app', 'Create Group'), ['create'], ['class' => 'btn btn-success']) ?>
+    </p> -->
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
+            [
+                'attribute' => 'student.regNo',
+                'label' => Yii::t('app', 'Reg No'),
+                'value' => function ($model) {
+                    if (!empty($model->students)) {
+                        return $model->students[0]->regNo; // Access the regNo of the first student
+                    }
+                    return null;
+                },                
+            ],
+            'student.fName',
+            [
+                'label' => Yii::t('app', 'Students'), // Custom label for student information
+                'value' => function ($model) {
+                    $studentInfo = [];
+                    foreach ($model->students as $student) {
+                        $studentInfo[] = $student->regNo; // Displaying student registration numbers
+                        $studentInfo[] = $student->regNo . ' - ' . $student->fname . ' ' . $student->lname; // Concatenating multiple student columns
 
-            'groupID',
+                    }
+                    return implode(', ', $studentInfo);
+                },
+            ],
             'groupNo',
             'courseCode',
             'groupName',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Group $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'groupID' => $model->groupID]);
                  }

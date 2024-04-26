@@ -7,7 +7,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-//use yii\db\Expression;
+// use yii\db\Expression;
 /**
  * User model
  *
@@ -22,6 +22,11 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * 
+ * @property string $role
+ * @property Instructor[] $instructors
+ * @property Student[] $students
+ * @property Submission[] $submissions
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -29,7 +34,8 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 10;
     const STATUS_ACTIVE = 10;
     
-
+    private $_user; // Holds the user object if it is authenticated.
+    public bool $rememberMe = true;
 
     /**
      * {@inheritdoc}
@@ -42,17 +48,17 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::class,
-        //    [ 'class' => TimestampBehavior::class,
-        //     'createdAtAttribute' => 'Created_at',
-        //     'updatedAtAttribute' => 'Updated_at',
-        //     'value' => new Expression('NOW()'),
-        //    ] ,
-        ];
-    }
+    // public function behaviors()
+    // {
+    //     return [
+    //         TimestampBehavior::class,
+    //        [ 'class' => TimestampBehavior::class,
+    //         'createdAtAttribute' => 'created_at',
+    //         'updatedAtAttribute' => 'Updated_at',
+    //         'value' => new Expression('NOW()'),
+    //        ] ,
+    //     ];
+    // }
 
     /**
      * {@inheritdoc}
@@ -60,9 +66,69 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+             ['status', 'default', 'value' => self::STATUS_INACTIVE],
+            // ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            //     [['username', 'role', 'password_hash', 'email', 'auth_key', 'status', 'created_at', 'updated_at'], 'required'],
+            //     [['role'], 'string'],
+            //     [['email_verified', 'status', 'created_at', 'updated_at'], 'integer'],
+            //     [['username', 'password', 'password_hash', 'password_reset_token', 'verification_token', 'email', 'auth_key'], 'string', 'max' => 255],
+            //     [['username'], 'unique'],
+            //     [['email'], 'unique'],
+            [['username', 'role', 'password_hash', 'email', 'auth_key', 'status', 'created_at', 'updated_at'], 'required'],
+           [['role'], 'string'],
+           [['email_verified', 'status', 'created_at', 'updated_at'], 'integer'],
+           [['username', 'password', 'password_hash', 'password_reset_token', 'verification_token', 'email', 'auth_key'], 'string', 'max' => 255],
+           [['username'], 'unique'],
+           [['password'],'string','min' => 8],
+           [['email'], 'unique'],
         ];
+    }
+
+
+     /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'UserID' => Yii::t('app', 'User ID'),
+            'username' => Yii::t('app', 'Username'),
+            'password' => Yii::t('app', 'Password'),
+            'role' => Yii::t('app', 'Sign As'),
+            'password_hash' => Yii::t('app', 'Password'),
+            'password_reset_token' => Yii::t('app', 'Password Reset Token'),
+            'verification_token' => Yii::t('app', 'Verification Token'),
+            'email' => Yii::t('app', 'Email'),
+            'email_verified' => Yii::t('app', 'Email Verified'),
+            'auth_key' => Yii::t('app', 'Auth Key'),
+            'status' => Yii::t('app', 'Status'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+        ];
+    }
+
+
+    /**
+     * Logs in a user using the provided username and password.
+     *
+     * @return bool whether the user is logged in successfully
+     */
+    public function login()
+    {
+        if ($this->validate()) {
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        }
+        
+        return false;
+    }
+
+    public function getUser()
+    {
+        if ($this->_user === false) {
+            $this->_user = User::findByUsername($this->username);
+        }
+
+        return $this->_user;
     }
 
     /**
@@ -183,6 +249,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function setPassword($password)
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+        
     }
 
     /**
@@ -215,5 +282,36 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+   
+
+    /**
+     * Gets query for [[Instructors]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInstructors()
+    {
+        return $this->hasMany(Instructor::class, ['UserID' => 'UserID'])->inverseOf('user');
+    }
+
+    /**
+     * Gets query for [[Students]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStudents()
+    {
+        return $this->hasMany(Student::class, ['userID' => 'UserID'])->inverseOf('user');
+    }
+
+    /**
+     * Gets query for [[Submissions]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubmissions()
+    {
+        return $this->hasMany(Submission::class, ['StudentID' => 'UserID'])->inverseOf('student');
     }
 }

@@ -7,7 +7,6 @@ use backend\models\Submissions;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii;
 
 /**
  * SubmissionController implements the CRUD actions for Submission model.
@@ -23,7 +22,7 @@ class SubmissionController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::class,
+                    'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
                     ],

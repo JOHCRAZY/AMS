@@ -12,25 +12,24 @@ use Yii;
  * @property string|null $mname
  * @property string $lname
  * @property int|null $userID
- * @property string|null $section
+ * @property string|null $session
  * @property string|null $regNo
  * @property string|null $phoneNumber
  * @property string|null $emailAddress
  * @property string|null $gender
  * @property string|null $profileImage
  * @property int|null $groupID
- * @property string|null $courseCode
  * @property string $programmeCode
  * @property string $year
  * @property string $semester
  *
- * @property Course $courseCode0
  * @property Group $group
  * @property Programme $programmeCode0
  * @property User $user
  */
 class Student extends \yii\db\ActiveRecord
 {
+    public $imageFile;
     /**
      * {@inheritdoc}
      */
@@ -39,31 +38,31 @@ class Student extends \yii\db\ActiveRecord
         return 'Student';
     }
 
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['fname', 'lname', 'programmeCode', 'year', 'semester'], 'required'],
+            [['fname', 'lname','regNo', 'programmeCode', 'year', 'semester'], 'required'],
             [['userID', 'groupID'], 'integer'],
-            [['gender', 'year', 'semester'], 'string'],
+            [['session', 'gender', 'year', 'semester'], 'string'],
             [['fname', 'mname', 'lname'], 'string', 'max' => 25],
-            [['section'], 'string', 'max' => 1],
-            [['regNo'], 'string', 'max' => 15],
+            [['regNo'], 'string', 'max' => 20],
             [['phoneNumber'], 'string', 'max' => 16],
             [['emailAddress'], 'string', 'max' => 64],
-            [['profileImage'], 'string', 'max' => 255],
-            [['courseCode'], 'string', 'max' => 12],
+            // [['profileImage'], 'string', 'max' => 255],
+            [['profileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => ['png','jpg','ico']],
             [['programmeCode'], 'string', 'max' => 5],
             [['regNo'], 'unique'],
             [['emailAddress'], 'unique'],
             [['userID'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['userID' => 'UserID']],
             [['groupID'], 'exist', 'skipOnError' => true, 'targetClass' => Group::class, 'targetAttribute' => ['groupID' => 'groupID']],
-            [['courseCode'], 'exist', 'skipOnError' => true, 'targetClass' => Course::class, 'targetAttribute' => ['courseCode' => 'courseCode']],
             [['programmeCode'], 'exist', 'skipOnError' => true, 'targetClass' => Programme::class, 'targetAttribute' => ['programmeCode' => 'programmeCode']],
         ];
     }
+
 
     /**
      * {@inheritdoc}
@@ -72,33 +71,24 @@ class Student extends \yii\db\ActiveRecord
     {
         return [
             'StudentID' => Yii::t('app', 'Student ID'),
-            'fname' => Yii::t('app', 'Fname'),
-            'mname' => Yii::t('app', 'Mname'),
-            'lname' => Yii::t('app', 'Lname'),
+            'fname' => Yii::t('app', 'First Name'),
+            'mname' => Yii::t('app', 'Middle Name'),
+            'lname' => Yii::t('app', 'Last Name'),
             'userID' => Yii::t('app', 'User ID'),
-            'section' => Yii::t('app', 'Section'),
-            'regNo' => Yii::t('app', 'Reg No'),
+            'session' => Yii::t('app', 'Session'),
+            'regNo' => Yii::t('app', 'Registration Number'),
             'phoneNumber' => Yii::t('app', 'Phone Number'),
             'emailAddress' => Yii::t('app', 'Email Address'),
             'gender' => Yii::t('app', 'Gender'),
             'profileImage' => Yii::t('app', 'Profile Image'),
             'groupID' => Yii::t('app', 'Group ID'),
-            'courseCode' => Yii::t('app', 'Course Code'),
             'programmeCode' => Yii::t('app', 'Programme Code'),
             'year' => Yii::t('app', 'Year'),
             'semester' => Yii::t('app', 'Semester'),
         ];
     }
 
-    /**
-     * Gets query for [[CourseCode0]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCourseCode0()
-    {
-        return $this->hasOne(Course::class, ['courseCode' => 'courseCode'])->inverseOf('students');
-    }
+    
 
     /**
      * Gets query for [[Group]].
@@ -128,5 +118,18 @@ class Student extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['UserID' => 'userID'])->inverseOf('students');
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $uploadDir = 'uploads/';
+            $filePath = $uploadDir . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+            if ($this->imageFile->saveAs($filePath)) {
+                $this->profileImage = $filePath;
+                return true;
+            }
+        }
+        return false;
     }
 }

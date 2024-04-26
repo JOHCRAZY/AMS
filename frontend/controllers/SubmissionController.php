@@ -1,18 +1,19 @@
 <?php
 
 namespace frontend\controllers;
-use yii;
-use frontend\models\Submission;
-use frontend\models\SubmissionSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
+use yii\web\Controller;
+use yii\filters\VerbFilter;
+use frontend\models\Submission;
+use yii\web\NotFoundHttpException;
+use frontend\models\SubmissionSearch;
+use yii;
 /**
  * SubmissionController implements the CRUD actions for Submission model.
  */
 class SubmissionController extends Controller
 {
+    //public $layout = 'student';
     /**
      * @inheritDoc
      */
@@ -27,11 +28,23 @@ class SubmissionController extends Controller
                         'delete' => ['POST'],
                     ],
                 ],
+                'access' => [
+                    'class' => \yii\filters\AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'create', 'update', 'delete','individual'],
+                            'allow' => true,
+                            'matchCallback' => function ($rule, $action) {
+                                // Custom logic to determine access
+                                return !Yii::$app->user->isGuest; // Allow if user is authenticated
+                            },
+                        ],
+                    ],
+                ],
             ]
         );
     }
-
-
+    
     /**
      * Lists all Submission models.
      *
@@ -103,6 +116,29 @@ class SubmissionController extends Controller
         ]);
     }
 
+
+    public function actionIndividual(){
+        $searchModel = new SubmissionSearch();
+        $dataProvider = $searchModel->searchIndividual(\Yii::$app->request->queryParams);
+
+        return $this->render('/submission/@assignment',[
+           'dataProvider'=>$dataProvider,
+           'searchModel'=>$searchModel,
+           'title' =>  "Individual Assignments"
+        ]);
+    }
+
+    public function actionGroup(){
+        $searchModel = new SubmissionSearch();
+        $dataProvider = $searchModel->searchGroup(\Yii::$app->request->queryParams);
+
+        return $this->render('/assignment/@assignment',[
+           'dataProvider'=>$dataProvider,
+           'searchModel'=>$searchModel,
+           'title' =>  "Group Assignments"
+        ]);
+    }
+
     /**
      * Deletes an existing Submission model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -130,6 +166,6 @@ class SubmissionController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(\Yii::t('app', 'The requested page does not exist.'));
     }
 }

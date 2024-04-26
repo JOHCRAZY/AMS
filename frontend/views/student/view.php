@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var frontend\models\Student $model */
 
-$this->title = $model->StudentID;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Students'), 'url' => ['index']];
+$this->title = $model->fname. ' '. $model->lname;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Students'), 'url' => ['profile']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -15,37 +15,29 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'StudentID' => $model->StudentID], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'StudentID' => $model->StudentID], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'StudentID',
+           // 'StudentID',
             'fname',
             'mname',
             'lname',
-            'userID',
-            'section',
+           // 'userID',
+            'session',
             'regNo',
             'phoneNumber',
             'emailAddress:email',
             'gender',
-            'profileImage',
+            //'profileImage',
             'groupID',
-            'courseCode',
             'programmeCode',
             'year',
             'semester',
         ],
     ]) ?>
 
+<div class="d-flex justify-content-center">
+<?= Html::a(Yii::t('app', 'Update'), ['update', 'StudentID' => $model->StudentID], ['class' => 'btn btn-primary']) ?>
+
+</div>
 </div>

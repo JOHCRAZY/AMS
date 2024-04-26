@@ -42,7 +42,7 @@ class LoginForm extends Model
     public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors()) {
-            $user = $this->getUser();
+            $user = $this->getAdmin();
             if (!$user || !$user->validatePassword($this->password)) {
                 $this->addError($attribute, 'Incorrect username or password.');
             }
@@ -68,7 +68,7 @@ class LoginForm extends Model
      *
      * @return Admin|null
      */
-    protected function getUser()
+    protected function getAdmin()
     {
         if ($this->_user === null) {
             $this->_user = Admin::findByUsername($this->username);

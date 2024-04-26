@@ -7,12 +7,14 @@ use frontend\models\students;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
  * StudentController implements the CRUD actions for Student model.
  */
 class StudentController extends Controller
 {
+    //public $layout = "student";
     /**
      * @inheritDoc
      */
@@ -22,14 +24,27 @@ class StudentController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
                 ],
+                'access' => [
+                    'class' => \yii\filters\AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'create', 'update', 'delete','profile'],
+                            'allow' => true,
+                            'matchCallback' => function ($rule, $action) {
+                                // Custom logic to determine access
+                                return !Yii::$app->user->isGuest; // Allow if user is authenticated
+                            },
+                        ],
+                    ],
+                ],
             ]
         );
-    }
+        }
 
     /**
      * Lists all Student models.
@@ -65,22 +80,43 @@ class StudentController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+  
+    public function actionProfile()
     {
-        $model = new Student();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'StudentID' => $model->StudentID]);
-            }
-        } else {
-            $model->loadDefaultValues();
+        $existingStudent = Student::find()
+        ->joinWith('user')
+        ->where([
+            'Student.userID' => Yii::$app->user->identity->id,
+            'User.role' => 'student', // Assuming the column name is 'role' in the user table
+        ])
+        ->one();
+        if($existingStudent !== null){
+            return $this->redirect(['view', 'StudentID' => $existingStudent->StudentID]);
+
         }
 
-        return $this->render('create', [
-            'model' => $model,
+        $Student = new Student();
+        $Student->userID = Yii::$app->user->identity->id;
+
+        if ($this->request->isPost) {
+            $Student->load($this->request->post());
+            $Student->imageFile = \yii\web\UploadedFile::getInstance($Student, 'imageFile');
+             if ($Student->imageFile) {
+                 $Student->upload();
+             }
+            if ($Student->save()) {
+                return $this->redirect(['view', 'StudentID' => $Student->StudentID]);
+            }
+        } else {
+            $Student->loadDefaultValues();
+        }
+
+        return $this->render('profile', [
+            'model' => $Student,
         ]);
     }
+
 
     /**
      * Updates an existing Student model.
@@ -93,9 +129,16 @@ class StudentController extends Controller
     {
         $model = $this->findModel($StudentID);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost){
+            $model->load($this->request->post());
+            $model->imageFile = \yii\web\UploadedFile::getInstance($model, 'imageFile');
+             if ($model->imageFile) {
+                 $model->upload();
+             }
+            if($model->save()) {
             return $this->redirect(['view', 'StudentID' => $model->StudentID]);
         }
+    }
 
         return $this->render('update', [
             'model' => $model,

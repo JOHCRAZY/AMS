@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="student-form">
+<div class="container">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'userID')->textInput() ?>
 
-    <?= $form->field($model, 'section')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'session')->dropDownList([ 'A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', ], ['prompt' => '']) ?>
 
     <?= $form->field($model, 'regNo')->textInput(['maxlength' => true]) ?>
 
@@ -33,8 +33,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'profileImage')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'groupID')->textInput() ?>
-
-    <?= $form->field($model, 'courseCode')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'programmeCode')->textInput(['maxlength' => true]) ?>
 

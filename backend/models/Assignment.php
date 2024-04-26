@@ -85,6 +85,6 @@ class Assignment extends \yii\db\ActiveRecord
      */
     public function getSubmissions()
     {
-        return $this->hasMany(Submission::class, ['assignmentID' => 'AssignmentID'])->inverseOf('assignment');
+        return $this->hasMany(Submission::class, ['AssignmentID' => 'AssignmentID'])->inverseOf('assignment');
     }
 }
