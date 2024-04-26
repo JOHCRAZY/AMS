@@ -19,7 +19,7 @@ The assignment management system is a web-based platform designed to facilitate 
 
 
 
-DDIRECTORY STRUCTURE
+DIRECTORY STRUCTURE
 -------------------
 
 ```
