@@ -21,6 +21,7 @@ use Yii;
  */
 class Instructor extends \yii\db\ActiveRecord
 {
+    public $imageFile;
     /**
      * {@inheritdoc}
      */
@@ -28,6 +29,7 @@ class Instructor extends \yii\db\ActiveRecord
     {
         return 'Instructor';
     }
+
 
     /**
      * {@inheritdoc}
@@ -40,7 +42,8 @@ class Instructor extends \yii\db\ActiveRecord
             [['fname', 'mname', 'lname'], 'string', 'max' => 25],
             [['emailAddress'], 'string', 'max' => 64],
             [['phoneNumber'], 'string', 'max' => 16],
-            [['profileImage'], 'string', 'max' => 255],
+            // [['profileImage'], 'string', 'max' => 255],
+            [['profileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => ['png','jpg','ico']],
             [['UserID'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['UserID' => 'UserID']],
         ];
     }
@@ -58,7 +61,7 @@ class Instructor extends \yii\db\ActiveRecord
             'UserID' => Yii::t('app', 'User ID'),
             'emailAddress' => Yii::t('app', 'Email Address'),
             'phoneNumber' => Yii::t('app', 'Phone Number'),
-            'profileImage' => Yii::t('app', 'Profile Image'),
+            'imageFile' => Yii::t('app', 'Profile Image'),
         ];
     }
 
@@ -80,5 +83,19 @@ class Instructor extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['UserID' => 'UserID'])->inverseOf('instructors');
+    }
+
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $uploadDir = 'uploads/';
+            $filePath = $uploadDir . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+            if ($this->imageFile->saveAs($filePath)) {
+                $this->profileImage = $filePath;
+                return true;
+            }
+        }
+        return false;
     }
 }

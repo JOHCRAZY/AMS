@@ -22,7 +22,7 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-100" style="background-color:#e6e6fa; ">
 <?php $this->beginBody() ?>
 
 <header>
@@ -69,7 +69,7 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 </header>
-<div class="d-flex flex-column align-items-stretch mt-4">
+<div class="col d-flex flex-column align-items-stretch mt-4">
 <div class="row">
 <div class="col-md-1 order-0 p-3 position-sticky fixed">
     <?php if(!\yii::$app->user->isGuest): ?>
@@ -95,10 +95,10 @@ $this->render('StudentSideNav') : $this->render('InstructorSideNav') ?>
 </div>
 
 
-<footer class="footer mt-auto py-3 text-muted">
-    <div class="container">
+<footer class="footer mt-auto py-3 text-muted bg-dark sticky-bottom" style="color:aquamarine">
+    <div class="container" style="color:aqua">
         <p class="float-start">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-        <p class="float-end"><?='Assignment Management System' ?></p>
+        <p class="float-end"><?= 'Assignment Management System' ?></p>
     </div>
 </footer>
 

@@ -37,14 +37,16 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                // Add your URL rules here
+                'custom-page' => 'site/custom', // Example: maps /custom-page to site/custom
+                'POST <controller:\w+>/<action:\w+>' => '<controller>/<action>', // Example: allows POST requests to any controller/action
+                // Add more rules as needed
             ],
         ],
-        */
     ],
     'params' => $params,
 ];

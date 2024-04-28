@@ -10,13 +10,11 @@
 <h1 align="center">Assignment Management System</h1>
 <h1 align="center">📖</h1>
 
-
-
-
-## Overview
+1; Overview
 The assignment management system is a web-based platform designed to facilitate the management of assignments for a university. The system caters to students, instructors, and administrators, providing functionalities for assignment creation, submission and overall management.
 
-
+## trying turnnel
+# https://insiders.vscode.dev/tunnel/johcrazy/opt/lampp/htdocs/AMS
 
 
 DIRECTORY STRUCTURE

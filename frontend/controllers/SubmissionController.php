@@ -32,7 +32,7 @@ class SubmissionController extends Controller
                     'class' => \yii\filters\AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index', 'view', 'create', 'update', 'delete','individual'],
+                            'actions' => ['index', 'view', 'create', 'update', 'delete','individual-not-marked','group-marked','group-not-marked','individual-marked'],
                             'allow' => true,
                             'matchCallback' => function ($rule, $action) {
                                 // Custom logic to determine access
@@ -117,9 +117,20 @@ class SubmissionController extends Controller
     }
 
 
-    public function actionIndividual(){
+    public function actionIndividualMarked(){
         $searchModel = new SubmissionSearch();
-        $dataProvider = $searchModel->searchIndividual(\Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchIndividualMarked(Yii::$app->request->queryParams);
+
+        return $this->render('/submission/@assignment',[
+           'dataProvider'=>$dataProvider,
+           'searchModel'=>$searchModel,
+           'title' =>  "Marked Individual Assignments"
+        ]);
+    }
+
+    public function actionIndividualNotMarked(){
+        $searchModel = new SubmissionSearch();
+        $dataProvider = $searchModel->searchIndividualNotMarked(Yii::$app->request->queryParams);
 
         return $this->render('/submission/@assignment',[
            'dataProvider'=>$dataProvider,
@@ -128,11 +139,22 @@ class SubmissionController extends Controller
         ]);
     }
 
-    public function actionGroup(){
+    public function actionGroupMarked(){
         $searchModel = new SubmissionSearch();
-        $dataProvider = $searchModel->searchGroup(\Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchGroupMarked(Yii::$app->request->queryParams);
 
-        return $this->render('/assignment/@assignment',[
+        return $this->render('/submission/@assignment',[
+           'dataProvider'=>$dataProvider,
+           'searchModel'=>$searchModel,
+           'title' =>  "Marked Group Assignments"
+        ]);
+    }
+
+    public function actionGroupNotMarked(){
+        $searchModel = new SubmissionSearch();
+        $dataProvider = $searchModel->searchGroupNotMarked(Yii::$app->request->queryParams);
+
+        return $this->render('/submission/@assignment',[
            'dataProvider'=>$dataProvider,
            'searchModel'=>$searchModel,
            'title' =>  "Group Assignments"
@@ -166,6 +188,6 @@ class SubmissionController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException(\Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 }

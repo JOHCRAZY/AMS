@@ -8,6 +8,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
+use yii\helpers\Json;
+use frontend\models\Group;
 
 /**
  * StudentController implements the CRUD actions for Student model.
@@ -173,5 +175,17 @@ class StudentController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public function actionGetGroupNumbers($courseCode, $programmeCode)
+    {
+        // Logic to fetch group numbers based on $courseCode and $programmeCode
+        // Example:
+        $groupNumbers = Group::find()
+            ->select('groupNo')
+            ->where(['courseCode' => $courseCode, 'programmeCode' => $programmeCode])
+            ->column();
+
+        return Json::encode($groupNumbers);
     }
 }

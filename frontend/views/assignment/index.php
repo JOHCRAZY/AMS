@@ -10,20 +10,15 @@ use yii\widgets\Pjax;
 /** @var frontend\models\AssignmentSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('app', 'Assignments');
+$this->title = Yii::t('app', 'All Assignments');
 $this->params['breadcrumbs'][] = $this->title;
+$isInstructor = frontend\models\User::findByUsername(Yii::$app->user->identity->username)->role == 'instructor' ;
 ?>
-<div class="assignment-index">
+<div class="container">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Assignment'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -45,7 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Assignment $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'AssignmentID' => $model->AssignmentID]);
-                 }
+                 },
+                 'template' => $isInstructor ? '{view} {update}' : '{view}',
             ],
         ],
     ]); ?>

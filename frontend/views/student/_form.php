@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use kartik\file\FileInput;
@@ -9,6 +10,24 @@ use kartik\file\FileInput;
 /** @var frontend\models\Student $model */
 /** @var yii\widgets\ActiveForm $form */
 /** @var bool $courseCodes */
+
+$this->registerJs('
+    $("#course-code, #programme-code").change(function(){
+        var courseCode = $("#course-code").val();
+        var programmeCode = $("#programme-code").val();
+        $.ajax({
+            url: "' . Url::to(['student/get-group-numbers']) . '",
+            type: "GET",
+            data: { courseCode: courseCode, programmeCode: programmeCode },
+            success: function(data) {
+                $("#group-number").empty();
+                $.each(JSON.parse(data), function(index, value) {
+                    $("#group-number").append("<option value=" + value + ">" + value + "</option>");
+                });
+            }
+        });
+    });
+');
 ?>
 
 <div class="container text-bold">
@@ -33,19 +52,20 @@ use kartik\file\FileInput;
         'pluginOptions' => [
             'showUpload' => false, // Hide the upload button
             'showRemove' => true, // Hide the remove button
-            'initialPreview' => isset($model->profileImage) ? Html::img($model->profileImage, ['class' => 'file-preview-image img-circle', 'style' => 'width: 150px; height: 150px;', 'alt' => 'Profile Image']) : null,
+            'initialPreview' =>'<img src="'.Yii::$app->request->baseUrl."/".$model->profileImage.'" class="file-preview-image img-circle elevation-2 pull-right" style="width: 150px;">',
+            // 'initialPreview' => isset($model->profileImage) ? Html::img($model->profileImage, ['class' => 'file-preview-image img-circle', 'style' => 'width: 150px; height: 150px;', 'alt' => 'Profile Image']) : null,
             'initialPreviewConfig' => [
                 [
-                    'caption' => basename($model->profileImage),
+                    //'caption' => basename($model->profileImage),
                     'width' => '120px', // Adjust the width as needed
                     //'url' => Yii::$app->urlManager->createUrl(['/controller/delete-profile-image']), // Action to delete the image
                     'key' => 0, // Use 0 if there's only one image
                 ]
             ],
            'initialPreviewAsData' => true,
-            'overwriteInitial' => true,
-            'browseClass' => 'btn btn-primary btn-block', // Bootstrap button style
-            'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+            //'overwriteInitial' => true,
+            //'browseClass' => 'btn btn-primary btn-block', // Bootstrap button style
+            //'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
             'browseLabel' => 'Choose Image', // Button label
         ]
     ]); ?>
@@ -72,6 +92,7 @@ use kartik\file\FileInput;
 </div>
 <div class="col-sm-3 mb-3 mb-sm-0">
 <?= $form->field($model, 'phoneNumber')->textInput(['maxlength' => true]) ?>
+
 </div>
 <div class="col-sm-5 mb-3 mb-sm-0">
 <?= $form->field($model, 'regNo')->textInput(['maxlength' => true]) ?>
@@ -97,15 +118,7 @@ use kartik\file\FileInput;
         ],
     ]); ?>
 </div>
-<!-- <div class="col-sm-3 mb-3 mb-sm-0">
-< ?= $form->field($model, 'courseCode')->widget(Select2::class, [
-        'data' => $courseCodes,
-        'options' => ['placeholder' => 'Select a course...'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
-</div> -->
+
 <div class="col-sm-5 mb-3 mb-sm-0">
 <?= $form->field($model, 'programmeCode')->widget(Select2::class, [
         'data' => $programmeCodes,
@@ -116,7 +129,15 @@ use kartik\file\FileInput;
     ]); ?>
 </div>
 </span>
-
+<div class="col-sm-3 mb-3 mb-sm-0">
+<?= $form->field($model, 'groupID')->widget(Select2::class, [
+    'data' => [], // Data will be populated dynamically via AJAX
+    'options' => ['placeholder' => 'Select group number...'],
+    'pluginOptions' => [
+        'allowClear' => true
+    ],
+]); ?>
+</div>
 <br><br>
 <span class="row">
     <div class="col-sm-6 mb-3 mb-sm-0">

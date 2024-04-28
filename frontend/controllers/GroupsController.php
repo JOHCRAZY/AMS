@@ -32,7 +32,7 @@ class GroupsController extends Controller
                     'class' => \yii\filters\AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                            'actions' => ['index', 'view', 'create', 'update', 'delete','members'],
                             'allow' => true,
                             'matchCallback' => function ($rule, $action) {
                                 // Custom logic to determine access
@@ -50,6 +50,17 @@ class GroupsController extends Controller
      *
      * @return string
      */
+    public function actionMembers()
+    {
+        $searchModel = new groups();
+        $dataProvider = $searchModel->searchGroupMembers($this->request->queryParams);
+
+        return $this->render('members', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     public function actionIndex()
     {
         $searchModel = new groups();

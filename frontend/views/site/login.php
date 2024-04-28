@@ -34,7 +34,7 @@ use yii\bootstrap5\Html;
                 'template' => "<div class=\"custom-control custom-checkbox\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
             ]) ?>
                 <div class="text-center">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-success btn-color px-5 mb-5 w-100']) ?>
+                    <?= Html::submitButton('Login', ['class' => 'btn btn-lg btn-primary mt-4 mb-1 w-100']) ?>
                 </div>
                 <?php ActiveForm::end(); ?>
                 <div class="text-center" style="color:#999;">

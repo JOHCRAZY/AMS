@@ -32,7 +32,7 @@ $this->title = 'Signup';
                 <?= $form->field($model, 'role')->dropDownList(['student'=> 'Student','instructor'=> 'Instructor'],['prompt' => '---Select---']) ?>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Signup', ['class' => 'btn btn-success btn-color px-5 mb-5 w-100', 'name' => 'signup-button']) ?>
+                    <?= Html::submitButton('Signup', ['class' => 'btn btn-lg btn-primary mt-4 mb-1 w-100', 'name' => 'signup-button']) ?>
                 </div>
 
             <?php ActiveForm::end(); ?>

@@ -81,7 +81,7 @@ class Student extends \yii\db\ActiveRecord
             'emailAddress' => Yii::t('app', 'Email Address'),
             'gender' => Yii::t('app', 'Gender'),
             'profileImage' => Yii::t('app', 'Profile Image'),
-            'groupID' => Yii::t('app', 'Group ID'),
+            'groupID' => Yii::t('app', 'Group Number'),
             'programmeCode' => Yii::t('app', 'Programme Code'),
             'year' => Yii::t('app', 'Year'),
             'semester' => Yii::t('app', 'Semester'),

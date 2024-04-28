@@ -14,9 +14,9 @@ use yii\widgets\Pjax;
 
 $this->title = Yii::t('app', $title);
 $this->params['breadcrumbs'][] = $this->title;
-$isInstructor = yii::$app->user->identity->role == 'instructor';
+$isInstructor = frontend\models\User::findByUsername(Yii::$app->user->identity->username)->role == 'instructor' ;
 ?>
-<div class="assignment-index">
+<div class="container">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -25,8 +25,6 @@ $isInstructor = yii::$app->user->identity->role == 'instructor';
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -35,10 +33,6 @@ $isInstructor = yii::$app->user->identity->role == 'instructor';
 
             //'AssignmentID',
             'courseCode',
-            [
-                'attribute'=>'Course.CourseName',
-                'label'=>Yii::t('app','Course Name'),
-            ],
             'assignment',
             'title',
             //'content:ntext',

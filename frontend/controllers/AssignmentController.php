@@ -33,7 +33,7 @@ class AssignmentController extends Controller
                     'class' => \yii\filters\AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                            'actions' => ['index', 'view', 'create', 'update', 'group','individual','do'],
                             'allow' => true,
                             'matchCallback' => function ($rule, $action) {
                                 // Custom logic to determine access
@@ -129,6 +129,10 @@ class AssignmentController extends Controller
     public function actionUpdate($AssignmentID)
     {
         $model = $this->findModel($AssignmentID);
+        // $assignment = Assignment::findOne($AssignmentID);
+        // if ($assignment->user_id !== Yii::$app->user->id) {
+        //     throw new \yii\web\ForbiddenHttpException('You are not allowed to update this assignment.');
+        // }
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'AssignmentID' => $model->AssignmentID]);
@@ -138,6 +142,21 @@ class AssignmentController extends Controller
             'model' => $model,
         ]);
     }
+
+
+    public function actionDo($AssignmentID)
+    {
+        $model = $this->findModel($AssignmentID);
+    
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'AssignmentID' => $model->AssignmentID]);
+        }
+
+        return $this->render('do', [
+            'model' => $model,
+        ]);
+    }
+
 
     /**
      * Deletes an existing Assignment model.

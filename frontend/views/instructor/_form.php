@@ -24,7 +24,7 @@ use kartik\file\FileInput;
     ]); ?>
 <div class="col align-self-center">
 
-<?= $form->field($model, 'profileImage')->widget(FileInput::class, [
+<?= $form->field($model, 'imageFile')->widget(FileInput::class, [
         'options' => ['accept' => 'image/*'], // Accept only image files
         'pluginOptions' => [
             'showUpload' => false, // Hide the upload button

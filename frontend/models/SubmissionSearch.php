@@ -73,7 +73,43 @@ class SubmissionSearch extends Submission
         return $dataProvider;
     }
 
-    public function searchIndividual($params)
+    public function searchIndividualMarked($params)
+    {
+        $query = Submission::find()
+        ->joinWith('assignment')
+        ->where(['Assignment.assignment' => 'Individual Assignment','Submission.status' => 'Marked']);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'SubmissionID' => $this->SubmissionID,
+            'AssignmentID' => $this->AssignmentID,
+            'groupID' => $this->groupID,
+            'StudentID' => $this->StudentID,
+            'submissionDate' => $this->submissionDate,
+            'score' => $this->score,
+        ]);
+
+        $query->andFilterWhere(['like', 'content', $this->content])
+            ->andFilterWhere(['like', 'fileURL', $this->fileURL])
+            ->andFilterWhere(['like', 'status', $this->status]);
+
+        return $dataProvider;
+    }
+    public function searchIndividualNotMarked($params)
     {
         $query = Submission::find()
         ->joinWith('assignment')
@@ -110,10 +146,48 @@ class SubmissionSearch extends Submission
         return $dataProvider;
     }
 
-    public function searchGroup($params)
+    public function searchGroupMarked($params)
     {
-        $query = Submission::find()->where(['status' => 'submitted']);
+        $query = Submission::find()
+        ->joinWith('assignment')
+        ->where(['Assignment.assignment' => 'Group Assignment','Submission.status' => 'Marked']);
+        // add conditions that should always apply here
 
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'SubmissionID' => $this->SubmissionID,
+            'AssignmentID' => $this->AssignmentID,
+            'groupID' => $this->groupID,
+            'StudentID' => $this->StudentID,
+            'submissionDate' => $this->submissionDate,
+            'score' => $this->score,
+        ]);
+
+        $query->andFilterWhere(['like', 'content', $this->content])
+            ->andFilterWhere(['like', 'fileURL', $this->fileURL])
+            ->andFilterWhere(['like', 'status', $this->status]);
+
+        return $dataProvider;
+    }
+
+
+    public function searchGroupNotMarked($params)
+    {
+        $query = Submission::find()
+        ->joinWith('assignment')
+        ->where(['Assignment.assignment' => 'Group Assignment','Submission.status' => 'Not Marked']);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

@@ -101,7 +101,13 @@ class InstructorController extends Controller
         $instructor = new Instructor();
         $instructor->UserID = Yii::$app->user->identity->id;
         if ($this->request->isPost) {
-            if ($instructor->load($this->request->post()) && $instructor->save()) {
+            $instructor->load($this->request->post());
+            $instructor->imageFile = \yii\web\UploadedFile::getInstance($instructor, 'imageFile');
+
+            if($instructor->imageFile){
+                $instructor->upload();
+            }
+            if ($instructor->save()) {
                 return $this->redirect(['view', 'InstructorID' => $instructor->InstructorID]);
             }
         } else {
@@ -124,10 +130,17 @@ class InstructorController extends Controller
     {
         $model = $this->findModel($InstructorID);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost){
+         $model->load($this->request->post());
+         $model->imageFile = \yii\web\UploadedFile::getInstance($model, 'imageFile');
+
+         if ($model->imageFile) {
+            $model->upload();
+        }
+         if($model->save()) {
             return $this->redirect(['view', 'InstructorID' => $model->InstructorID]);
         }
-
+    }
         return $this->render('update', [
             'model' => $model,
         ]);

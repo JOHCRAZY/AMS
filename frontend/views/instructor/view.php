@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
            // 'UserID',
             'emailAddress:email',
             'phoneNumber',
-            'profileImage',
+            //'profileImage',
         ],
     ]) ?>
 <div class="d-flex justify-content-center">

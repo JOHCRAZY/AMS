@@ -2,9 +2,7 @@
 <nav class="d-flex flex-column align-items-end mt-4 position-fixed">
     <?php
     use kartik\sidenav\SideNav;
-    use yii\helpers\Html;
     $student = frontend\models\Student::findOne(['userID' => Yii::$app->user->identity->getId()]);
-    // Yii::$app->user->identity->;
 echo SideNav::widget([
     'options' => [
         'class' => 'd-flex flex-column align-items-stretch',
@@ -12,7 +10,7 @@ echo SideNav::widget([
     'type' => SideNav::TYPE_SUCCESS,
     'encodeLabels' => false,
     'items' => [
-        ['label' => $student !== null ? '<img src="'.$student->profileImage.'" class="img-circle elevation-2 pull-right" style="width: 45px;">' : 'Navigate',
+         ['label' => $student !== null ? '<img src="'.Yii::$app->request->baseUrl."/".$student->profileImage.'" class="img-circle elevation-2 pull-right" style="width: 45px;">' : 'Navigate',
             'items' => [
                 ['label' => '<span class="pull-right float-right float-end badge">3</span>Pending Assignments',
                  'items' => [
@@ -23,16 +21,16 @@ echo SideNav::widget([
                     'items' => [
                         ['label' => 'Individual Assignment', 'active' => false,
                             'items' => [
-                                ['label' => 'Marked', 'url' => ['/submission/individual'], 'active' => false],
-                                ['label' => 'Not Marked', 'url' => ['/submission/individual'], 'active' => false],
+                                ['label' => 'Marked', 'url' => ['/submission/individual-marked'], 'active' => false],
+                                ['label' => 'Not Marked', 'url' => ['/submission/individual-not-marked'], 'active' => false],
                             ]],
                         ['label' => 'Group Assignment','active' => false,
                             'items' => [
-                                ['label' => 'Marked', 'url' => ['/submission/group'], 'active' => false],
-                                ['label' => 'Not Marked', 'url' => ['/submission/group'], 'active' => false],
+                                ['label' => 'Marked', 'url' => ['/submission/group-marked'], 'active' => false],
+                                ['label' => 'Not Marked', 'url' => ['/submission/group-not-marked'], 'active' => false],
                             ]],
                     ]],
-                    ['label' => '<span class="pull-right float-right float-end badge">3</span>Group Members','url' => ['groups/']],
+                    ['label' => '<span class="pull-right float-right float-end badge">  </span>Group Members','url' => ['groups/members']],
 
                 ['label' => 'Profile', 'url' => ['/student/profile'], 'active' => false],
             ]],
@@ -40,5 +38,6 @@ echo SideNav::widget([
     ],
 ]);
 ?>
+
 </nav>
 </aside>
