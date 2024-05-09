@@ -32,6 +32,22 @@ class AssignmentSearch extends Assignment
         return Model::scenarios();
     }
 
+    protected static function getStudent(){
+        $user = User::findByUsername(\Yii::$app->user->identity->username);
+      return \frontend\models\Student::find()->where(['UserID' => $user->UserID])->one();
+    }
+
+
+    protected function isInstructor(){
+        return User::findByUsername(\Yii::$app->user->identity->username)->role == 'instructor';
+
+    }
+    protected function isStudent(){
+        return User::findByUsername(\Yii::$app->user->identity->username)->role == 'student';
+
+    }
+
+    
     /**
      * Creates data provider instance with search query applied
      *
@@ -39,9 +55,31 @@ class AssignmentSearch extends Assignment
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$courseCode)
     {
-        $query = Assignment::find();
+        
+    if($this->isInstructor()){
+        $query = Assignment::find()
+        ->where(['courseCode' => $courseCode]);
+
+    }else{
+
+
+       if(self::getStudent() != null){
+        $query = Assignment::find()
+        ->joinWith('submissions')
+        ->where(['IN', 'courseCode', 
+        Course::find()
+        ->select('courseCode')
+        ->where(['programmeCode' => self::getStudent()->programmeCode,'year' => self::getStudent()->year,'semester' => self::getStudent()->semester])]
+       )
+       ->andFilterWhere(['status' => 'Assigned'])
+      // ->andFilterWhere(['Submission.AssignmentStatus' => '']);
+    ;
+       }
+    }
+            // ->joinWith('courseCode0')
+            // ->where(['Course.courseCode'  => $instructor->CourseCode ,'status' => 'Assigned']);
 
         // add conditions that should always apply here
 
@@ -68,7 +106,7 @@ class AssignmentSearch extends Assignment
         $query->andFilterWhere(['like', 'courseCode', $this->courseCode])
             ->andFilterWhere(['like', 'assignment', $this->assignment])
             ->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'content', $this->content])
+            ->andFilterWhere(['like', 'content', $this->AssignmentContent])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'fileURL', $this->fileURL])
             ->andFilterWhere(['like', 'status', $this->status]);
@@ -77,9 +115,21 @@ class AssignmentSearch extends Assignment
     }
 
 
-    public function searchIndividualAssignmentPending($params)
+    public function searchIndividualAssignmentPending($params,$courseCode)
     {
-        $query = Assignment::find()->where(['assignment'  => 'Individual Assignment','status' => 'pending']);
+
+        
+        // if($this->isInstructor()){
+        //     $query = Assignment::find()
+        //     ->joinWith('submissions')
+        //     ->joinWith('courseCode0')
+        //     ->where(['Course.courseCode' => Instructor::find()->where(['UserID' => \Yii::$app->user->getId()])->one()->CourseCode,'Assignment.assignment'  => 'Individual Assignment','status' => 'Assigned','Submission.SubmissionStatus' => 'Not Marked']);
+        // }else{
+
+            $query = Assignment::find()
+            ->joinWith('submissions')
+            ->where(['Assignment.assignment'  => 'Individual Assignment','Assignment.courseCode' => $courseCode,'Submission.StudentID' => self::getStudent()->StudentID,'status' => 'Assigned','Submission.AssignmentStatus' => 'Pending']);
+       // }
 
         // add conditions that should always apply here
 
@@ -106,7 +156,7 @@ class AssignmentSearch extends Assignment
         $query->andFilterWhere(['like', 'courseCode', $this->courseCode])
             ->andFilterWhere(['like', 'assignment', $this->assignment])
             ->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'content', $this->content])
+            ->andFilterWhere(['like', 'content', $this->AssignmentContent])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'fileURL', $this->fileURL])
             ->andFilterWhere(['like', 'status', $this->status]);
@@ -114,10 +164,15 @@ class AssignmentSearch extends Assignment
         return $dataProvider;
     }
 
-    public function searchGroupAssignmentPending($params)
+    public function searchGroupAssignmentPending($params,$courseCode)
     {
-        $query = Assignment::find()->where(['assignment' => 'Group Assignment','status' => 'pending']);
 
+
+        $query = Assignment::find()
+        ->joinWith('submissions')
+        ->where(['Assignment.assignment' => 'Group Assignment','Assignment.courseCode' => $courseCode,'Assignment.status' => 'Assigned']);
+
+    
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -143,7 +198,7 @@ class AssignmentSearch extends Assignment
         $query->andFilterWhere(['like', 'courseCode', $this->courseCode])
             ->andFilterWhere(['like', 'assignment', $this->assignment])
             ->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'content', $this->content])
+            ->andFilterWhere(['like', 'content', $this->AssignmentContent])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'fileURL', $this->fileURL])
             ->andFilterWhere(['like', 'status', $this->status]);

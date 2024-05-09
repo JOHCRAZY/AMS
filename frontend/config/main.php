@@ -44,6 +44,8 @@ return [
                 // Add your URL rules here
                 'custom-page' => 'site/custom', // Example: maps /custom-page to site/custom
                 'POST <controller:\w+>/<action:\w+>' => '<controller>/<action>', // Example: allows POST requests to any controller/action
+                'site/view-file/<filePath:\S+>' => 'site/view-file',
+                'site/load-file/<filePath:\S+>' => 'site/load-file',
                 // Add more rules as needed
             ],
         ],

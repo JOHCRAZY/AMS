@@ -14,9 +14,10 @@ use frontend\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\User;
-use frontend\models\Instructor;
+use frontend\models\{Instructor,Student};
 use yii\helpers\Html;
 use frontend\models\ContactForm;
+
 
 /**
  * Site controller
@@ -87,18 +88,41 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        $this->layout = 'blank';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
-        $username = $model->username;
+       // $username = $model->username;
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $user = User::findByUsername(Yii::$app->user->identity->username);
             if($user->role == "student"){
-                return $this->redirect(['/student/profile']);
+                $student = Student::find()->where(['UserID' => $user->UserID])->one();
+                if($student != null){
+
+                    Yii::$app->session->setFlash('success', 'you\'re Now Logged in');
+                    return $this->redirect(['/site/index']);
+                }else{
+                    Yii::$app->session->setFlash('success', 'Fill you\'re Profile details to continue');
+
+                    return $this->redirect(['/student/profile']);
+
+                }
+                //Yii::$app->session['Student'] = serialize($student);
+
             }else{
-                return $this->redirect(['/instructor/profile']);
+                $instructor = Instructor::find()->where(['UserID' => $user->UserID])->one();
+
+                if($instructor != null){
+                    Yii::$app->session->setFlash('success', 'you\'re Now Logged in');
+                    return $this->redirect(['/site/index']);
+                }else{
+
+                    Yii::$app->session->setFlash('success', 'Complete you\'re Details for verification');
+                    return $this->redirect(['/instructor/profile']);
+                }
+                
             }
             //return $this->goBack();
         }
@@ -163,6 +187,8 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
+        $this->layout = 'blank';
+
         $model = new User();//SignupForm();
 
         if ($model->load(Yii::$app->request->post())/* && $model->signup()*/) {
@@ -177,7 +203,7 @@ class SiteController extends Controller
                     return $this->redirect(['site/login']);
                 }else{
                     Yii::$app->session->setFlash('error', 'Sorry, Something went wrong, please try again.');
-                   var_dump($model->getErrors());
+                  // var_dump($model->getErrors());
 
                 }
             // }else{

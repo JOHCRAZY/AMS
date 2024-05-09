@@ -37,10 +37,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'Student.fName',
             ],
-            'content:ntext',
+            'SubmissionContent:ntext',
             'submissionDate',
             //'fileURL',
-            'status',
+            'SubmissionStatus',
             'score',
             [
                 'class' => ActionColumn::class,

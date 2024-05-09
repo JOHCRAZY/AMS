@@ -17,7 +17,7 @@ class students extends Student
     public function rules()
     {
         return [
-            [['StudentID', 'userID', 'groupID'], 'integer'],
+            [['StudentID', 'userID', 'groupNo'], 'integer'],
             [['fname', 'mname', 'lname', 'session', 'regNo', 'phoneNumber', 'emailAddress', 'gender', 'profileImage', 'programmeCode', 'year', 'semester'], 'safe'],
         ];
     }
@@ -60,7 +60,7 @@ class students extends Student
         $query->andFilterWhere([
             'StudentID' => $this->StudentID,
             'userID' => $this->userID,
-            'groupID' => $this->groupID,
+            'groupID' => $this->groupNo,
         ]);
 
         $query->andFilterWhere(['like', 'fname', $this->fname])

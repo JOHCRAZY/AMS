@@ -10,7 +10,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-            <?='<img src="'.$assetDir.'/uploads/eastc.png'.'" alt="profile image">'?>
+            <?='<img src="'.$assetDir.'/uploads/johcrazy.png'.'" alt="profile image">'?>
                 <!-- <img src="".Yii::$app->request->baseUrl."/uploads/eastc.png" class="img-circle elevation-2" alt="< ?= Yii::$app->request->baseUrl ?>"> -->
             </div>
             <div class="info">

@@ -103,7 +103,7 @@ class InstructorController extends Controller
         if ($this->request->isPost) {
             $instructor->load($this->request->post());
             $instructor->imageFile = \yii\web\UploadedFile::getInstance($instructor, 'imageFile');
-
+            $instructor->Status = 'Pending';
             if($instructor->imageFile){
                 $instructor->upload();
             }

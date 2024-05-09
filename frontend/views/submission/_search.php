@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'StudentID') ?>
 
-    <?= $form->field($model, 'content') ?>
+    <?= $form->field($model, 'SubmissionContent') ?>
 
     <?php // echo $form->field($model, 'submissionDate') ?>
 

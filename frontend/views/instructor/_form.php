@@ -59,9 +59,19 @@ use kartik\file\FileInput;
     </span>
 <br><br>
 <span class="row">
-<div class="col-sm-8 mb-3 mb-sm-0">
+<div class="col-sm-4 mb-3 mb-sm-0">
 <?= $form->field($model, 'phoneNumber')->textInput(['maxlength' => true]) ?>
 </div>
+<!-- <div class="col-sm-4 mb-3 mb-sm-0">
+    < ?php $courses = \frontend\models\Course::find()->all() ?>
+< ?= $form->field($model, 'CourseCode')->widget(Select2::class, [
+        'data' => \yii\helpers\ArrayHelper::map($courses, 'courseCode', 'courseName'),////\yii\helpers\ArrayHelper::map($programme,'programmeCode','programmeName'),// $programmeCodes,
+        'options' => ['placeholder' => 'Select a programme...'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
+ </div> -->
 <div class="col-sm-4 mb-3 mb-sm-0">
 <?= $form->field($model, 'emailAddress')->textInput(['maxlength' => true]) ?>
 </div>

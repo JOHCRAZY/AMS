@@ -12,9 +12,10 @@ use Yii;
  * @property string|null $mname
  * @property string $lname
  * @property int|null $UserID
- * @property string|null $mailAddress
+ * @property string|null $emailAddress
  * @property string|null $phoneNumber
  * @property string|null $profileImage
+ * @property string $Status 
  *
  * @property Course[] $courses
  * @property User $user
@@ -37,7 +38,7 @@ class Instructor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fname', 'lname','emailAddress'], 'required'],
+            [['fname', 'lname','Status'], 'required'],
             [['UserID'], 'integer'],
             [['fname', 'mname', 'lname'], 'string', 'max' => 25],
             [['emailAddress'], 'string', 'max' => 64],
@@ -45,6 +46,7 @@ class Instructor extends \yii\db\ActiveRecord
             // [['profileImage'], 'string', 'max' => 255],
             [['profileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => ['png','jpg','ico']],
             [['UserID'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['UserID' => 'UserID']],
+
         ];
     }
 
@@ -72,7 +74,7 @@ class Instructor extends \yii\db\ActiveRecord
      */
     public function getCourses()
     {
-        return $this->hasMany(Course::class, ['InstructorID' => 'InstructorID'])->inverseOf('instructor');
+        return $this->hasMany(Course::class, ['courseInstructor' => 'InstructorID'])->inverseOf('courseInstructor0');
     }
 
     /**

@@ -11,6 +11,7 @@ use frontend\models\Submission;
  */
 class SubmissionSearch extends Submission
 {
+   
     /**
      * {@inheritdoc}
      */
@@ -31,6 +32,20 @@ class SubmissionSearch extends Submission
         return Model::scenarios();
     }
 
+    protected function isInstructor(){
+        return User::findByUsername(\Yii::$app->user->identity->username)->role == 'instructor';
+
+    }
+    protected function isStudent(){
+        return User::findByUsername(\Yii::$app->user->identity->username)->role == 'student';
+
+    }
+
+    protected static function getStudentID(){
+
+        $user = User::findByUsername(\Yii::$app->user->identity->username);
+      return \frontend\models\Student::find()->where(['UserID' => $user->UserID])->one();
+    }
     /**
      * Creates data provider instance with search query applied
      *
@@ -66,18 +81,44 @@ class SubmissionSearch extends Submission
             'score' => $this->score,
         ]);
 
-        $query->andFilterWhere(['like', 'content', $this->content])
+        $query->andFilterWhere(['like', 'SubmissionContent', $this->SubmissionContent])
             ->andFilterWhere(['like', 'fileURL', $this->fileURL])
-            ->andFilterWhere(['like', 'status', $this->status]);
+            ->andFilterWhere(['like', 'AssignmentStatus', $this->AssignmentStatus]);
 
         return $dataProvider;
     }
 
-    public function searchIndividualMarked($params)
+    public function searchIndividualMarked($params,$courseCode)
     {
-        $query = Submission::find()
+        
+
+        if($this->isInstructor()){ 
+
+         $query = Submission::find()
+         ->joinWith('assignment')
+         ->where([
+            'Assignment.courseCode' => Course::find()->where([
+                'courseInstructor' => Instructor::find()->where([
+                    'UserID' => \Yii::$app->user->getId()
+                    ])->one()
+                    ])->one()->courseCode,
+                    'Assignment.assignment' => 'Individual Assignment',
+                    'Submission.AssignmentStatus' => 'Submitted',
+                    'Submission.SubmissionStatus' => 'Marked'
+                ]);
+
+        }else{
+
+            $query = Submission::find()
         ->joinWith('assignment')
-        ->where(['Assignment.assignment' => 'Individual Assignment','Submission.status' => 'Marked']);
+        ->where([
+            'Assignment.assignment' => 'Individual Assignment',
+            'Assignment.courseCode' => $courseCode,
+            'StudentID' => self::getStudentID()->StudentID,
+            'Submission.AssignmentStatus' => 'Submitted',
+            'Submission.SubmissionStatus' => 'Marked'
+        ]);
+        }
 
         // add conditions that should always apply here
 
@@ -103,17 +144,43 @@ class SubmissionSearch extends Submission
             'score' => $this->score,
         ]);
 
-        $query->andFilterWhere(['like', 'content', $this->content])
+        $query->andFilterWhere(['like', 'SubmissionContent', $this->SubmissionContent])
             ->andFilterWhere(['like', 'fileURL', $this->fileURL])
-            ->andFilterWhere(['like', 'status', $this->status]);
+            ->andFilterWhere(['like', 'AssignmentStatus', $this->AssignmentStatus]);
 
         return $dataProvider;
     }
-    public function searchIndividualNotMarked($params)
+    public function searchIndividualNotMarked($params,$courseCode)
     {
+
+        
+
+        if($this->isInstructor()){
+            $query = Submission::find()
+        ->joinWith('assignment')
+        ->where([
+            'Assignment.courseCode' => Course::find()->where([
+                'courseInstructor' => Instructor::find()->where([
+                    'UserID' => \Yii::$app->user->getId()
+                    ])->one()
+                    ])->one()->courseCode,
+                    'Assignment.assignment' => 'Individual Assignment',
+                    'Submission.AssignmentStatus' => 'Submitted',
+                    'Submission.SubmissionStatus' => 'Not Marked'
+                ]);
+        
+    }else{
+
         $query = Submission::find()
         ->joinWith('assignment')
-        ->where(['Assignment.assignment' => 'Individual Assignment','Submission.status' => 'Not Marked']);
+        ->where([
+            'Assignment.assignment' => 'Individual Assignment',
+            'Assignment.courseCode' => $courseCode,
+            'StudentID' => self::getStudentID()->StudentID,
+            'Submission.AssignmentStatus' => 'Submitted',
+            'Submission.SubmissionStatus' => 'Not Marked'
+        ]);
+        }
 
         // add conditions that should always apply here
 
@@ -139,18 +206,36 @@ class SubmissionSearch extends Submission
             'score' => $this->score,
         ]);
 
-        $query->andFilterWhere(['like', 'content', $this->content])
+        $query->andFilterWhere(['like', 'SubmissionContent', $this->SubmissionContent])
             ->andFilterWhere(['like', 'fileURL', $this->fileURL])
-            ->andFilterWhere(['like', 'status', $this->status]);
+            ->andFilterWhere(['like', 'AssignmentStatus', $this->AssignmentStatus]);
 
         return $dataProvider;
     }
 
-    public function searchGroupMarked($params)
+    public function searchGroupMarked($params,$courseCode,$GroupID = null)
     {
-        $query = Submission::find()
+        
+        if($this->isInstructor()){
+            $query = Submission::find()
         ->joinWith('assignment')
-        ->where(['Assignment.assignment' => 'Group Assignment','Submission.status' => 'Marked']);
+        ->where([
+            'Assignment.courseCode' => Course::find()->where([
+                'courseInstructor' => Instructor::find()->where([
+                    'UserID' => \Yii::$app->user->getId()
+                    ])->one()
+                ])->one()->courseCode,
+                'Assignment.assignment' => 'Group Assignment',
+                'Submission.SubmissionStatus' => 'Marked'
+            ]);
+
+        }else{
+
+            $query = Submission::find()
+        ->joinWith('assignment')
+        ->where(['Assignment.assignment' => 'Group Assignment','Assignment.courseCode' => $courseCode,'Submission.SubmissionStatus' => 'Marked']);
+
+        }
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -175,19 +260,42 @@ class SubmissionSearch extends Submission
             'score' => $this->score,
         ]);
 
-        $query->andFilterWhere(['like', 'content', $this->content])
+        $query->andFilterWhere(['like', 'SubmissionContent', $this->SubmissionContent])
             ->andFilterWhere(['like', 'fileURL', $this->fileURL])
-            ->andFilterWhere(['like', 'status', $this->status]);
+            ->andFilterWhere(['like', 'AssignmentStatus', $this->AssignmentStatus]);
 
         return $dataProvider;
     }
 
 
-    public function searchGroupNotMarked($params)
+    public function searchGroupNotMarked($params,$courseCode)
     {
-        $query = Submission::find()
+        
+
+        if($this->isInstructor()){
+            $query = Submission::find()
         ->joinWith('assignment')
-        ->where(['Assignment.assignment' => 'Group Assignment','Submission.status' => 'Not Marked']);
+        ->where([
+            'Assignment.courseCode' => Course::find()->where([
+                'courseInstructor' => Instructor::find()->where([
+                    'UserID' => \Yii::$app->user->getId()
+                    ])->one()
+                    ])->one()->courseCode,
+                    'Assignment.assignment' => 'Group Assignment',
+                    'Submission.SubmissionStatus' => 'Not Marked'
+                ]);
+        
+    }else{
+
+            $query = Submission::find()
+        ->joinWith('assignment')
+        ->where([
+            'Assignment.assignment' => 'Group Assignment',
+            'Assignment.courseCode' => $courseCode,
+            
+            'Submission.SubmissionStatus' => 'Not Marked'
+        ]);
+        }
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -212,9 +320,9 @@ class SubmissionSearch extends Submission
             'score' => $this->score,
         ]);
 
-        $query->andFilterWhere(['like', 'content', $this->content])
+        $query->andFilterWhere(['like', 'SubmissionContent', $this->SubmissionContent])
             ->andFilterWhere(['like', 'fileURL', $this->fileURL])
-            ->andFilterWhere(['like', 'status', $this->status]);
+            ->andFilterWhere(['like', 'AssignmentStatus', $this->AssignmentStatus]);
 
         return $dataProvider;
     }

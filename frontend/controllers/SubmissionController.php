@@ -7,6 +7,8 @@ use yii\filters\VerbFilter;
 use frontend\models\Submission;
 use yii\web\NotFoundHttpException;
 use frontend\models\SubmissionSearch;
+use frontend\models\User;
+use frontend\models\Student;
 use yii;
 /**
  * SubmissionController implements the CRUD actions for Submission model.
@@ -32,7 +34,7 @@ class SubmissionController extends Controller
                     'class' => \yii\filters\AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index', 'view', 'create', 'update', 'delete','individual-not-marked','group-marked','group-not-marked','individual-marked'],
+                            'actions' => ['index','mark', 'view', 'create', 'update','individual-not-marked','group-marked','group-not-marked','individual-marked'],
                             'allow' => true,
                             'matchCallback' => function ($rule, $action) {
                                 // Custom logic to determine access
@@ -45,11 +47,21 @@ class SubmissionController extends Controller
         );
     }
     
+    protected function isInstructor(){
+        return User::findByUsername(Yii::$app->user->identity->username)->role == 'instructor';
+
+    }
+    protected function isStudent(){
+        return User::findByUsername(Yii::$app->user->identity->username)->role == 'student';
+
+    }
     /**
      * Lists all Submission models.
      *
      * @return string
      */
+
+
     public function actionIndex()
     {
         $searchModel = new SubmissionSearch();
@@ -117,47 +129,83 @@ class SubmissionController extends Controller
     }
 
 
-    public function actionIndividualMarked(){
+    public function actionIndividualMarked($courseCode = null){
+
+        if($courseCode == null && !$this->isInstructor()){
+            $ctrAct = 'submission/individual-marked';
+             $this->redirect(['/course/select','ctrAct' => $ctrAct]);
+        }
+       
         $searchModel = new SubmissionSearch();
-        $dataProvider = $searchModel->searchIndividualMarked(Yii::$app->request->queryParams);
+
+        if($this->isStudent()){
+
+            $dataProvider = $searchModel->searchIndividualMarked(Yii::$app->request->queryParams,$courseCode);
+
+        }else{
+            $dataProvider = $searchModel->searchIndividualMarked(Yii::$app->request->queryParams,null);
+
+        }
 
         return $this->render('/submission/@assignment',[
            'dataProvider'=>$dataProvider,
            'searchModel'=>$searchModel,
-           'title' =>  "Marked Individual Assignments"
+           'title' =>  "Marked Individual Assignment"
         ]);
     }
 
-    public function actionIndividualNotMarked(){
-        $searchModel = new SubmissionSearch();
-        $dataProvider = $searchModel->searchIndividualNotMarked(Yii::$app->request->queryParams);
+    public function actionIndividualNotMarked($courseCode = null){
 
+        if($courseCode == null && !$this->isInstructor()){
+            $ctrAct = 'submission/individual-not-marked';
+             $this->redirect(['/course/select','ctrAct' => $ctrAct]);
+        }
+        
+        $searchModel = new SubmissionSearch();
+
+        if($this->isStudent()){
+            $dataProvider = $searchModel->searchIndividualNotMarked(Yii::$app->request->queryParams,$courseCode);
+
+        }else{
+            $dataProvider = $searchModel->searchIndividualNotMarked(Yii::$app->request->queryParams,null);
+
+        }
         return $this->render('/submission/@assignment',[
            'dataProvider'=>$dataProvider,
            'searchModel'=>$searchModel,
-           'title' =>  "Individual Assignments"
+           'title' =>  "Individual Assignment"
         ]);
     }
 
-    public function actionGroupMarked(){
+    public function actionGroupMarked($courseCode = null){
+
+        if($courseCode == null && !$this->isInstructor()){
+            $ctrAct = 'submission/group-marked';
+             $this->redirect(['/course/select','ctrAct' => $ctrAct]);
+        }
         $searchModel = new SubmissionSearch();
-        $dataProvider = $searchModel->searchGroupMarked(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchGroupMarked(Yii::$app->request->queryParams,$courseCode);
 
         return $this->render('/submission/@assignment',[
            'dataProvider'=>$dataProvider,
            'searchModel'=>$searchModel,
-           'title' =>  "Marked Group Assignments"
+           'title' =>  "Marked Group Assignment"
         ]);
     }
 
-    public function actionGroupNotMarked(){
+    public function actionGroupNotMarked($courseCode = null){
+
+        if($courseCode == null && !$this->isInstructor()){
+            $ctrAct = 'submission/group-not-marked';
+             $this->redirect(['/course/select','ctrAct' => $ctrAct]);
+        }
         $searchModel = new SubmissionSearch();
-        $dataProvider = $searchModel->searchGroupNotMarked(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchGroupNotMarked(Yii::$app->request->queryParams,$courseCode);
 
         return $this->render('/submission/@assignment',[
            'dataProvider'=>$dataProvider,
            'searchModel'=>$searchModel,
-           'title' =>  "Group Assignments"
+           'title' =>  "Group Assignment"
         ]);
     }
 
@@ -175,6 +223,31 @@ class SubmissionController extends Controller
         return $this->redirect(['index']);
     }
 
+
+
+    public function actionMark($SubmissionID,$Marked = false){
+        $model = $this->findModel($SubmissionID);
+
+
+        if($model->SubmissionStatus == 'Marked'){
+            Yii::$app->session->setFlash('error', 'Assignment Already Marked.');
+                return $this->redirect(['view','SubmissionID' => $SubmissionID]);
+        }
+
+        if($Marked && $this->isInstructor() && $this->request->isPost){
+            $model->load($this->request->post());
+            $model->SubmissionStatus = 'Marked';
+            $model->score = $model->PreScore;
+            if($model->save()){
+                Yii::$app->session->setFlash('success', 'Assignment Marked.');
+                return $this->redirect(['view','SubmissionID' => $SubmissionID]);
+
+            }
+        }
+        return $this->render('mark',[
+        'model' => $model
+    ]);
+    }
     /**
      * Finds the Submission model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

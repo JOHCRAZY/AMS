@@ -11,9 +11,13 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Students'), 'url' =>
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="student-view">
+<div class="container" >
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<center class="mb-lg-2 p-xl-5">
+    <img src="<?= Yii::$app->request->baseUrl.'/'.$model->profileImage ?>" class="img-circle rounded-4 elevation-2 pull-right" style="width: 70px;">
+
+</center>
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
     <?= DetailView::widget([
         'model' => $model,
@@ -29,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'emailAddress:email',
             'gender',
             //'profileImage',
-            'groupID',
+            //'groupID',
             'programmeCode',
             'year',
             'semester',

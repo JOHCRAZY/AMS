@@ -10,6 +10,7 @@ use yii\bootstrap5\Html;
 
 ?>
 
+<div class="container">
 
 <div class="container mt-8" style="margin-left: auto" >
     <div class="row justify-content-center">
@@ -42,8 +43,9 @@ use yii\bootstrap5\Html;
                     <br>
                     Need new verification email? <?= Html::a('Resend', ['site/resend-verification-email']) ?>
                 </div>
-                <div class="form-text text-center mb-5 text-dark">
+                <div class="form-text text-center mb-5">
 
+                <p>New To AMS </p>
                     <?=
                    Html::beginForm(['/site/signup'])
                     . Html::submitButton(
@@ -60,6 +62,7 @@ use yii\bootstrap5\Html;
     </div>
 </div>
 
+</div>
 
 
 

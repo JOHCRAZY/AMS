@@ -11,9 +11,12 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Instructors'), 'url'
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="instructor-view">
+<div class="container">
+    <center class="mb-lg-2 p-xl-5">
+    <img src="<?= Yii::$app->request->baseUrl.'/'.$model->profileImage ?>" class="rounded img-circle elevation-2 pull-right" style="width: 70px;">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+</center>
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
     <?= DetailView::widget([
         'model' => $model,
@@ -25,7 +28,24 @@ $this->params['breadcrumbs'][] = $this->title;
            // 'UserID',
             'emailAddress:email',
             'phoneNumber',
-            //'profileImage',
+            [
+                'attribute' => 'courses.courseCode',
+                'label' => 'Module Code',
+                'value' => function($model){
+                if($model->Status == 'Verified'){
+                    return frontend\models\Course::find()->where(['courseInstructor' => $model->InstructorID])->one()->courseCode;
+                }
+                }
+            ],
+            [
+                'attribute' => 'courses.courseName',
+                'label'=>'Module Name',
+            	'value' => function($model){
+                    if($model->Status == 'Verified'){
+                        return frontend\models\Course::find()->where(['courseInstructor' => $model->InstructorID])->one()->courseName;
+                    }                }
+            ],
+            'Status',
         ],
     ]) ?>
 <div class="d-flex justify-content-center">

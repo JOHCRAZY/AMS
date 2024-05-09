@@ -14,16 +14,16 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
 
 $courses = \frontend\models\Course::find()->select(['courseCode','courseName'])->indexBy('courseCode')->column();
-$programmeCodes = \frontend\models\Programme::find()->select(['programmeCode'])->indexBy('programmeCode')->column();
+$programme = \frontend\models\Programme::find()->all()//->select(['programmeCode'])->indexBy('programmeCode')->column();
 ?>
-<div class="student-update">
+<div class="container">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
         'courseCodes' => $courses,
-        'programmeCodes' => $programmeCodes,
+        'programme' => $programme,
     ]) ?>
 
 </div>

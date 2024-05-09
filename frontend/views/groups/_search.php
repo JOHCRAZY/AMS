@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var frontend\models\groups $model */
+/** @var frontend\models\Groups $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
@@ -18,13 +18,15 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'groupID') ?>
+    <?= $form->field($model, 'GroupID') ?>
 
-    <?= $form->field($model, 'groupNo') ?>
-
-    <?= $form->field($model, 'courseCode') ?>
+    <?= $form->field($model, 'GroupNO') ?>
 
     <?= $form->field($model, 'groupName') ?>
+
+    <?= $form->field($model, 'StudentID') ?>
+
+    <?= $form->field($model, 'courseCode') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>

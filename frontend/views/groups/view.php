@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var frontend\models\Group $model */
 
-$this->title = $model->groupID;
+$this->title = $model->GroupID;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Groups'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -16,8 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'groupID' => $model->groupID], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'groupID' => $model->groupID], [
+        <?= Html::a(Yii::t('app', 'Update'), ['update', 'GroupID' => $model->GroupID], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'GroupID' => $model->GroupID], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
@@ -29,10 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'groupID',
-            'groupNo',
-            'courseCode',
+            'GroupID',
+            'GroupNO',
             'groupName',
+            'StudentID',
+            'courseCode',
         ],
     ]) ?>
 

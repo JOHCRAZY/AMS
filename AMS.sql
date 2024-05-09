@@ -66,8 +66,8 @@ CREATE TABLE IF NOT EXISTS `User` (
     `email_verified` BOOL DEFAULT FALSE,
     `auth_key` VARCHAR(255) NOT NULL,
     `status` INT NOT NULL,
-    `created_at` INT(11) NOT NULL,
-    `updated_at` INT(11) NOT NULL
+    `created_at` INT (11) NOT NULL,
+    `updated_at` INT (11) NOT NULL
 );
 -- Admin Table
 CREATE TABLE IF NOT EXISTS `Admin` (
@@ -81,8 +81,8 @@ CREATE TABLE IF NOT EXISTS `Admin` (
     `email_verified` BOOL DEFAULT FALSE,
     `auth_key` VARCHAR(255) NOT NULL,
     `status` INT NOT NULL,
-    `created_at` INT(11) NOT NULL,
-    `updated_at` INT(11) NOT NULL
+    `created_at` INT (11) NOT NULL,
+    `updated_at` INT (11) NOT NULL
 );
 INSERT INTO `Admin` (
         `username`,
@@ -106,6 +106,7 @@ VALUES (
         '1713101628',
         '1713101628'
     );
+
 -- Instructor  Table
 DROP TABLE IF EXISTS `Instructor`;
 CREATE TABLE IF NOT EXISTS `Instructor` (
@@ -117,8 +118,10 @@ CREATE TABLE IF NOT EXISTS `Instructor` (
     FOREIGN KEY (`UserID`) REFERENCES `User` (`UserID`),
     `emailAddress` VARCHAR(64),
     `phoneNumber` VARCHAR(16),
-    `profileImage` VARCHAR(255) DEFAULT 'uploads/eastc.png'
+    `profileImage` VARCHAR(255),
+    `Status`  ENUM('Pending','Verified') NOT NULL
 );
+
 -- Courses Table
 DROP TABLE IF EXISTS `Course`;
 CREATE TABLE IF NOT EXISTS `Course` (
@@ -131,91 +134,31 @@ CREATE TABLE IF NOT EXISTS `Course` (
     `programmeCode` VARCHAR(5),
     FOREIGN KEY (`programmeCode`) REFERENCES `Programme` (`programmeCode`)
 );
-INSERT INTO `Course`(
-        `courseCode`,
-        `semester`,
-        `year`,
-        `courseName`,
-        `programmeCode`
-    )
-VALUES
-        ('DSU07315', 'I', 'II', 'Basics of Big Data', 'BDS'),
-        ('DSU07316', 'I', 'II', 'Software Engineering', 'BDS'),
-        ('DSU07317', 'I', 'II', 'Data Analysis with R', 'BDS'),
-        (
-            'DSU07318',
-            'I',
-            'II',
-            'Statistical Inference',
-            'BDS'
-        ),
-        (
-            'DSU07319',
-            'I',
-            'II',
-            'Algorithms Design and Data Structures',
-            'BDS'
-        ),
-        ('DSU07320', 'I', 'II', 'Machine Learning', 'BDS'),
-        (
-            'DSU07421',
-            'II',
-            'II',
-            'Data Communication and Computer Networks',
-            'BDS'
-        ),
-        (
-            'DSU07422',
-            'II',
-            'II',
-            'Programming With Python',
-            'BDS'
-        ),
-        (
-            'DSU07423',
-            'II',
-            'II',
-            'Object Oriented Programming With PHP',
-            'BDS'
-        ),
-        (
-            'DSU07424',
-            'II',
-            'II',
-            'Big Data Technologies',
-            'BDS'
-        ),
-        (
-            'DSU07425',
-            'II',
-            'II',
-            'Data Mining Techniques',
-            'BDS'
-        ),
-        (
-            'DSU07426',
-            'II',
-            'II',
-            'Time Series and Forecasting',
-            'BDS'
-        ),
-        (
-            'DSU07427',
-            'II',
-            'II',
-            'Field and Practical Training',
-            'BDS'
-    );
--- Groups  table
-DROP TABLE IF EXISTS `Group`;
-CREATE TABLE IF NOT EXISTS `Group` (
-    `groupID` INT NOT NULL AUTO_INCREMENT,
-    `groupNo` INT NOT NULL,
-    `courseCode` VARCHAR(12) NOT NULL,
-    `groupName` VARCHAR(64),
-    PRIMARY KEY (`groupID`),
-    FOREIGN KEY (`courseCode`) REFERENCES `Course` (`courseCode`)
-);
+INSERT INTO `Course` (`courseCode`, `courseName`, `semester`, `year`, `courseInstructor`, `programmeCode`) VALUES
+('ASU07209', 'Fundamental of microeconomics', 'II', 'I', NULL, 'BASE'),
+('ASU07210', 'Design of Experiments', 'II', 'I', NULL, 'BASE'),
+('ASU07211', 'Continuous Probability Distribution', 'II', 'I', NULL, 'BASE'),
+('ASU07212', 'Price statistics and indices', 'II', 'I', NULL, 'BASE'),
+('ASU07213', 'Data Analysis with SPSS', 'II', 'I', NULL, 'BASE'),
+('ASU07214', 'Livestock Statistics', 'II', 'I', NULL, 'BASE'),
+('ASU07215', 'Crop and Post-harvest Loss Statistics', 'II', 'I', NULL, 'BASE'),
+('DSU07315', 'Basics of Big Data', 'I', 'II', NULL, 'BDS'),
+('DSU07316', 'Software Engineering', 'I', 'II', NULL, 'BDS'),
+('DSU07317', 'Data Analysis with R', 'I', 'II', NULL, 'BDS'),
+('DSU07318', 'Statistical Inference', 'I', 'II', NULL, 'BDS'),
+('DSU07319', 'Algorithms Design and Data Structures', 'I', 'II', NULL, 'BDS'),
+('DSU07320', 'Machine Learning', 'I', 'II', NULL, 'BDS'),
+('DSU07421', 'Data Communication and Computer Networks', 'II', 'II', NULL, 'BDS'),
+('DSU07422', 'Programming With Python', 'II', 'II', NULL, 'BDS'),
+('DSU07423', 'Object Oriented Programming With PHP', 'II', 'II', NULL, 'BDS'),
+('DSU07424', 'Big Data Technologies', 'II', 'II', NULL, 'BDS'),
+('DSU07425', 'Data Mining Techniques', 'II', 'II', NULL, 'BDS'),
+('DSU07426', 'Time Series and Forecasting', 'II', 'II', NULL, 'BDS'),
+('DSU07427', 'Field and Practical Training', 'II', 'II', NULL, 'BDS');
+
+
+
+
 -- Students Table
 DROP TABLE IF EXISTS `Student`;
 CREATE TABLE IF NOT EXISTS `Student` (
@@ -226,17 +169,26 @@ CREATE TABLE IF NOT EXISTS `Student` (
     `userID` INT,
     FOREIGN KEY (`userID`) REFERENCES `User` (`UserID`),
     `session` ENUM ('A', 'B', 'C', 'D', 'E'),
-    `regNo` VARCHAR(15) UNIQUE,
+    `regNo` VARCHAR(20) UNIQUE,
     `phoneNumber` VARCHAR(16),
     `emailAddress` VARCHAR(64) UNIQUE,
     `gender` ENUM ('Male', 'Female'),
-    `profileImage` VARCHAR(255) DEFAULT 'uploads/eastc.png',
-    `groupID` INT,
-    FOREIGN KEY (`groupID`) REFERENCES `Group` (`groupID`),
+    `profileImage` VARCHAR(255),
     `programmeCode` VARCHAR(5) NOT NULL,
     FOREIGN KEY (`programmeCode`) REFERENCES `Programme` (`programmeCode`),
     `year` ENUM ('I', 'II', 'III') NOT NULL,
     `semester` ENUM ('I', 'II') NOT NULL
+);
+
+DROP TABLE IF EXISTS `Group`;
+CREATE TABLE IF NOT EXISTS `Group` (
+    `GroupID` INT PRIMARY KEY AUTO_INCREMENT,
+    `GroupNO` INT,
+    `groupName` VARCHAR(64),
+    `StudentID` INT,
+    FOREIGN KEY(`StudentID`) REFERENCES `Student` (`StudentID`),
+    `courseCode` VARCHAR(12),
+    FOREIGN KEY (`courseCode`) REFERENCES `Course` (`courseCode`)
 );
 -- Assignments Table
 DROP TABLE IF EXISTS `Assignment`;
@@ -246,13 +198,13 @@ CREATE TABLE IF NOT EXISTS `Assignment` (
     FOREIGN KEY (`courseCode`) REFERENCES `Course` (`courseCode`),
     `assignment` ENUM ('Individual Assignment', 'Group Assignment') NOT NULL,
     `title` VARCHAR(255) NOT NULL,
-    `content` TEXT,
-    `description` TEXT,
+    `AssignmentContent` longtext DEFAULT NULL,
+    `description` LONGTEXT,
     `fileURL` VARCHAR(255),
     `assignedDate` DATETIME,
     `submissionDate` DATETIME,
     `marks` INT NOT NULL,
-    `status` ENUM ('Pending', 'Submitted')
+    `status` ENUM ('Pending', 'Assigned')
 );
 
 -- Submissions Table
@@ -264,12 +216,13 @@ CREATE TABLE IF NOT EXISTS `Submission` (
     `groupID` INT,
     FOREIGN KEY (`groupID`) REFERENCES `Group` (`groupID`),
     `StudentID` INT,
-    FOREIGN KEY (`StudentID`) REFERENCES `User` (`UserID`),
-    `content` TEXT,
-    `submissionDate` DATETIME NOT NULL,
+    FOREIGN KEY (`StudentID`) REFERENCES `Student` (`StudentID`),
+    `SubmissionContent` longtext DEFAULT NULL,
+    `submissionDate` DATETIME,
     `fileURL` VARCHAR(255),
-    `status` enum('Marked','Not Marked') NOT NULL,
-    `score` int(11) DEFAULT NULL
+    `score` INT,
+    `AssignmentStatus` ENUM ('Pending', 'Submitted'),
+    `SubmissionStatus` ENUM ('Marked', 'Not Marked')
 );
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */
 ;

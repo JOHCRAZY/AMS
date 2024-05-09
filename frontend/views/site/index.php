@@ -3,12 +3,12 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-/* @var $this yii\web\View */
+/** @var yii\web\View $this */
 
 $this->title = 'Assignment Management System';
 ?>
 
-<div class="site-index">
+<div class="container">
 
     <header class="jumbotron text-center">
         <h1><?= Html::encode($this->title) ?></h1>
@@ -23,22 +23,22 @@ $this->title = 'Assignment Management System';
                 <!-- < ?= Html::icon('book') ?> -->
                 <h3>Effortless Assignment Creation</h3>
                 <p>Create, distribute, and manage assignments with ease. Our intuitive interface saves instructors valuable time.</p>
-                <?= Html::a('Learn more', ['/site/about'], ['class' => 'btn btn-outline-primary']) ?>
+                <!-- < ?= Html::a('Learn more', ['/site/about'], ['class' => 'btn btn-outline-primary']) ?> -->
             </div>
             <div class="col-md-4">
                 <!-- < ?= Html::icon('upload') ?> -->
                 <h3>Organized Submission Tracking</h3>
                 <p>Effortlessly track submissions and manage grading. Our system provides comprehensive features for monitoring student progress and delivering timely feedback.</p>
-                <?= Html::a('Explore features', ['/site/about'], ['class' => 'btn btn-outline-primary']) ?>
+                <!-- < ?= Html::a('Explore features', ['/site/about'], ['class' => 'btn btn-outline-primary']) ?> -->
             </div>
             <div class="col-md-4">
                 <!-- < ?= Html::icon('calendar-alt') ?> -->
                 <h3>Seamless Calendar Integration</h3>
                 <p>Stay on top of deadlines with calendar integration. Sync due dates with your preferred calendar to ensure everyone stays organized.</p>
-                <?= Html::a('Get started', ['/site/calendar'], ['class' => 'btn btn-outline-primary']) ?>
+                <!-- < ?= Html::a('Get started', ['/site/calendar'], ['class' => 'btn btn-outline-primary']) ?> -->
             </div>
         </section>
-l
+
         <hr class="my-5">
 
         <section class="row benefits">
@@ -73,7 +73,7 @@ l
             <div class="col-md-6">
                 <h2>Security and Privacy</h2>
                 <p>We take the security and privacy of your data extremely seriously. Learn more about our security measures and privacy policies here.</p>
-                <?= Html::a('Security & Privacy', ['/site/about'], ['class' => 'btn btn-secondary']) ?>
+                <!-- < ?= Html::a('Security & Privacy', ['/site/about'], ['class' => 'btn btn-secondary']) ?> -->
             </div>
         </section>
 

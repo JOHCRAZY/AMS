@@ -9,27 +9,11 @@ use kartik\file\FileInput;
 /** @var yii\web\View $this */
 /** @var frontend\models\Student $model */
 /** @var yii\widgets\ActiveForm $form */
-/** @var bool $courseCodes */
+/** @var [] $courseCodes */
+/** @var $programme */
 
-$this->registerJs('
-    $("#course-code, #programme-code").change(function(){
-        var courseCode = $("#course-code").val();
-        var programmeCode = $("#programme-code").val();
-        $.ajax({
-            url: "' . Url::to(['student/get-group-numbers']) . '",
-            type: "GET",
-            data: { courseCode: courseCode, programmeCode: programmeCode },
-            success: function(data) {
-                $("#group-number").empty();
-                $.each(JSON.parse(data), function(index, value) {
-                    $("#group-number").append("<option value=" + value + ">" + value + "</option>");
-                });
-            }
-        });
-    });
-');
 ?>
-
+<div class="container">
 <div class="container text-bold">
 <div class="row">
 
@@ -45,8 +29,9 @@ $this->registerJs('
         ],
     ]); ?>
 
-<div class="col align-self-center">
+<div class="row justify-content-between">
 
+<div class="col">
 <?= $form->field($model, 'imageFile')->widget(FileInput::class, [
         'options' => ['accept' => 'image/*'], // Accept only image files
         'pluginOptions' => [
@@ -57,19 +42,21 @@ $this->registerJs('
             'initialPreviewConfig' => [
                 [
                     //'caption' => basename($model->profileImage),
-                    'width' => '120px', // Adjust the width as needed
+                    'width' => '1200px', // Adjust the width as needed
                     //'url' => Yii::$app->urlManager->createUrl(['/controller/delete-profile-image']), // Action to delete the image
                     'key' => 0, // Use 0 if there's only one image
                 ]
             ],
            'initialPreviewAsData' => true,
-            //'overwriteInitial' => true,
+            'overwriteInitial' => true,
             //'browseClass' => 'btn btn-primary btn-block', // Bootstrap button style
             //'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
-            'browseLabel' => 'Choose Image', // Button label
+            'browseLabel' => 'Choose Profile Image', // Button label
         ]
     ]); ?>
 </div>
+</div>
+<br><br>
  <span class="row">
  <div class="col-sm-4 mb-3 mb-sm-0">
     <?= $form->field($model, 'fname')->textInput(['maxlength' => true]) ?>
@@ -81,8 +68,6 @@ $this->registerJs('
     <?= $form->field($model, 'lname')->textInput(['maxlength' => true]) ?>
  </div>
     </span>
-
-    <!-- < ?= $form->field($model, 'userID')->textInput(['class' => 'form-control','value' => Yii::$app->user->id]) ?> -->
 
    <br>
 
@@ -119,9 +104,10 @@ $this->registerJs('
     ]); ?>
 </div>
 
+<!-- 'data' => \yii\helpers\ArrayHelper::map($dataProvider->models, 'courseCode', 'courseName'), -->
 <div class="col-sm-5 mb-3 mb-sm-0">
 <?= $form->field($model, 'programmeCode')->widget(Select2::class, [
-        'data' => $programmeCodes,
+        'data' => \yii\helpers\ArrayHelper::map($programme, 'programmeCode', 'programmeName'),////\yii\helpers\ArrayHelper::map($programme,'programmeCode','programmeName'),// $programmeCodes,
         'options' => ['placeholder' => 'Select a programme...'],
         'pluginOptions' => [
             'allowClear' => true
@@ -129,15 +115,6 @@ $this->registerJs('
     ]); ?>
 </div>
 </span>
-<div class="col-sm-3 mb-3 mb-sm-0">
-<?= $form->field($model, 'groupID')->widget(Select2::class, [
-    'data' => [], // Data will be populated dynamically via AJAX
-    'options' => ['placeholder' => 'Select group number...'],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]); ?>
-</div>
 <br><br>
 <span class="row">
     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -180,3 +157,4 @@ $this->registerJs('
 </div>
 </div>
 
+</div>

@@ -18,13 +18,13 @@ use Yii;
  * @property string|null $emailAddress
  * @property string|null $gender
  * @property string|null $profileImage
- * @property int|null $groupID
+ * @property int|null $groupNo
  * @property string $programmeCode
  * @property string $year
  * @property string $semester
  *
- * @property Group $group
  * @property Programme $programmeCode0
+ * @property Submission[] $submissions
  * @property User $user
  */
 class Student extends \yii\db\ActiveRecord
@@ -38,31 +38,28 @@ class Student extends \yii\db\ActiveRecord
         return 'Student';
     }
 
-
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['fname', 'lname','regNo', 'programmeCode', 'year', 'semester'], 'required'],
-            [['userID', 'groupID'], 'integer'],
+            [['fname', 'lname', 'programmeCode','regNo','session','gender', 'year', 'semester'], 'required'],
+            [['userID'], 'integer'],
             [['session', 'gender', 'year', 'semester'], 'string'],
             [['fname', 'mname', 'lname'], 'string', 'max' => 25],
             [['regNo'], 'string', 'max' => 20],
             [['phoneNumber'], 'string', 'max' => 16],
             [['emailAddress'], 'string', 'max' => 64],
-            // [['profileImage'], 'string', 'max' => 255],
-            [['profileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => ['png','jpg','ico']],
+           // [['profileImage'], 'string', 'max' => 255],
+           [['profileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => ['png','jpg','ico']],
             [['programmeCode'], 'string', 'max' => 5],
             [['regNo'], 'unique'],
             [['emailAddress'], 'unique'],
             [['userID'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['userID' => 'UserID']],
-            [['groupID'], 'exist', 'skipOnError' => true, 'targetClass' => Group::class, 'targetAttribute' => ['groupID' => 'groupID']],
             [['programmeCode'], 'exist', 'skipOnError' => true, 'targetClass' => Programme::class, 'targetAttribute' => ['programmeCode' => 'programmeCode']],
         ];
     }
-
 
     /**
      * {@inheritdoc}
@@ -81,24 +78,12 @@ class Student extends \yii\db\ActiveRecord
             'emailAddress' => Yii::t('app', 'Email Address'),
             'gender' => Yii::t('app', 'Gender'),
             'profileImage' => Yii::t('app', 'Profile Image'),
-            'groupID' => Yii::t('app', 'Group Number'),
-            'programmeCode' => Yii::t('app', 'Programme Code'),
+            'programmeCode' => Yii::t('app', 'Programme'),
             'year' => Yii::t('app', 'Year'),
             'semester' => Yii::t('app', 'Semester'),
         ];
     }
 
-    
-
-    /**
-     * Gets query for [[Group]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getGroup()
-    {
-        return $this->hasOne(Group::class, ['groupID' => 'groupID'])->inverseOf('students');
-    }
 
     /**
      * Gets query for [[ProgrammeCode0]].
@@ -108,6 +93,16 @@ class Student extends \yii\db\ActiveRecord
     public function getProgrammeCode0()
     {
         return $this->hasOne(Programme::class, ['programmeCode' => 'programmeCode'])->inverseOf('students');
+    }
+
+    /**
+     * Gets query for [[Submissions]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubmissions()
+    {
+        return $this->hasMany(Submission::class, ['StudentID' => 'StudentID'])->inverseOf('student');
     }
 
     /**

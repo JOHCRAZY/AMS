@@ -21,19 +21,23 @@ $this->title = 'Admin Dashboard';
                 <!-- < ?= Html::icon('users-cog') ?> -->
                 <h3>User Management</h3>
                 <p>Manage user accounts, roles, and permissions. Create, edit, or delete user profiles as needed.</p>
-                <?= Html::a('Manage Users', ['/admin/user-management'], ['class' => 'btn btn-outline-primary']) ?>
+                <?= Html::a('Manage Users', ['/user/'], ['class' => 'btn btn-outline-primary']) ?>
             </div>
             <div class="col-md-4">
                 <!-- < ?= Html::icon('cogs') ?> -->
                 <h3>System Settings</h3>
-                <p>Configure system settings, including email notifications, security options, and other global settings.</p>
-                <?= Html::a('Configure Settings', ['/admin/system-settings'], ['class' => 'btn btn-outline-primary']) ?>
+                <p>Configure Display settings,  and other global settings.</p>
+                <!-- < ?= Html::button('Configure Settings', ['class' => 'btn btn-outline-primary']) ?> -->
+                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                <?= Html::button('Configure Settings', ['class' => 'btn btn-outline-primary']) ?>
+                <!-- <i class="fas fa-th-large"></i> -->
+            </a>
             </div>
             <div class="col-md-4">
                 <!-- < ?= Html::icon('database') ?> -->
                 <h3>Data Management</h3>
                 <p>Manage data, including backups, imports, exports, and database maintenance tasks.</p>
-                <?= Html::a('Manage Data', ['/admin/data-management'], ['class' => 'btn btn-outline-primary']) ?>
+                <?= Html::a('Manage Data', ['#'], ['class' => 'btn btn-outline-primary']) ?>
             </div>
         </section>
 
@@ -66,12 +70,12 @@ $this->title = 'Admin Dashboard';
             <div class="col-md-6">
                 <h2>Documentation</h2>
                 <p>Access documentation and guides for system administration tasks. Learn how to effectively manage the system.</p>
-                <?= Html::a('View Documentation', ['/admin/documentation'], ['class' => 'btn btn-secondary']) ?>
+                <?= Html::a('View Documentation', ['#'], ['class' => 'btn btn-secondary']) ?>
             </div>
             <div class="col-md-6">
                 <h2>Support</h2>
                 <p>Need assistance? Contact our support team for help with any technical issues or questions.</p>
-                <?= Html::a('Contact Support', ['/admin/support'], ['class' => 'btn btn-secondary']) ?>
+                <?= Html::a('Contact Support', ['#'], ['class' => 'btn btn-secondary']) ?>
             </div>
         </section>
 

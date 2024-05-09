@@ -18,13 +18,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'StudentID')->textInput() ?>
 
-    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'SubmissionContent')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'submissionDate')->textInput() ?>
 
     <?= $form->field($model, 'fileURL')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->dropDownList([ 'Marked' => 'Marked', 'Not Marked' => 'Not Marked', ], ['prompt' => '']) ?>
 
     <?= $form->field($model, 'score')->textInput() ?>
 

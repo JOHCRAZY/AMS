@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Instructors'), 'url'
 $this->params['breadcrumbs'][] = ['label' => $model->fname, 'url' => ['view', 'InstructorID' => $model->InstructorID]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
-<div class="instructor-update">
+<div class="container">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

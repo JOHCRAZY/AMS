@@ -12,25 +12,18 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Students'), 'url' =>
 $this->params['breadcrumbs'][] = $this->title;
 
 $courses = Course::find()->select(['courseCode','courseName'])->indexBy('courseCode')->column();
-$programmeCodes = \frontend\models\Programme::find()->select(['programmeCode'])->indexBy('programmeCode')->column();
+$programme = \frontend\models\Programme::find()->all();//->select(['programmeCode'])->indexBy('programmeCode')->column();
 
-// Assuming $courses is the result of your database query
-// $courseCodes = ArrayHelper::map($courses, 'id', function(Courses) {
-//     return [
-//         'name' => $model->course_name,
-//         'title' => $model->course_title,
-//     ];
-// });
 
 ?>
-<div class="student-profile">
+<div class="container">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
         'courseCodes' => $courses,
-        'programmeCodes' => $programmeCodes,
+        'programme' => $programme,
     ]) ?>
 
 </div>

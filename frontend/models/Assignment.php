@@ -12,7 +12,7 @@ use Yii;
  * @property string $courseCode
  * @property string $assignment
  * @property string $title
- * @property string|null $content
+ * @property string|null $AssignmentContent
  * @property string|null $description
  * @property string|null $fileURL
  * @property string|null $assignedDate
@@ -25,6 +25,7 @@ use Yii;
  */
 class Assignment extends \yii\db\ActiveRecord
 {
+    public $file;
     /**
      * {@inheritdoc}
      */
@@ -39,10 +40,11 @@ class Assignment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['courseCode', 'assignment', 'title', 'marks'], 'required'],
-            [['assignment', 'content', 'description', 'status'], 'string'],
+            [['courseCode', 'assignment', 'title', 'marks','description'], 'required'],
+            [['assignment', 'AssignmentContent', 'description', 'status'], 'string'],
             [['assignedDate', 'submissionDate'], 'safe'],
             [['marks'], 'integer'],
+            [['fileURL'], 'file', 'skipOnEmpty' => true,],
             [['courseCode'], 'string', 'max' => 12],
             [['title', 'fileURL'], 'string', 'max' => 255],
             [['courseCode'], 'exist', 'skipOnError' => true, 'targetClass' => Course::class, 'targetAttribute' => ['courseCode' => 'courseCode']],
@@ -57,15 +59,16 @@ class Assignment extends \yii\db\ActiveRecord
         return [
             'AssignmentID' => Yii::t('app', 'Assignment ID'),
             'courseCode' => Yii::t('app', 'Module Code'),
-            'assignment' => Yii::t('app', 'Assignment'),
-            'title' => Yii::t('app', 'Title'),
-            'content' => Yii::t('app', 'Content'),
-            'description' => Yii::t('app', 'Description'),
-            'fileURL' => Yii::t('app', 'Attachment'),
+            'assignment' => Yii::t('app', 'Assignment Type'),
+            'title' => Yii::t('app', 'Assignment Title'),
+            'AssignmentContent' => Yii::t('app', 'Edit Your Assignment'),
+            'description' => Yii::t('app', 'Assignment'),
+            'fileURL' => Yii::t('app', 'Attachment file'),
+            'file' => Yii::t('app','Attach file'),
             'assignedDate' => Yii::t('app', 'Assigned Date'),
             'submissionDate' => Yii::t('app', 'Deadline'),
             'marks' => Yii::t('app', 'Total Marks'),
-            'status' => Yii::t('app', 'Status'),
+            'status' => Yii::t('app', 'Assignment Status'),
         ];
     }
 
@@ -96,5 +99,18 @@ class Assignment extends \yii\db\ActiveRecord
     public function getSubmissions()
     {
         return $this->hasMany(Submission::class, ['AssignmentID' => 'AssignmentID'])->inverseOf('assignment');
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $uploadDir = 'attachments/';
+            $filePath = $uploadDir . $this->file->baseName . '.' . $this->file->extension;
+            if ($this->file->saveAs($filePath)) {
+                $this->fileURL = $filePath;
+                return true;
+            }
+        }
+        return false;
     }
 }

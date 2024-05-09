@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use Yii;
 use yii\helpers\Json;
 use frontend\models\Group;
+use frontend\controllers\{StudentList,StudentInfo};
 
 /**
  * StudentController implements the CRUD actions for Student model.
@@ -35,7 +36,7 @@ class StudentController extends Controller
                     'class' => \yii\filters\AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index', 'view', 'create', 'update', 'delete','profile'],
+                            'actions' => ['index','students', 'info' ,'view', 'create', 'update', 'delete','profile'],
                             'allow' => true,
                             'matchCallback' => function ($rule, $action) {
                                 // Custom logic to determine access
@@ -77,6 +78,22 @@ class StudentController extends Controller
         ]);
     }
 
+    // public function actionStudentInfo($StudentID){
+
+    //     return;
+
+    // }
+
+    
+    public function actionInfo($StudentID)
+    {        
+        StudentInfo::ShowStudentInfo($StudentID);
+
+        $this->layout = 'blank';
+        return $this->render('_info', [
+            'model' => $this->findModel($StudentID),
+        ]);
+    }
     /**
      * Creates a new Student model.
      * If creation is successful, the browser will be redirected to the 'view' page.

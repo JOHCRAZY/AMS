@@ -1,6 +1,7 @@
 <?php
 
 use frontend\models\Assignment;
+use frontend\models\Submission;
 //use yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -18,7 +19,7 @@ $isInstructor = frontend\models\User::findByUsername(Yii::$app->user->identity->
 ?>
 <div class="container">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?php $isInstructor ?  Html::a(Yii::t('app', 'Create Assignment'), ['create'], ['class' => 'btn btn-success']) : null?>
@@ -32,6 +33,12 @@ $isInstructor = frontend\models\User::findByUsername(Yii::$app->user->identity->
             ['class' => 'yii\grid\SerialColumn'],
 
             //'AssignmentID',
+            [
+                'attribute' => 'Course Name',
+                'value' => function ($model) {
+                    return frontend\models\Course::find()->where(['courseCode' => $model->courseCode])->one()->courseName; // Assuming group_name is the attribute you want to display
+                },
+            ],
             'courseCode',
             'assignment',
             'title',
@@ -41,7 +48,7 @@ $isInstructor = frontend\models\User::findByUsername(Yii::$app->user->identity->
             'assignedDate',
             'submissionDate',
             'marks',
-            'status',
+            $isInstructor ? 'status' : 'status',
             [
                 'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Assignment $model, $key, $index, $column) {
