@@ -34,6 +34,7 @@ class Group extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            ['GroupID', 'default', 'value' => time() + random_int(50,100)],
             [['GroupNO', 'StudentID'], 'integer'],
             [['groupName'], 'string', 'max' => 64],
             [['courseCode'], 'string', 'max' => 12],

@@ -7,6 +7,8 @@ use backend\models\Instructors;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use backend\models\Course;
+use Yii;
 
 /**
  * InstructorController implements the CRUD actions for Instructor model.
@@ -22,7 +24,7 @@ class InstructorController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -92,13 +94,37 @@ class InstructorController extends Controller
     public function actionUpdate($InstructorID)
     {
         $model = $this->findModel($InstructorID);
-
+        $Courses = Course::find()->all();
+        $model->Course = $model->Status == 'Verified' ? Course::find()->where(['courseInstructor' => $model->InstructorID])->one()->courseName : null;
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'InstructorID' => $model->InstructorID]);
+
+            if($model->Course != null){
+
+                $courseExisting = Course::find()->where(['courseInstructor' => $model->CourseInstructorID])->one();
+                if($courseExisting != null) {
+
+                    $courseExisting->courseInstructor = null;
+                    $courseExisting->save();
+                }
+                $courseUpdate = Course::findOne(['courseCode' => $model->Course]);
+                $courseUpdate->courseInstructor = $model->CourseInstructorID;
+
+                
+                if($courseUpdate->save()){
+
+                    return $this->render('view', ['model' => $model,'InstructorID' => $model->InstructorID]);
+                }else{
+                    return $this->refresh();
+
+                }
+            }
+            
+
         }
 
         return $this->render('update', [
             'model' => $model,
+            'Courses' => $Courses,
         ]);
     }
 

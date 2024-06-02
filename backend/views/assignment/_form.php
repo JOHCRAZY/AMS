@@ -18,11 +18,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+    <!-- < ?= $form->field($model, 'AssignmentContent')->textarea(['rows' => 6]) ?> -->
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'fileURL')->textInput(['maxlength' => true]) ?>
+    <!-- < ?= $form->field($model, 'fileURL')->textInput(['maxlength' => true]) ?> -->
 
     <?= $form->field($model, 'assignedDate')->textInput() ?>
 
@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'marks')->textInput() ?>
 
-    <?= $form->field($model, 'status')->dropDownList([ 'Pending' => 'Pending', 'Submitted' => 'Submitted', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'status')->dropDownList([ 'Pending' => 'Pending', 'Assigned' => 'Assigned', ], ['prompt' => '']) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

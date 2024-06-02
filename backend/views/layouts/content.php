@@ -24,7 +24,7 @@ use yii\bootstrap4\Breadcrumbs;
                     echo Breadcrumbs::widget([
                         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                         'options' => [
-                            'class' => 'breadcrumb float-sm-right'
+                            'class' => 'breadcrumb float-sm-right bg-dark p-2'
                         ]
                     ]);
                     ?>

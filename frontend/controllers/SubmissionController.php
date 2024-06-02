@@ -2,19 +2,22 @@
 
 namespace frontend\controllers;
 
+use common\models\WindowController;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use frontend\models\Submission;
 use yii\web\NotFoundHttpException;
 use frontend\models\SubmissionSearch;
 use frontend\models\User;
-use frontend\models\Student;
+use frontend\models\{Student,Group};
 use yii;
+
 /**
  * SubmissionController implements the CRUD actions for Submission model.
  */
 class SubmissionController extends Controller
 {
+    use WindowController;
     //public $layout = 'student';
     /**
      * @inheritDoc
@@ -54,6 +57,11 @@ class SubmissionController extends Controller
     protected function isStudent(){
         return User::findByUsername(Yii::$app->user->identity->username)->role == 'student';
 
+    }
+    protected static function getStudent()
+    {
+        $user = User::findByUsername(Yii::$app->user->identity->username);
+        return Student::find()->where(['UserID' => $user->UserID])->one();
     }
     /**
      * Lists all Submission models.
@@ -133,7 +141,7 @@ class SubmissionController extends Controller
 
         if($courseCode == null && !$this->isInstructor()){
             $ctrAct = 'submission/individual-marked';
-             $this->redirect(['/course/select','ctrAct' => $ctrAct]);
+            return $this->redirect(['/course/select','ctrAct' => $ctrAct]);
         }
        
         $searchModel = new SubmissionSearch();
@@ -158,7 +166,7 @@ class SubmissionController extends Controller
 
         if($courseCode == null && !$this->isInstructor()){
             $ctrAct = 'submission/individual-not-marked';
-             $this->redirect(['/course/select','ctrAct' => $ctrAct]);
+           return  $this->redirect(['/course/select','ctrAct' => $ctrAct]);
         }
         
         $searchModel = new SubmissionSearch();
@@ -181,7 +189,18 @@ class SubmissionController extends Controller
 
         if($courseCode == null && !$this->isInstructor()){
             $ctrAct = 'submission/group-marked';
-             $this->redirect(['/course/select','ctrAct' => $ctrAct]);
+            return $this->redirect(['/course/select','ctrAct' => $ctrAct]);
+        }
+        if(!$this->isInstructor()){
+            $group = Group::find()
+                ->where(['StudentID' => self::getStudent()->StudentID, 'courseCode' => $courseCode])->one();
+
+            if ($group == null) {
+
+                //throw new yii\web\NotFoundHttpException(Yii::t('app', '( Group Not Found ) You\'re Not Assigned to Any Group in This Course'.'<br>'.'Contact Your Lecture for Assistance'));
+                Yii::$app->session->setFlash('info', '( Group Not Found ) You\'re Not Assigned to Any Group in This Course<br>Contact Your Lecture for Assistance');
+                 return $this->goBack();
+            }
         }
         $searchModel = new SubmissionSearch();
         $dataProvider = $searchModel->searchGroupMarked(Yii::$app->request->queryParams,$courseCode);
@@ -196,8 +215,21 @@ class SubmissionController extends Controller
     public function actionGroupNotMarked($courseCode = null){
 
         if($courseCode == null && !$this->isInstructor()){
+
             $ctrAct = 'submission/group-not-marked';
-             $this->redirect(['/course/select','ctrAct' => $ctrAct]);
+            return $this->redirect(['/course/select','ctrAct' => $ctrAct]);
+        }
+
+        if(!$this->isInstructor()){
+            $group = Group::find()
+                ->where(['StudentID' => self::getStudent()->StudentID, 'courseCode' => $courseCode])->one();
+
+            if ($group == null) {
+
+                //throw new yii\web\NotFoundHttpException(Yii::t('app', '( Group Not Found ) You\'re Not Assigned to Any Group in This Course'.'<br>'.'Contact Your Lecture for Assistance'));
+                Yii::$app->session->setFlash('info', '( Group Not Found ) You\'re Not Assigned to Any Group in This Course<br>Contact Your Lecture for Assistance');
+                 return $this->goBack();
+            }
         }
         $searchModel = new SubmissionSearch();
         $dataProvider = $searchModel->searchGroupNotMarked(Yii::$app->request->queryParams,$courseCode);
@@ -205,7 +237,7 @@ class SubmissionController extends Controller
         return $this->render('/submission/@assignment',[
            'dataProvider'=>$dataProvider,
            'searchModel'=>$searchModel,
-           'title' =>  "Group Assignment"
+           'title' =>  "Group Assignments"
         ]);
     }
 
@@ -235,10 +267,13 @@ class SubmissionController extends Controller
         }
 
         if($Marked && $this->isInstructor() && $this->request->isPost){
+
             $model->load($this->request->post());
             $model->SubmissionStatus = 'Marked';
             $model->score = $model->PreScore;
+
             if($model->save()){
+
                 Yii::$app->session->setFlash('success', 'Assignment Marked.');
                 return $this->redirect(['view','SubmissionID' => $SubmissionID]);
 

@@ -45,6 +45,8 @@ $isInstructor = frontend\models\User::findByUsername(Yii::$app->user->identity->
         //'StudentID',
         [
             'attribute' => 'Student Name',
+            'label' => $model->assignment->assignment == 'Group Assignment' ? 'Submitted By' : 'Student Name',
+           
             'value' => function ($model) {
                 return $model->student->fname . '   ' .$model->student->lname;
             },
@@ -53,9 +55,7 @@ $isInstructor = frontend\models\User::findByUsername(Yii::$app->user->identity->
         [
             'attribute' => 'SubmissionContent',
             'format' => 'html',
-            // 'value' => function ($model) {
-            //     return $model->SubmissionContent;
-            // },
+            
         ],
         [
             'attribute' => 'submissionDate',
@@ -65,7 +65,6 @@ $isInstructor = frontend\models\User::findByUsername(Yii::$app->user->identity->
             'attribute' => 'fileURL',
             'label' => 'Attached File',
             'value' => function ($model) {
-                //return $model->student->fname . '   ' .$model->student->lname;
                 if (!empty($model->fileURL)){
                     return $model->fileURL;
                 }else{
@@ -82,7 +81,7 @@ $isInstructor = frontend\models\User::findByUsername(Yii::$app->user->identity->
 <div class="d-flex justify-content-center">
     <div class="text-center">
     <?php $form = ActiveForm::begin(['action' => ['mark', 'SubmissionID' => $model->SubmissionID], 'method' => 'post']) ?>
-            <?= Html::submitButton(Yii::t('app', 'mark Assignment'), ['class' => 'btn btn-lg btn-primary mt-4 mb-1 w-10']) ?>
+            <?= Html::submitButton(Yii::t('app', 'mark Assignment'), ['class' => 'btn btn-lg btn-outline-primary mt-4 mb-1 w-10']) ?>
         <?php ActiveForm::end(); ?>
     </div>
 </div>

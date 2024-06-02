@@ -7,19 +7,19 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /** @var yii\web\View $this */
-/** @var backend\models\students $searchModel */
+/** @var backend\models\Students $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('app', 'Students');
+$this->title = Yii::t('app', 'All Students');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="student-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
+<!-- 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Student'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+        < ?= Html::a(Yii::t('app', 'Create Student'), ['create'], ['class' => 'btn btn-success']) ?>
+    </p> -->
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -30,27 +30,27 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'StudentID',
+           // 'StudentID',
             'fname',
-            'mname',
+            //'mname',
             'lname',
-            'userID',
+            //'userID',
             //'session',
-            //'regNo',
+            'regNo',
             //'phoneNumber',
             //'emailAddress:email',
-            //'gender',
+            'gender',
             //'profileImage',
-            //'groupID',
-            //'courseCode',
             //'programmeCode',
-            //'year',
+            'year',
             //'semester',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Student $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'StudentID' => $model->StudentID]);
-                 }
+                 },
+                 'template' => '{view}{update}',
+
             ],
         ],
     ]); ?>

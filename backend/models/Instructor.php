@@ -12,15 +12,19 @@ use Yii;
  * @property string|null $mname
  * @property string $lname
  * @property int|null $UserID
- * @property string|null $mailAddress
+ * @property string|null $emailAddress
  * @property string|null $phoneNumber
  * @property string|null $profileImage
+ * @property string $Status 
  *
  * @property Course[] $courses
  * @property User $user
  */
 class Instructor extends \yii\db\ActiveRecord
 {
+    public $imageFile;
+    public $Course;
+    public $CourseInstructorID;
     /**
      * {@inheritdoc}
      */
@@ -29,19 +33,23 @@ class Instructor extends \yii\db\ActiveRecord
         return 'Instructor';
     }
 
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['fname', 'lname'], 'required'],
+            ['InstructorID', 'default', 'value' => time()],
+            [['fname', 'lname','Status','Course','CourseInstructorID'], 'required'],
             [['UserID'], 'integer'],
             [['fname', 'mname', 'lname'], 'string', 'max' => 25],
-            [['mailAddress'], 'string', 'max' => 64],
+            [['emailAddress'], 'string', 'max' => 64],
             [['phoneNumber'], 'string', 'max' => 16],
-            [['profileImage'], 'string', 'max' => 255],
+            // [['profileImage'], 'string', 'max' => 255],
+            [['profileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => ['png','jpg','ico']],
             [['UserID'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['UserID' => 'UserID']],
+
         ];
     }
 
@@ -52,13 +60,15 @@ class Instructor extends \yii\db\ActiveRecord
     {
         return [
             'InstructorID' => Yii::t('app', 'Instructor ID'),
-            'fname' => Yii::t('app', 'Fname'),
-            'mname' => Yii::t('app', 'Mname'),
-            'lname' => Yii::t('app', 'Lname'),
+            'fname' => Yii::t('app', 'First Name'),
+            'mname' => Yii::t('app', 'Middle Name'),
+            'lname' => Yii::t('app', 'Last Name'),
             'UserID' => Yii::t('app', 'User ID'),
-            'mailAddress' => Yii::t('app', 'Mail Address'),
+            'Course' => Yii::t('app','Instructor Course'),
+            'emailAddress' => Yii::t('app', 'Email Address'),
             'phoneNumber' => Yii::t('app', 'Phone Number'),
-            'profileImage' => Yii::t('app', 'Profile Image'),
+            'imageFile' => Yii::t('app', 'Profile Image'),
+            'CourseInstructorID' => Yii::t('app',''),
         ];
     }
 
@@ -69,7 +79,7 @@ class Instructor extends \yii\db\ActiveRecord
      */
     public function getCourses()
     {
-        return $this->hasMany(Course::class, ['InstructorID' => 'InstructorID'])->inverseOf('instructor');
+        return $this->hasMany(Course::class, ['courseInstructor' => 'InstructorID'])->inverseOf('courseInstructor0');
     }
 
     /**
@@ -81,4 +91,29 @@ class Instructor extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['UserID' => 'UserID'])->inverseOf('instructors');
     }
+
+
+    public function upload()
+    {
+
+    if ($this->validate()) {
+
+        if ($this->imageFile) {
+
+            if ($this->profileImage) {
+                unlink(Yii::getAlias('@webroot') . '/profiles/' . $this->profileImage);
+            }
+
+            $fileName = 'profile_' . time() . '.' . $this->imageFile->extension;
+
+            $this->imageFile->saveAs(Yii::getAlias('@webroot/profiles/') . $fileName);
+
+            $this->profileImage = $fileName;
+        }
+        return true;
+     }
+
+     return false;
+}
+
 }

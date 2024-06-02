@@ -2,35 +2,40 @@
 
 namespace frontend\models;
 
+use Yii;
 use yii\base\Model;
 
 class GroupForm extends Model
 {
-    public $groups = [];
+    public $StudentIDs = [];
+    public $groupNO;
+    public $groupName;
 
     public function rules()
     {
         return [
-            ['groups', 'required'],
-            ['groups', 'validateGroups'],
+            [['StudentIDs', 'groupNO','groupName'], 'required'],
+            [['groupNO'],'integer'],
+            ['groupName','string'],
+            ['StudentIDs', 'validateStudents'],
         ];
     }
 
-    public function validateGroups($attribute, $params)
+    public function attributeLabels()
     {
-        foreach ($this->$attribute as $group) {
-            if (!isset($group['GroupNO']) || empty($group['GroupNO'])) {
-                $this->addError($attribute, 'Group number is required for all groups.');
-                return;
-            }
-            if (!isset($group['groupName']) || empty($group['groupName'])) {
-                $this->addError($attribute, 'Group name is required for all groups.');
-                return;
-            }
-            if (!isset($group['StudentIDs']) || empty($group['StudentIDs'])) {
-                $this->addError($attribute, 'At least one student must be selected for each group.');
-                return;
-            }
+        return [
+            'StudentIDs' => Yii::t('app', 'Students With No Groups'),
+            'groupNO' => Yii::t('app', 'Group Number'),
+            'groupName' => Yii::t('app', 'Group Name'),
+        ];
+    }
+
+    public function validateStudents($attribute, $params)
+    {
+        if (!is_array($this->$attribute) || count($this->$attribute) < 2 ) {
+            $this->addError($attribute, 'A Group Must have  At Least Two Students.');
+            return;
         }
+
     }
 }

@@ -40,6 +40,7 @@ class Assignment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            ['AssignmentID', 'default', 'value' => time()],
             [['courseCode', 'assignment', 'title', 'marks','description'], 'required'],
             [['assignment', 'AssignmentContent', 'description', 'status'], 'string'],
             [['assignedDate', 'submissionDate'], 'safe'],
@@ -101,16 +102,18 @@ class Assignment extends \yii\db\ActiveRecord
         return $this->hasMany(Submission::class, ['AssignmentID' => 'AssignmentID'])->inverseOf('assignment');
     }
 
-    public function upload()
-    {
-        if ($this->validate()) {
-            $uploadDir = 'attachments/';
-            $filePath = $uploadDir . $this->file->baseName . '.' . $this->file->extension;
-            if ($this->file->saveAs($filePath)) {
-                $this->fileURL = $filePath;
-                return true;
-            }
-        }
-        return false;
-    }
+    // public function upload()
+    // {
+    //     if ($this->validate()) {
+    //         $uploadDir = 'attachments/';
+    //         $filePath = $uploadDir . $this->file->baseName . '.' . $this->file->extension;
+    //         if ($this->file->saveAs($filePath)) {
+    //             $this->fileURL = $filePath;
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
+
+   
 }

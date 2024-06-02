@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 use backend\models\Student;
 
 /**
- * StudentSearch represents the model behind the search form of `backend\models\Student`.
+ * Students represents the model behind the search form of `backend\models\Student`.
  */
 class Students extends Student
 {
@@ -17,8 +17,8 @@ class Students extends Student
     public function rules()
     {
         return [
-            [['StudentID', 'userID', 'groupID'], 'integer'],
-            [['fname', 'mname', 'lname', 'section', 'regNo', 'phoneNumber', 'emailAddress', 'gender', 'profileImage', 'programmeCode', 'year', 'semester'], 'safe'],
+            [['StudentID', 'userID'], 'integer'],
+            [['fname', 'mname', 'lname', 'session', 'regNo', 'phoneNumber', 'emailAddress', 'gender', 'profileImage', 'programmeCode', 'year', 'semester'], 'safe'],
         ];
     }
 
@@ -60,13 +60,12 @@ class Students extends Student
         $query->andFilterWhere([
             'StudentID' => $this->StudentID,
             'userID' => $this->userID,
-            'groupID' => $this->groupID,
         ]);
 
         $query->andFilterWhere(['like', 'fname', $this->fname])
             ->andFilterWhere(['like', 'mname', $this->mname])
             ->andFilterWhere(['like', 'lname', $this->lname])
-            ->andFilterWhere(['like', 'section', $this->section])
+            ->andFilterWhere(['like', 'session', $this->session])
             ->andFilterWhere(['like', 'regNo', $this->regNo])
             ->andFilterWhere(['like', 'phoneNumber', $this->phoneNumber])
             ->andFilterWhere(['like', 'emailAddress', $this->emailAddress])
@@ -79,4 +78,3 @@ class Students extends Student
         return $dataProvider;
     }
 }
-

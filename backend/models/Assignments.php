@@ -18,7 +18,7 @@ class Assignments extends Assignment
     {
         return [
             [['AssignmentID', 'marks'], 'integer'],
-            [['courseCode', 'assignment', 'title', 'content', 'description', 'fileURL', 'assignedDate', 'submissionDate', 'status'], 'safe'],
+            [['courseCode', 'assignment', 'title', 'AssignmentContent', 'description', 'fileURL', 'assignedDate', 'submissionDate', 'status'], 'safe'],
         ];
     }
 
@@ -67,7 +67,7 @@ class Assignments extends Assignment
         $query->andFilterWhere(['like', 'courseCode', $this->courseCode])
             ->andFilterWhere(['like', 'assignment', $this->assignment])
             ->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'content', $this->content])
+            ->andFilterWhere(['like', 'AssignmentContent', $this->AssignmentContent])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'fileURL', $this->fileURL])
             ->andFilterWhere(['like', 'status', $this->status]);

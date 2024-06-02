@@ -10,16 +10,16 @@ use yii\widgets\Pjax;
 /** @var backend\models\Users $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('app', 'Users');
+$this->title = Yii::t('app', 'All Users');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
+<!-- 
     <p>
-        <?= Html::a(Yii::t('app', 'Create User'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+        < ?= Html::a(Yii::t('app', 'Create User'), ['create'], ['class' => 'btn btn-success']) ?>
+    </p> -->
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -30,24 +30,25 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'UserID',
+            //'UserID',
             'username',
-            'password',
+            //'password',
             'role',
-            'password_hash',
+            //'password_hash',
             //'password_reset_token',
             //'verification_token',
-            //'email:email',
+            'email:email',
             //'email_verified:email',
             //'auth_key',
             //'status',
-            //'created_at',
+            'created_at:datetime',
             //'updated_at',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, User $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'UserID' => $model->UserID]);
-                 }
+                 },
+                 'template' => '{view}{update}',
             ],
         ],
     ]); ?>

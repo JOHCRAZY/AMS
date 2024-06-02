@@ -28,7 +28,7 @@
 }
 
 .kv-sidenav .active > a > span > .indicator {
-    color: #fff;
+    color: #302929;
 }
 
 .kv-sidenav .active > ul {
@@ -76,3 +76,22 @@
     border-bottom-left-radius: 0.25rem;
     border-bottom-right-radius: 0.25rem;
 }
+
+
+/* Custom dark theme for Kartik Sidenav */
+.kv-sidenav {
+    background-color: #333; /* Dark background color */
+    color: #fff; /* Light text color */
+}
+
+.kv-sidenav .panel-heading {
+    background-color: #222; /* Darker background color for panel heading */
+    color: #fff; /* Light text color for panel heading */
+}
+
+.kv-sidenav .panel-body {
+    background-color: #444; /* Darker background color for panel body */
+    color: #fff; /* Light text color for panel body */
+}
+
+/* Customize other styles as needed */

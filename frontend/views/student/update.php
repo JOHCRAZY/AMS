@@ -9,7 +9,7 @@ $this->title = Yii::t('app', '{name}', [
     'name' => $model->fname. " ". $model->lname,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Students'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->fname, 'url' => ['view', 'StudentID' => $model->StudentID]];
+$this->params['breadcrumbs'][] = ['label' => $model->fname . ' ' .$model->lname, 'url' => ['view', 'StudentID' => $model->StudentID]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
 
@@ -20,6 +20,10 @@ $programme = \frontend\models\Programme::find()->all()//->select(['programmeCode
 
     <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
+    <center class="mb-lg-2 p-xl-5">
+    <img src="<?= Yii::$app->request->baseUrl.'/profiles/'.$model->profileImage ?>" class="rounded-3 img-circle elevation-2 pull-right" style="width: 70px;">
+
+</center>
     <?= $this->render('_form', [
         'model' => $model,
         'courseCodes' => $courses,

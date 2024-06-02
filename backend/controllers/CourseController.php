@@ -3,10 +3,12 @@
 namespace backend\controllers;
 
 use backend\models\Course;
+use backend\models\Instructor;
 use backend\models\Courses;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
  * CourseController implements the CRUD actions for Course model.
@@ -22,7 +24,7 @@ class CourseController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -71,6 +73,9 @@ class CourseController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+                $instructor = Instructor::findOne(['InstructorID' => $model->courseInstructor]);
+                $instructor->Status = 'Verified';
+                $instructor->save(false);
                 return $this->redirect(['view', 'courseCode' => $model->courseCode]);
             }
         } else {
@@ -94,6 +99,10 @@ class CourseController extends Controller
         $model = $this->findModel($courseCode);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            $instructor = Instructor::findOne(['InstructorID' => $model->courseInstructor]);
+                $instructor->Status = 'Verified';
+
+                $instructor->save(false);
             return $this->redirect(['view', 'courseCode' => $model->courseCode]);
         }
 

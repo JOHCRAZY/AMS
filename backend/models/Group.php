@@ -7,17 +7,23 @@ use Yii;
 /**
  * This is the model class for table "Group".
  *
- * @property int $groupID
- * @property int $groupNo
- * @property string $courseCode
+ * @property int $GroupID
+ * @property int|null $GroupNO
  * @property string|null $groupName
+ * @property int|null $StudentID
+ * @property string|null $courseCode
  *
  * @property Course $courseCode0
- * @property Student[] $students
+ * @property Student $student
  * @property Submission[] $submissions
  */
 class Group extends \yii\db\ActiveRecord
 {
+    
+    public $StudentIDs = [];
+    //public $groupNO;
+    //public $groupName;
+
     /**
      * {@inheritdoc}
      */
@@ -32,10 +38,14 @@ class Group extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['groupNo', 'courseCode'], 'required'],
-            [['groupNo'], 'integer'],
-            [['courseCode'], 'string', 'max' => 12],
+            [['GroupNO', 'StudentID'], 'integer'],
             [['groupName'], 'string', 'max' => 64],
+            [['courseCode'], 'string', 'max' => 12],
+            [['StudentIDs', 'groupNO','groupName'], 'required'],
+            [['groupNO'],'integer'],
+            ['groupName','string'],
+            ['StudentIDs', 'validateStudents'],
+            [['StudentID'], 'exist', 'skipOnError' => true, 'targetClass' => Student::class, 'targetAttribute' => ['StudentID' => 'StudentID']],
             [['courseCode'], 'exist', 'skipOnError' => true, 'targetClass' => Course::class, 'targetAttribute' => ['courseCode' => 'courseCode']],
         ];
     }
@@ -46,13 +56,25 @@ class Group extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'groupID' => Yii::t('app', 'Group ID'),
-            'groupNo' => Yii::t('app', 'Group No'),
-            'courseCode' => Yii::t('app', 'Course Code'),
+            'GroupID' => Yii::t('app', 'Group ID'),
+            'GroupNO' => Yii::t('app', 'Group No'),
             'groupName' => Yii::t('app', 'Group Name'),
+            'StudentID' => Yii::t('app', 'Student ID'),
+            'courseCode' => Yii::t('app', 'Course Code'),
+            'StudentIDs' => Yii::t('app', 'Students With No Groups'),
+            'groupNO' => Yii::t('app', 'Group Number'),
         ];
     }
 
+
+    public function validateStudents($attribute)
+    {
+        if (!is_array($this->$attribute) || count($this->$attribute) < 2 ) {
+            $this->addError($attribute, 'A Group Must have  At Least Two Students.');
+            return;
+        }
+
+    }
     /**
      * Gets query for [[CourseCode0]].
      *
@@ -64,13 +86,13 @@ class Group extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Students]].
+     * Gets query for [[Student]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getStudents()
+    public function getStudent()
     {
-        return $this->hasMany(Student::class, ['groupID' => 'groupID'])->inverseOf('group');
+        return $this->hasOne(Student::class, ['StudentID' => 'StudentID'])->inverseOf('groups');
     }
 
     /**
@@ -80,6 +102,6 @@ class Group extends \yii\db\ActiveRecord
      */
     public function getSubmissions()
     {
-        return $this->hasMany(Submission::class, ['groupID' => 'groupID'])->inverseOf('group');
+        return $this->hasMany(Submission::class, ['groupID' => 'GroupID'])->inverseOf('group');
     }
 }

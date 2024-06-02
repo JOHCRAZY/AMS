@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="group-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
+<!-- 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Group'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+        < ?= Html::a(Yii::t('app', 'Create Group'), ['create'], ['class' => 'btn btn-success']) ?>
+    </p> -->
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -30,15 +30,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'groupID',
-            'groupNo',
-            'courseCode',
+            'GroupID',
+            'GroupNO',
             'groupName',
+            'StudentID',
+            'courseCode',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Group $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'groupID' => $model->groupID]);
-                 }
+                    return Url::toRoute([$action, 'GroupID' => $model->GroupID]);
+                 },
+                 'template' => '{view}{update}',
+
             ],
         ],
     ]); ?>

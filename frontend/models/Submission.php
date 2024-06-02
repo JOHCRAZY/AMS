@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $SubmissionID
  * @property int|null $AssignmentID
- * @property int|null $groupID
+ * @property int|null $groupNO
  * @property int|null $StudentID
  * @property string|null $SubmissionContent
  * @property string|null $submissionDate
@@ -19,7 +19,6 @@ use Yii;
  * @property string|null $SubmissionStatus
  *
  * @property Assignment $assignment
- * @property Group $group
  * @property Student $student
  */
 class Submission extends \yii\db\ActiveRecord
@@ -39,13 +38,14 @@ class Submission extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            ['SubmissionID', 'default', 'value' => time()],
             [['PreScore'], 'required'],
-            [['AssignmentID', 'groupID', 'StudentID', 'score'], 'integer'],
+            [['AssignmentID', 'groupNO', 'StudentID', 'score'], 'integer'],
             [['SubmissionContent', 'AssignmentStatus', 'SubmissionStatus'], 'string'],
             [['submissionDate'], 'safe'],
             [['fileURL'], 'string', 'max' => 255],
             [['AssignmentID'], 'exist', 'skipOnError' => true, 'targetClass' => Assignment::class, 'targetAttribute' => ['AssignmentID' => 'AssignmentID']],
-            [['groupID'], 'exist', 'skipOnError' => true, 'targetClass' => Group::class, 'targetAttribute' => ['groupID' => 'groupID']],
+            // [['groupID'], 'exist', 'skipOnError' => true, 'targetClass' => Group::class, 'targetAttribute' => ['groupID' => 'groupID']],
             [['StudentID'], 'exist', 'skipOnError' => true, 'targetClass' => Student::class, 'targetAttribute' => ['StudentID' => 'StudentID']],
         ];
     }
@@ -58,7 +58,7 @@ class Submission extends \yii\db\ActiveRecord
         return [
             'SubmissionID' => Yii::t('app', 'Submission ID'),
             'AssignmentID' => Yii::t('app', 'Assignment ID'),
-            'groupID' => Yii::t('app', 'Group ID'),
+            'groupNO' => Yii::t('app', 'Group Number'),
             'PreScore' => Yii::t('app','Student Score'),
             'StudentID' => Yii::t('app', 'Student ID'),
             'SubmissionContent' => Yii::t('app', 'Student Work'),
@@ -80,15 +80,7 @@ class Submission extends \yii\db\ActiveRecord
         return $this->hasOne(Assignment::class, ['AssignmentID' => 'AssignmentID'])->inverseOf('submissions');
     }
 
-    /**
-     * Gets query for [[Group]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getGroup()
-    {
-        return $this->hasOne(Group::class, ['groupID' => 'groupID'])->inverseOf('submissions');
-    }
+    
 
     /**
      * Gets query for [[Student]].

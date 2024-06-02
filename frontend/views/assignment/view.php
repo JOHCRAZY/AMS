@@ -19,22 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="container">
 
     <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
-<?php if($isInstructor): ?>
-    <p>
-        <?= Html::a(Yii::t('app', 'Update Assignment'), ['update', 'AssignmentID' => $model->AssignmentID], ['class' => 'btn btn-primary']) ?>
-        <!-- < ?= Html::a(Yii::t('app', 'Delete'), ['delete', 'AssignmentID' => $model->AssignmentID], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?> -->
-    </p>
-    <?php else: ?>
-        <p>
-        <?= Html::a(Yii::t('app', 'Take Assignment'), ['do', 'AssignmentID' => $model->AssignmentID,'StudentID' => frontend\models\Student::find()->where(['userID' => Yii::$app->user->id])->one()->StudentID], ['class' => 'btn btn-primary']) ?>
-        </p>
-<?php endif ?>
+
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -51,12 +36,24 @@ $this->params['breadcrumbs'][] = $this->title;
             //'content:ntext',
             'description:html',
             //'fileURL',
-            'assignedDate',
-            'submissionDate',
+            'assignedDate:datetime',
+            'submissionDate:datetime',
             'marks',
             'status',
            
         ],
     ]) ?>
+    
 
 </div>
+<div class="text-center">
+    <?php if($isInstructor): ?>
+    <p>
+        <?= Html::a(Yii::t('app', 'Update Assignment'), ['update', 'AssignmentID' => $model->AssignmentID], ['class' => 'btn btn-outline-primary']) ?>
+    </p>
+    <?php else: ?>
+        <p>
+        <?= Html::a(Yii::t('app', 'Take Assignment'), ['do', 'AssignmentID' => $model->AssignmentID,'StudentID' => frontend\models\Student::find()->where(['userID' => Yii::$app->user->id])->one()->StudentID], ['class' => 'btn btn-outline-primary']) ?>
+        </p>
+<?php endif ?>
+    </div>

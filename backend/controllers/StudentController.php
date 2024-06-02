@@ -2,9 +2,8 @@
 
 namespace backend\controllers;
 
-use yii;
 use backend\models\Student;
-use backend\models\students;
+use backend\models\Students;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -23,7 +22,7 @@ class StudentController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::class,
+                    'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -39,7 +38,7 @@ class StudentController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new students();
+        $searchModel = new Students();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [

@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Course;
+use frontend\models\{Course,User};
 use frontend\models\CourseSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -11,6 +11,7 @@ use yii\helpers\Html;
 use yii\bootstrap5\Modal;
 use frontend\models\Student;
 use frontend\controllers\Selector;
+use common\models\WindowController;
 
 include_once('Selector.php');
 /**
@@ -18,7 +19,7 @@ include_once('Selector.php');
  */
 class CourseController extends Controller
 {
-
+    use WindowController;
     /**
      * @inheritDoc
      */
@@ -37,6 +38,13 @@ class CourseController extends Controller
         );
     }
 
+    protected function isInstructor()
+    {
+        return User::findByUsername(\Yii::$app->user->identity->username)->role == 'instructor';
+
+    }
+
+
     /**
      * Lists all Course models.
      *
@@ -48,9 +56,7 @@ class CourseController extends Controller
         $searchModel = new CourseSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, $student->semester,$student->year,$student->programmeCode);
 
-        //$modalContent = 
-        //renderModal($dataProvider);
-       //echo $modalContent;
+     
         Selector::SelectCourse($dataProvider);
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -89,6 +95,11 @@ class CourseController extends Controller
      */
     public function actionCreate()
     {
+        if(!$this->isInstructor()){
+
+            throw new NotFoundHttpException(\Yii::t('app', 'You\'re Not allowed to perform this action.'));
+
+        }
         $model = new Course();
 
         if ($this->request->isPost) {
@@ -113,6 +124,11 @@ class CourseController extends Controller
      */
     public function actionUpdate($courseCode)
     {
+        if(!$this->isInstructor()){
+
+            throw new NotFoundHttpException(\Yii::t('app', 'You\'re Not allowed to perform this action.'));
+
+        }
         $model = $this->findModel($courseCode);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -133,9 +149,12 @@ class CourseController extends Controller
      */
     public function actionDelete($courseCode)
     {
-        $this->findModel($courseCode)->delete();
+        throw new NotFoundHttpException(\Yii::t('app', 'You\'re Not allowed to perform this action.'));
 
-        return $this->redirect(['index']);
+        
+        //$this->findModel($courseCode)->delete();
+
+        //return $this->redirect(['index']);
     }
 
     /**

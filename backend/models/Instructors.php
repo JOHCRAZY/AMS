@@ -18,7 +18,7 @@ class Instructors extends Instructor
     {
         return [
             [['InstructorID', 'UserID'], 'integer'],
-            [['fname', 'mname', 'lname', 'emailAddress', 'phoneNumber', 'profileImage'], 'safe'],
+            [['fname', 'mname', 'lname', 'emailAddress', 'phoneNumber', 'profileImage', 'Status'], 'safe'],
         ];
     }
 
@@ -67,7 +67,8 @@ class Instructors extends Instructor
             ->andFilterWhere(['like', 'lname', $this->lname])
             ->andFilterWhere(['like', 'emailAddress', $this->emailAddress])
             ->andFilterWhere(['like', 'phoneNumber', $this->phoneNumber])
-            ->andFilterWhere(['like', 'profileImage', $this->profileImage]);
+            ->andFilterWhere(['like', 'profileImage', $this->profileImage])
+            ->andFilterWhere(['like', 'Status', $this->Status]);
 
         return $dataProvider;
     }

@@ -66,6 +66,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            ['UserID', 'default', 'value' => time()],
              ['status', 'default', 'value' => self::STATUS_INACTIVE],
             // ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
             //     [['username', 'role', 'password_hash', 'email', 'auth_key', 'status', 'created_at', 'updated_at'], 'required'],
@@ -81,6 +82,7 @@ class User extends ActiveRecord implements IdentityInterface
            [['username'], 'unique'],
            [['password'],'string','min' => 8],
            [['email'], 'unique'],
+           ['email', 'email'],
         ];
     }
 

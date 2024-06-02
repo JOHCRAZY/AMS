@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use yii\base\Model;
+use yii;
 use yii\data\ActiveDataProvider;
 use frontend\models\Assignment;
 
@@ -33,17 +34,17 @@ class AssignmentSearch extends Assignment
     }
 
     protected static function getStudent(){
-        $user = User::findByUsername(\Yii::$app->user->identity->username);
+        $user = User::findByUsername(Yii::$app->user->identity->username);
       return \frontend\models\Student::find()->where(['UserID' => $user->UserID])->one();
     }
 
 
     protected function isInstructor(){
-        return User::findByUsername(\Yii::$app->user->identity->username)->role == 'instructor';
+        return User::findByUsername(Yii::$app->user->identity->username)->role == 'instructor';
 
     }
     protected function isStudent(){
-        return User::findByUsername(\Yii::$app->user->identity->username)->role == 'student';
+        return User::findByUsername(Yii::$app->user->identity->username)->role == 'student';
 
     }
 
@@ -66,6 +67,7 @@ class AssignmentSearch extends Assignment
 
 
        if(self::getStudent() != null){
+
         $query = Assignment::find()
         ->joinWith('submissions')
         ->where(['IN', 'courseCode', 
@@ -74,7 +76,7 @@ class AssignmentSearch extends Assignment
         ->where(['programmeCode' => self::getStudent()->programmeCode,'year' => self::getStudent()->year,'semester' => self::getStudent()->semester])]
        )
        ->andFilterWhere(['status' => 'Assigned'])
-      // ->andFilterWhere(['Submission.AssignmentStatus' => '']);
+      //->andFilterWhere([]);
     ;
        }
     }
@@ -128,7 +130,13 @@ class AssignmentSearch extends Assignment
 
             $query = Assignment::find()
             ->joinWith('submissions')
-            ->where(['Assignment.assignment'  => 'Individual Assignment','Assignment.courseCode' => $courseCode,'Submission.StudentID' => self::getStudent()->StudentID,'status' => 'Assigned','Submission.AssignmentStatus' => 'Pending']);
+            ->where([
+                'Assignment.assignment'  => 'Individual Assignment',
+                'Assignment.courseCode' => $courseCode,
+                'Submission.StudentID' => self::getStudent()->StudentID,
+                'status' => 'Assigned',
+                'Submission.AssignmentStatus' => 'Pending'
+            ]);
        // }
 
         // add conditions that should always apply here
@@ -164,14 +172,29 @@ class AssignmentSearch extends Assignment
         return $dataProvider;
     }
 
+
+
     public function searchGroupAssignmentPending($params,$courseCode)
     {
 
 
+        $groupNO = Group::find()
+        ->where([
+            'StudentID' => self::getStudent()->StudentID,
+            'courseCode' => $courseCode
+            ])
+        ->one()->GroupNO;
+
         $query = Assignment::find()
         ->joinWith('submissions')
-        ->where(['Assignment.assignment' => 'Group Assignment','Assignment.courseCode' => $courseCode,'Assignment.status' => 'Assigned']);
+        ->where([
+            'Assignment.assignment' => 'Group Assignment',
+            'Assignment.courseCode' => $courseCode,
+            'Assignment.status' => 'Assigned',
+            'Submission.groupNO' => $groupNO,
+            'Submission.AssignmentStatus' => 'Pending'
 
+        ]);
     
         // add conditions that should always apply here
 

@@ -1,46 +1,100 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-1">
-<nav class="d-flex flex-column mt-4 position-fixed">
-    <?php
-    use kartik\sidenav\SideNav;
-    $student = frontend\models\Student::findOne(['userID' => Yii::$app->user->identity->getId()]);
-echo SideNav::widget([
-    'options' => [
-        'class' => 'card m-3 p-0 text-center position-fixed',
-    ],
-    'type' => SideNav::TYPE_SUCCESS,
-    'encodeLabels' => false,
-    'items' => [
-         ['label' => $student !== null ? '<img src="'.Yii::$app->request->baseUrl."/".$student->profileImage.'" class="img-circle rounded-4 elevation-2 pull-right" style="width: 45px;">' : 'Navigate',
-            'items' => [
-                ['label' => 'All Assignments', 'url' => ['/assignment/'], 'active' =>  false],
-                ['label' => '<span class="pull-right float-right float-end badge"> </span>Pending Assignments',
-                 'items' => [
-                    ['label' => '<span class="pull-right float-right float-end badge"> </span> Individual Assignment', 'url' => ['/assignment/individual'], 'active' => false],
-                    ['label' => '<span class="pull-right float-right float-end badge"> </span> Group Assignment', 'url' => ['/assignment/group'], 'active' => false],
-                ]],
-                ['label' => '<span class="pull-right float-right float-end badge"> </span> Submitted Assignments',
-                    'items' => [
-                        ['label' => 'Individual Assignment', 'active' => false,
-                            'items' => [
-                                ['label' => 'Marked', 'url' => ['/submission/individual-marked'], 'active' => false],
-                                ['label' => 'Not Marked', 'url' => ['/submission/individual-not-marked'], 'active' => false],
-                            ]],
-                        ['label' => 'Group Assignment','active' => false,
-                            'items' => [
-                                ['label' => 'Marked', 'url' => ['/submission/group-marked'], 'active' => false],
-                                ['label' => 'Not Marked', 'url' => ['/submission/group-not-marked'], 'active' => false],
-                            ]],
-                    ]],
-                    ['label' => '<span class="pull-right float-right float-end badge">  </span>Group Members','url' => ['groups/members']],
-
-                ['label' => 'Profile', 'url' => ['/student/profile'], 'active' => false],
-                ['label' => 'Select Course', 'url' => ['/course/'],],
-            ]],
-
-    ],
-]);
+<?php
+use frontend\models\Student;
+use yii\helpers\Url;
 ?>
 
-</nav>
-</aside>
+<nav class="m-4 text-center position-fixed bg-dark p-1" aria-label="Sidebar navigation" style="max-height: 100%;">
+    
 
+<ul class="">
+  <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#sidenav" aria-expanded="false" aria-controls="pendingAssignments"> 
+        <?php
+        $student = Student::findOne(['userID' => Yii::$app->user->identity->getId()]);
+        if ($student !== null && $student->profileImage !== null) {
+            echo '<img src="' . Yii::$app->request->baseUrl . '/profiles/' . $student->profileImage . '" class="card rounded-4" style="width: 50px;">';
+        } else {
+            echo 'Navigate';
+        }
+        ?>
+
+  </a>
+  <div class="card collapse elevation-5" id="sidenav">
+    <ul class="nav flex-column  mt-3">
+        <li class="nav-item border-bottom border-primary">
+            <a class="nav-link" href="<?= Url::to(['/assignment/']) ?>">All Assignments</a>
+        </li>
+        <li class="nav-item border-bottom border-primary">
+            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#pendingAssignments" aria-expanded="false" aria-controls="pendingAssignments">Pending Assignments</a>
+            <div class="collapse" id="pendingAssignments">
+                <ul class="nav flex-column ms-3">
+                    <li class="nav-item border-bottom border-primary">
+                        <a class="nav-link" href="<?= Url::to(['/assignment/individual']) ?>">Individual Assignment</a>
+                    </li>
+                    <li class="nav-item border-bottom border-primary">
+                        <a class="nav-link" href="<?= Url::to(['/assignment/group']) ?>">Group Assignment</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item border-bottom border-primary">
+            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#submittedAssignments" aria-expanded="false" aria-controls="submittedAssignments">Submitted Assignments</a>
+            <div class="collapse" id="submittedAssignments">
+                <ul class="nav flex-column ms-3">
+                    <li class="nav-item border-bottom border-primary">
+                        <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#individualSubmitted" aria-expanded="false" aria-controls="individualSubmitted">Individual Assignment</a>
+                        <div class="collapse" id="individualSubmitted">
+                            <ul class="nav flex-column ms-3">
+                                <li class="nav-item border-bottom border-primary">
+                                    <a class="nav-link" href="<?= Url::to(['/submission/individual-marked']) ?>">Marked</a>
+                                </li>
+                                <li class="nav-item border-bottom border-primary">
+                                    <a class="nav-link" href="<?= Url::to(['/submission/individual-not-marked']) ?>">Not Marked</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item border-bottom border-primary">
+                        <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#groupSubmitted" aria-expanded="false" aria-controls="groupSubmitted">Group Assignment</a>
+                        <div class="collapse" id="groupSubmitted">
+                            <ul class="nav flex-column ms-3">
+                                <li class="nav-item border-bottom border-primary">
+                                    <a class="nav-link" href="<?= Url::to(['/submission/group-marked']) ?>">Marked</a>
+                                </li>
+                                <li class="nav-item border-bottom border-primary">
+                                    <a class="nav-link" href="<?= Url::to(['/submission/group-not-marked']) ?>">Not Marked</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item border-bottom border-primary">
+            <a class="nav-link" href="<?= Url::to(['groups/members']) ?>">Group Members</a>
+        </li>
+        <li class="nav-item border-bottom border-primary ">
+            <a class="nav-link" href="<?= Url::to(['/student/profile']) ?>">Profile</a>
+        </li>
+    </ul>
+    </div>
+    </ul>
+</nav>
+
+<style>
+  /* .nav-link {
+    color: #000;
+  } */
+  .nav{
+        align-items: start;
+        justify-content: start;
+    }
+  .nav-link:hover {
+    color: green;
+  }
+  .border-bottom {
+    border-bottom: 1px solid;
+  }
+  .nav-item .collapse {
+    background-color: black;
+  }
+</style>

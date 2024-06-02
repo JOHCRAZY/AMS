@@ -38,6 +38,7 @@ class Instructor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            ['InstructorID', 'default', 'value' => time()],
             [['fname', 'lname','Status'], 'required'],
             [['UserID'], 'integer'],
             [['fname', 'mname', 'lname'], 'string', 'max' => 25],
@@ -90,14 +91,25 @@ class Instructor extends \yii\db\ActiveRecord
 
     public function upload()
     {
-        if ($this->validate()) {
-            $uploadDir = 'uploads/';
-            $filePath = $uploadDir . $this->imageFile->baseName . '.' . $this->imageFile->extension;
-            if ($this->imageFile->saveAs($filePath)) {
-                $this->profileImage = $filePath;
-                return true;
+
+    if ($this->validate()) {
+
+        if ($this->imageFile) {
+
+            if ($this->profileImage) {
+                unlink(Yii::getAlias('@webroot') . '/profiles/' . $this->profileImage);
             }
+
+            $fileName = 'profile_' . time() . '.' . $this->imageFile->extension;
+
+            $this->imageFile->saveAs(Yii::getAlias('@webroot/profiles/') . $fileName);
+
+            $this->profileImage = $fileName;
         }
-        return false;
-    }
+        return true;
+     }
+
+     return false;
+}
+
 }

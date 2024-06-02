@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var frontend\models\Assignment $model */
+/** @var mixed $editedBy */
 
 $this->title = Yii::t('app', 'Edit | {name}', [
     'name' => $model->title,
@@ -15,14 +16,15 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'DO');
 
 <h1 class="text-center"><?= Html::encode($model->title) ?></h1>
 
-<div class="card bg-body-secondary text-bg-info text-capitalize text-center">
+<div class="card text-center">
 
 
     <?= $this->render('_do', [
         'model' => $model,
+        'editedBy' => $editedBy,
     ]) ?>
 
 </div>
 <div class="card mt-5 text-center">
-    <?= date('Y-m-d H:m')?>
+    <?= date('Y-m-d H:m',time())?>
 </div>

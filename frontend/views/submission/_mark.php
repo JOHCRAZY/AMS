@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\editors\Summernote;
-use function PHPUnit\Framework\stringEndsWith;
 
 // Usage with model and Active Record
 /** @var yii\web\View $this */
@@ -47,7 +46,8 @@ use function PHPUnit\Framework\stringEndsWith;
 
   <div class="row justify-content-between">
       <div class="col">
-          <?= Html::submitButton(Yii::t('app', 'Marked '), ['class' => 'btn btn-lg btn-primary mt-4 mb-1 w-50']) ?> <?php ActiveForm::end(); ?>
+          <?= Html::submitButton(Yii::t('app', 'Marked '), ['class' => 'btn btn-lg btn-outline-primary mt-4 mb-1 w-50']) ?>
+          <?php ActiveForm::end(); ?>
       </div>
   </div>
 </div>

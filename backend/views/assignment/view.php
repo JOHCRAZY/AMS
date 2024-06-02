@@ -13,34 +13,40 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="assignment-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'AssignmentID' => $model->AssignmentID], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'AssignmentID' => $model->AssignmentID], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+    
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'AssignmentID',
+            //'AssignmentID',
             'courseCode',
             'assignment',
             'title',
-            'content:ntext',
+            //'AssignmentContent:ntext',
             'description:ntext',
-            'fileURL',
-            'assignedDate',
-            'submissionDate',
+            //'fileURL',
+            'assignedDate:datetime',
+            'submissionDate:datetime',
             'marks',
             'status',
         ],
     ]) ?>
 
+</div>
+<div class="row d-flex">
+<div class="col">
+        <?= Html::a(Yii::t('app', 'Update'), ['update', 'AssignmentID' => $model->AssignmentID], ['class' => 'btn btn-outline-primary']) ?>
+        
+</div>
+<div class="col">
+<?= Html::a(Yii::t('app', 'Delete'), ['delete', 'AssignmentID' => $model->AssignmentID], [
+            'class' => 'btn btn-outline-danger',
+            'data' => [
+                'confirm' => Yii::t('app', 'Are you sure you want to delete this Assignment?'),
+                'method' => 'post',
+            ],
+        ]) ?>
+</div>
 </div>

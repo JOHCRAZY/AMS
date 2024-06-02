@@ -18,7 +18,6 @@ use Yii;
  * @property string|null $emailAddress
  * @property string|null $gender
  * @property string|null $profileImage
- * @property int|null $groupNo
  * @property string $programmeCode
  * @property string $year
  * @property string $semester
@@ -26,6 +25,7 @@ use Yii;
  * @property Programme $programmeCode0
  * @property Submission[] $submissions
  * @property User $user
+ * @property Group[] $groups 
  */
 class Student extends \yii\db\ActiveRecord
 {
@@ -44,12 +44,14 @@ class Student extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            ['StudentID', 'default', 'value' => time()],
             [['fname', 'lname', 'programmeCode','regNo','session','gender', 'year', 'semester'], 'required'],
             [['userID'], 'integer'],
             [['session', 'gender', 'year', 'semester'], 'string'],
             [['fname', 'mname', 'lname'], 'string', 'max' => 25],
             [['regNo'], 'string', 'max' => 20],
             [['phoneNumber'], 'string', 'max' => 16],
+            ['phoneNumber', 'match', 'pattern' => '/^[0-9]{10}$/i'],
             [['emailAddress'], 'string', 'max' => 64],
            // [['profileImage'], 'string', 'max' => 255],
            [['profileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => ['png','jpg','ico']],
@@ -81,6 +83,7 @@ class Student extends \yii\db\ActiveRecord
             'programmeCode' => Yii::t('app', 'Programme'),
             'year' => Yii::t('app', 'Year'),
             'semester' => Yii::t('app', 'Semester'),
+            'imageFile' => Yii::t('app','Profile image'),
         ];
     }
 
@@ -105,6 +108,18 @@ class Student extends \yii\db\ActiveRecord
         return $this->hasMany(Submission::class, ['StudentID' => 'StudentID'])->inverseOf('student');
     }
 
+
+    /** 
+    * Gets query for [[Groups]]. 
+    * 
+    * @return \yii\db\ActiveQuery 
+    */ 
+   public function getGroups() 
+   { 
+       return $this->hasMany(Group::class, ['StudentID' => 'StudentID'])->inverseOf('student'); 
+   } 
+
+
     /**
      * Gets query for [[User]].
      *
@@ -117,14 +132,34 @@ class Student extends \yii\db\ActiveRecord
 
     public function upload()
     {
+        // if ($this->validate()) {
+        //     $uploadDir = 'uploads/';
+        //     $filePath = $uploadDir . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+        //     if ($this->imageFile->saveAs($filePath)) {
+        //         $this->profileImage = $filePath;
+        //         return true;
+        //     }
+        // }
+        // return false;
+
         if ($this->validate()) {
-            $uploadDir = 'uploads/';
-            $filePath = $uploadDir . $this->imageFile->baseName . '.' . $this->imageFile->extension;
-            if ($this->imageFile->saveAs($filePath)) {
-                $this->profileImage = $filePath;
-                return true;
+
+            if ($this->imageFile) {
+    
+                if ($this->profileImage) {
+                    unlink(Yii::getAlias('@webroot') . '/profiles/' . $this->profileImage);
+                }
+    
+                $fileName = 'profile_' . time() . '.' . $this->imageFile->extension;
+    
+                $this->imageFile->saveAs(Yii::getAlias('@webroot/profiles/') . $fileName);
+    
+                $this->profileImage = $fileName;
             }
-        }
-        return false;
+
+            return true;
+         }
+
+         return false;
     }
 }

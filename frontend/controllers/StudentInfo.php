@@ -9,16 +9,16 @@ class StudentInfo {
     // Start building the modal content
     $modalContent = '<div class="modal fade text-center " id="StudentInfoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="StudentInfoModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg">
-                            <div class="modal-content bg-dark m-0 p-0" style="height: 700px">
-                                <div class="modal-header">
-                                    <h5 class="modal-title text-primary" id="StudentInfoModalLabel">Student Information</h5>
+                            <div class="modal-content bg-dark m-0 p-0 rounded-3" style="height: 700px">
+                                <div class="modal-header bg-dark">
+                                    <h5 class="modal-title text-primary bg-dark" id="StudentInfoModalLabel">Student Information</h5>
                                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
                                 </div>
-                                <div class="modal-body">
-                                    <iframe class="container rounded-5" src="' . \Yii::getAlias('@web') . '/student/info?StudentID=' . $StudentID . '" width="100%" height="550"></iframe>
+                                <div class="modal-body bg-dark">
+                                    <iframe class="container bg-dark rounded-5" src="' . \Yii::getAlias('@web') . '/student/info?StudentID=' . $StudentID . '" width="100%" height="590"></iframe>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" id="back" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-outline-primary bg-dark" id="back" data-bs-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>

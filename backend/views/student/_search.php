@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var backend\models\students $model */
+/** @var backend\models\Students $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?php // $form->field($model, 'StudentID') ?>
+    <?= $form->field($model, 'StudentID') ?>
 
     <?= $form->field($model, 'fname') ?>
 
@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'session') ?>
 
-    <?php echo $form->field($model, 'regNo') ?>
+    <?php // echo $form->field($model, 'regNo') ?>
 
     <?php // echo $form->field($model, 'phoneNumber') ?>
 
@@ -39,10 +39,6 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'gender') ?>
 
     <?php // echo $form->field($model, 'profileImage') ?>
-
-    <?php // echo $form->field($model, 'groupID') ?>
-
-    <?php // echo $form->field($model, 'courseCode') ?>
 
     <?php // echo $form->field($model, 'programmeCode') ?>
 

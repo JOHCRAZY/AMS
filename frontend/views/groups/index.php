@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'StudentID',
             'courseCode',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Group $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'GroupID' => $model->GroupID]);
                  }

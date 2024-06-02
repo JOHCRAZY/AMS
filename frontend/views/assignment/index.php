@@ -13,12 +13,14 @@ use yii\widgets\Pjax;
 $this->title = Yii::t('app', 'All Assignments');
 $this->params['breadcrumbs'][] = $this->title;
 $isInstructor = frontend\models\User::findByUsername(Yii::$app->user->identity->username)->role == 'instructor' ;
+$user = frontend\models\User::findByUsername(\Yii::$app->user->identity->username);
+$student = frontend\models\Student::find()->where(['UserID' => $user->UserID])->one();
 ?>
 <div class="container">
 
     <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 <div class="row justify-content-center">
-<?= $isInstructor ? Html::a(Yii::t('app', 'Create New Assignment'), ['create'], ['class' => 'btn btn-lg btn-primary mt-4 mb-1 w-50']) : null?>
+<?= $isInstructor ? Html::a(Yii::t('app', 'Create New Assignment'), ['create'], ['class' => 'btn btn-lg btn-outline-primary mt-4 mb-1 w-50']) : null?>
 
 </div>
     <?php Pjax::begin(); ?>
@@ -35,21 +37,22 @@ $isInstructor = frontend\models\User::findByUsername(Yii::$app->user->identity->
                     return frontend\models\Course::find()->where(['courseCode' => $model->courseCode])->one()->courseName; // Assuming group_name is the attribute you want to display
                 },
             ],
-            'courseCode',
+           // 'courseCode',
             'assignment',
             'title',
            // 'content:ntext',
            // 'description:html',
             //'fileURL',
-            'assignedDate',
-            'submissionDate',
+            'assignedDate:datetime',
+            'submissionDate:datetime',
             'marks',
             [
                 'attribute' => 'status',
-                'value' => function ($model) use($isInstructor){
+                'value' => function ($model) use($isInstructor,$student){
+
                     if(!$isInstructor && $model->status == 'Assigned'){
 
-                        $assignment = frontend\models\Submission::find()->where(['AssignmentID' => $model->AssignmentID])->one();
+                        $assignment = frontend\models\Submission::find()->where(['AssignmentID' => $model->AssignmentID,'StudentID' => $student->StudentID])->one();
 
                         if($assignment != null && $assignment->AssignmentStatus == 'Submitted'){
 
@@ -57,8 +60,7 @@ $isInstructor = frontend\models\User::findByUsername(Yii::$app->user->identity->
                         }
                        
                     else{
-                        return 'New';
-                        //return Url::toRoute([$action, 'AssignmentID' => $model->AssignmentID]);
+                        return 'Not Submitted';
                     }
                     }
                     return $model->status;
@@ -67,17 +69,22 @@ $isInstructor = frontend\models\User::findByUsername(Yii::$app->user->identity->
              ],
             [
                 'class' => ActionColumn::class,
-                'urlCreator' => function ($action, Assignment $model, $key, $index, $column) {
-                    if($model->status == 'Assigned'){
-                        $assignment = frontend\models\Submission::find()->where(['AssignmentID' => $model->AssignmentID])->one();
+                'urlCreator' => function ($action, Assignment $model, $key, $index, $column) use ($isInstructor,$student) {
+                    if(!$isInstructor && $model->status == 'Assigned'){
+
+                        $assignment = frontend\models\Submission::find()->where(['AssignmentID' => $model->AssignmentID,'StudentID' => $student->StudentID])->one();
                         if($assignment != null && $assignment->AssignmentStatus == 'Submitted'){
 
                             return null;
+                            //return Url::toRoute([$action, 'AssignmentID' => $model->AssignmentID]);
                         }
                        
                     else{
                         return Url::toRoute([$action, 'AssignmentID' => $model->AssignmentID]);
                     }
+                    }else{
+                        return Url::toRoute([$action, 'AssignmentID' => $model->AssignmentID]);
+
                     }
                  },
                  'template' => $isInstructor ? '{view} {update}' : '{view}',

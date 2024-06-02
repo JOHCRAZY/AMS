@@ -9,7 +9,7 @@ $this->title = 'Admin Dashboard';
 
 <div class="admin-dashboard">
 
-    <header class="jumbotron text-center">
+    <header class=" text-center">
         <h1><?= Html::encode($this->title) ?></h1>
         <p class="lead">Welcome to the Admin Dashboard. Manage your system efficiently.</p>
     </header>

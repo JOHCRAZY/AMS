@@ -6,42 +6,31 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var backend\models\Student $model */
 
-$this->title = $model->StudentID;
+$this->title = $model->fname. ' '.$model->lname;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Students'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="student-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'StudentID' => $model->StudentID], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'StudentID' => $model->StudentID], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+    
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'StudentID',
+            //'StudentID',
             'fname',
             'mname',
             'lname',
-            'userID',
+            //'userID',
             'session',
             'regNo',
             'phoneNumber',
             'emailAddress:email',
             'gender',
-            'profileImage',
-            'groupID',
-            'courseCode',
+            //'profileImage',
             'programmeCode',
             'year',
             'semester',
@@ -49,3 +38,19 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+<div class="row d-flex">
+<div class="col m-5">
+<?= Html::a(Yii::t('app', 'Update'), ['update', 'StudentID' => $model->StudentID], ['class' => 'btn btn-outline-primary']) ?>
+
+</div>        
+<div class="col m-5">
+<?= Html::a(Yii::t('app', 'Delete'), ['delete', 'StudentID' => $model->StudentID], [
+            'class' => 'btn btn-outline-danger',
+            'data' => [
+                'confirm' => Yii::t('app', 'Are you sure you want to delete this Student?'),
+                'method' => 'post',
+            ],
+        ]) ?>
+</div>
+    
+</div>     

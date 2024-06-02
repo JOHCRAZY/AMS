@@ -1,5 +1,5 @@
 <?php 
-
+$this->title = 'Previous Attachment';
 ?>
 <main class="container w-100">
     <p class="text-center">Preview</p>

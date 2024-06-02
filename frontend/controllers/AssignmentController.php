@@ -2,25 +2,25 @@
 
 namespace frontend\controllers;
 
-use DateTime;
 use frontend\models\Assignment;
 use frontend\models\AssignmentSearch;
+use frontend\models\Course;
+use frontend\models\Group;
+use frontend\models\Instructor;
+use frontend\models\Student;
 use frontend\models\Submission;
 use frontend\models\User;
-use frontend\models\Student;
 use yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use frontend\models\Instructor;
-use frontend\models\Course;
-
-include_once 'Selector.php';
+use common\models\WindowController;
 /**
  * AssignmentController implements the CRUD actions for Assignment model.
  */
 class AssignmentController extends Controller
 {
+    use WindowController;
     //public $layout = "student";
     /**
      * @inheritDoc
@@ -100,14 +100,21 @@ class AssignmentController extends Controller
         return file_get_contents(Yii::getAlias('@webroot') . '/attachments/' . $filePath);
     }
 
-
-    protected function isInstructor(){
+    protected function isInstructor()
+    {
         return User::findByUsername(Yii::$app->user->identity->username)->role == 'instructor';
 
     }
-    protected function isStudent(){
+    protected function isStudent()
+    {
         return User::findByUsername(Yii::$app->user->identity->username)->role == 'student';
 
+    }
+
+    protected static function getStudent()
+    {
+        $user = User::findByUsername(Yii::$app->user->identity->username);
+        return Student::find()->where(['UserID' => $user->UserID])->one();
     }
     /**
      * Lists all Assignment models.
@@ -129,7 +136,7 @@ class AssignmentController extends Controller
         // }
         $courseCode = Course::find()->where(['courseInstructor' => Instructor::find()->where(['UserID' => Yii::$app->user->getId()])->one()])->one()->courseCode;
         $searchModel = new AssignmentSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams,$courseCode);
+        $dataProvider = $searchModel->search($this->request->queryParams, $courseCode);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -152,34 +159,43 @@ class AssignmentController extends Controller
 
     public function actionIndividual($courseCode = null)
     {
-        if($courseCode == null && !$this->isInstructor()){
+        if ($courseCode == null && !$this->isInstructor()) {
             $ctrAct = 'assignment/individual';
-             $this->redirect(['/course/select','ctrAct' => $ctrAct]);
+            return $this->redirect(['/course/select', 'ctrAct' => $ctrAct]);
         }
         $searchModel = new AssignmentSearch();
-        $dataProvider = $searchModel->searchIndividualAssignmentPending(Yii::$app->request->queryParams,$courseCode);
-        
+        $dataProvider = $searchModel->searchIndividualAssignmentPending(Yii::$app->request->queryParams, $courseCode);
+
         return $this->render('/assignment/@assignment', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
-            'title' => "Individual Assignments",
+            'title' => "Pending Individual Assignments",
         ]);
     }
 
     public function actionGroup($courseCode = null)
     {
-        if($courseCode == null && !$this->isInstructor()){
+        if ($courseCode == null && !$this->isInstructor()) {
             $ctrAct = 'assignment/group';
-             $this->redirect(['/course/select','ctrAct' => $ctrAct]);
+            return $this->redirect(['/course/select', 'ctrAct' => $ctrAct]);
         }
 
+        $group = Group::find()
+                ->where(['StudentID' => self::getStudent()->StudentID, 'courseCode' => $courseCode])->one();
+
+            if ($group == null) {
+
+                //throw new yii\web\NotFoundHttpException(Yii::t('app', '( Group Not Found ) You\'re Not Assigned to Any Group in This Course'.'<br>'.'Contact Your Lecture for Assistance'));
+                Yii::$app->session->setFlash('info', '( Group Not Found ) You\'re Not Assigned to Any Group in This Course<br>Contact Your Lecture for Assistance');
+                 return $this->goBack();
+            }
         $searchModel = new AssignmentSearch();
-        $dataProvider = $searchModel->searchGroupAssignmentPending(Yii::$app->request->queryParams,$courseCode);
+        $dataProvider = $searchModel->searchGroupAssignmentPending(Yii::$app->request->queryParams, $courseCode);
 
         return $this->render('/assignment/@assignment', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
-            'title' => "Group Assignments",
+            'title' => "Pending Group Assignments",
         ]);
     }
     /**
@@ -189,21 +205,39 @@ class AssignmentController extends Controller
      */
     public function actionCreate()
     {
-        $isInstructor = User::findByUsername(Yii::$app->user->identity->username)->role == 'instructor' ;
-        if( !$isInstructor ){
-            return  $this->redirect(['site/error']);
+        if (!$this->isInstructor()) {
+            return $this->redirect(['site/error']);
         }
         $model = new Assignment();
-        $model->courseCode = Course::find()->where(['courseInstructor' => Instructor::find()->where(['UserID' => Yii::$app->user->getId()])->one()])->one()->courseCode;//Instructor::find()->where(['UserID' => Yii::$app->user->getId()])->one()->CourseCode;
+        $code = Course::find()->where(['courseInstructor' => Instructor::find()->where(['UserID' => Yii::$app->user->getId()])->one()])->one()->courseCode; //Instructor::find()->where(['UserID' => Yii::$app->user->getId()])->one()->CourseCode;
+        $model->courseCode = $code;
+
         if ($this->request->isPost) {
             $model->load($this->request->post());
+
+            if ($model->assignment == 'Group Assignment') {
+
+                $Groups = Group::find()
+                    ->joinWith('courseCode0')
+                    ->where(['Course.courseCode' => $code])
+                    ->groupBy(['groupName', 'GroupNO'])
+                    ->all();
+
+                if (!$Groups) {
+
+                    Yii::$app->session->setFlash('error', 'Failed to create Group Assignment<br>No any Groups Created.');
+                    return $this->refresh();
+                }
+
+            }
+
             $model->status = 'Pending';
-            $model->assignedDate = date('d-m-y h:i',time());
             if ($model->save()) {
                 Yii::$app->session->setFlash('success', 'Successfully Created Assignment.');
                 return $this->redirect(['view', 'AssignmentID' => $model->AssignmentID]);
             }
         } else {
+
             $model->loadDefaultValues();
         }
 
@@ -223,42 +257,40 @@ class AssignmentController extends Controller
     {
 
         $model = $this->findModel($AssignmentID);
-        $model->assignedDate = date('d-m-y h:i',time());
 
-        if($model->status == 'Assigned'){
+        if ($model->status == 'Assigned') {
+
             Yii::$app->session->setFlash('error', 'Assigned Assignments cant be Updated');
             return $this->redirect(['view', 'AssignmentID' => $model->AssignmentID]);
-                }
+        }
+
         if ($this->request->isPost) {
 
             $model->load($this->request->post());
-            $model->file = \yii\web\UploadedFile::getInstance($model, 'file');
 
-            if ($model->file) {
-                $model->upload();
+            $code = Course::find()->where(['courseInstructor' => Instructor::find()->where(['UserID' => Yii::$app->user->getId()])->one()])->one()->courseCode; //Instructor::find()->where(['UserID' => Yii::$app->user->getId()])->one()->CourseCode;
+
+            if (($StudentID == null) && ($model->assignment == 'Group Assignment')) {
+
+                $Groups = Group::find()
+                    ->joinWith('courseCode0')
+                    ->where(['Course.courseCode' => $code])
+                    ->groupBy(['groupName', 'GroupNO'])
+                    ->all();
+
+                if (!$Groups) {
+
+                    Yii::$app->session->setFlash('error', 'Failed to create Group Assignment<br>No any Groups Created.');
+                    return $this->refresh();
+                }
+
             }
 
             if ($model->save()) {
-                if ($StudentID != null) {
-                    
-                    $SubmissionExist = Submission::find()->where(['AssignmentID' => $AssignmentID, 'StudentID' => $StudentID])->one();
-                    if ($SubmissionExist) {
 
+                Yii::$app->session->setFlash('Success', 'Assignment Updated Successfully');
+                return $this->redirect(['view', 'AssignmentID' => $model->AssignmentID]);
 
-                    } else {
-                        $SubmissionModel = new Submission();
-
-                        $SubmissionModel->AssignmentID = $model->AssignmentID;
-                        $SubmissionModel->SubmissionStatus = 'Not Marked';
-                        $SubmissionModel->SubmissionContent = $model->AssignmentContent;
-                        $SubmissionModel->fileURL = $model->fileURL;
-                        $SubmissionModel->StudentID = $StudentID;
-                    }
-                }else{
-                    Yii::$app->session->setFlash('Success', 'Assignment Updated Successfully');
-                    return $this->redirect(['view', 'AssignmentID' => $model->AssignmentID]);
-                }
-               
             }
         }
 
@@ -266,8 +298,6 @@ class AssignmentController extends Controller
             'model' => $model,
         ]);
     }
-
-
 
     public function actionSubmit($AssignmentID, $StudentID = null)
     {
@@ -280,10 +310,10 @@ class AssignmentController extends Controller
                 $SubmissionModel = Submission::find()->where(['AssignmentID' => $AssignmentID, 'StudentID' => $StudentID])->one();
                 if (!$SubmissionModel) {
 
-                    $SubmissionModel = new Submission(); 
+                    $SubmissionModel = new Submission();
                 }
-                    if($AssignmentModel->save()){
-                    
+                if ($AssignmentModel->save()) {
+
                     $SubmissionModel->AssignmentID = $AssignmentModel->AssignmentID;
                     $SubmissionModel->AssignmentStatus = 'Submitted';
                     $SubmissionModel->SubmissionStatus = 'Not Marked';
@@ -291,32 +321,30 @@ class AssignmentController extends Controller
                     $SubmissionModel->fileURL = $AssignmentModel->fileURL;
                     $SubmissionModel->StudentID = $StudentID;
 
-                    if($SubmissionModel->save()){
-                        Yii::$app->session->setFlash('Success', 'Assignment Submitted Successfully');
-                        //return $this->goBack();
+                    if ($SubmissionModel->save()) {
 
+                        Yii::$app->session->setFlash('Success', 'Assignment Submitted Successfully');
                         $AssignmentModel->AssignmentContent = null;
                         $AssignmentModel->fileURL = null;
 
-                        if($AssignmentModel->save()){
+                        if ($AssignmentModel->save()) {
                             return $this->goBack();
                         }
                     }
 
-                    }
+                }
 
-               
+            } else {
 
-            }else{
-            $AssignmentModel->status = 'Assigned';
-            if($AssignmentModel->save()){
-                return $this->render('view', [
-                    'model' => $AssignmentModel,
-                ]);
+                $AssignmentModel->status = 'Assigned';
+                if ($AssignmentModel->save()) {
+                    Yii::$app->session->setFlash('Success', 'Assignment Submitted Successfully');
+                    return $this->render('view', [
+                        'model' => $AssignmentModel,
+                    ]);
+                }
             }
-            }
 
-            
         }
 
         return $this->render('View', [
@@ -324,94 +352,6 @@ class AssignmentController extends Controller
         ]);
 
     }
-
-    public function actionDo($AssignmentID,$StudentID = null,$Submit = false)
-    {
-        $model = $this->findModel($AssignmentID);
-       
-        $SubmissionModel = Submission::find()->where(['AssignmentID' => $AssignmentID,'StudentID' => $StudentID])->one();
-        if ($StudentID != null && $SubmissionModel) {
-            
-
-            if($SubmissionModel->AssignmentStatus == 'Submitted' ){
-
-                Yii::$app->session->setFlash('danger', 'Submitted Assignment Cant\'t be Edited.');
-                return $this->redirect(['view', 'AssignmentID' => $model->AssignmentID]);
-            }
-            //throw new NotFoundHttpException('The requested page does not exist.');
-            $model->AssignmentContent = $SubmissionModel->SubmissionContent;
-            $model->fileURL = $SubmissionModel->fileURL;
-        }
-
-        if (Yii::$app->request->isPost) {
-            $model->load(Yii::$app->request->post());
-
-            // Get the uploaded file instance
-            $model->file = \yii\web\UploadedFile::getInstance($model, 'file');
-
-            // Validate and save the model
-            if ($model->validate()) {
-                if ($model->file) {
-                    // Delete the existing file, if any
-                    if ($model->fileURL) {
-                        unlink(Yii::getAlias('@webroot') . '/attachments/' . $model->fileURL);
-                    }
-
-                    // Generate a unique filename
-                    $fileName = 'prefix_' . time() . '.' . $model->file->extension;
-
-                    // Move the uploaded file to a directory
-                    $model->file->saveAs(Yii::getAlias('@webroot/attachments/') . $fileName);
-
-                    // Save the filename to the model attribute
-                    $model->fileURL = $fileName;
-                }
-
-                if ($model->save()) {
-                    
-                    if($StudentID != null){
-                        if(!$SubmissionModel){
-                         $SubmissionModel = new Submission();
-
-                        }
-                        $SubmissionModel->AssignmentID = $model->AssignmentID;
-                        $SubmissionModel->PreScore = 0;
-                        $SubmissionModel->fileURL = $model->fileURL;
-                        $SubmissionModel->StudentID = $StudentID;
-                        $SubmissionModel->submissionDate = date('Y-m-d H:m');
-                        $SubmissionModel->AssignmentStatus = $Submit ? 'Submitted': 'Pending';
-                        $SubmissionModel->SubmissionContent = $model->AssignmentContent;
-
-                        $SubmissionModel->SubmissionStatus = 'Not Marked';
-                    if($SubmissionModel->save()){
-                        //$this->findModel($AssignmentID)->delete();
-                        $model->AssignmentContent = null;
-                        $model->fileURL = null;
-
-                        if($model->save()){
-                             // Model saved successfully
-                            Yii::$app->session->setFlash('success', $Submit ? 'Assignment Submitted Successfully':'Successfully Saved Assignment.');
-                            return $this->redirect(['view', 'AssignmentID' => $model->AssignmentID]);
-                        }
-                       
-                    
-                    }else{
-// Model saved successfully
-                    Yii::$app->session->setFlash('error', 'Failed to Save Assignment.');
-                    return $this->refresh('#');
-                    }
-                    }
-                    
-                }
-            }
-        }
-
-
-        return $this->render('do', [
-            'model' => $model,
-        ]);
-    }
-
     /**
      * Deletes an existing Assignment model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -441,4 +381,149 @@ class AssignmentController extends Controller
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
+
+    public function actionDo($AssignmentID, $StudentID = null, $Submit = false)
+    {
+        $model = $this->findModel($AssignmentID);
+
+        if ($model->assignment == 'Group Assignment') {
+            // $groupNO = Group::find()
+            //     ->where(['StudentID' => $StudentID, 'courseCode' => $model->courseCode])
+            //     ->one()->GroupNO;
+
+            $group = Group::find()
+                ->where(['StudentID' => $StudentID, 'courseCode' => $model->courseCode])->one();
+
+            if ($group == null) {
+
+                throw new NotFoundHttpException(Yii::t('app','(Group Assignment)  You\'re Not Assigned to Any Group in This Course.'));
+
+            }
+            $groupNO = $group->GroupNO;
+                $courseName = Course::find()
+            ->where(['courseCode' => $model->courseCode])->one()->courseName;
+
+        $groupName = Group::find()
+            ->where(['StudentID' => self::getStudent()->StudentID,'courseCode' => $model->courseCode])->one()->groupName;    
+
+        
+            
+        $studentIDs = Group::find()
+            ->select('StudentID')
+            ->where(['GroupNO' => $groupNO,'courseCode' => $model->courseCode])->all();
+
+        $students = Student::find()
+            ->where(['IN','StudentID',$studentIDs])->all();
+
+        GroupMembers::ShowGroupMembers($students,$courseName,$groupName,$groupNO);
+            $SubmissionModel = Submission::find()
+                ->where(['AssignmentID' => $AssignmentID, 'groupNO' => $groupNO])
+                ->andWhere(['IN', 'StudentID',
+                    Group::find()
+                        ->select('StudentID')
+                        ->where(['courseCode' => $model->courseCode]),
+                ])->one();
+
+            if ($SubmissionModel != null) {
+
+                $editorID = $SubmissionModel->StudentID;
+                $student = Student::find()->where(['StudentID' => $editorID])->one();
+                $lastEditedBy = $student->fname . '   ' . $student->lname;
+                if ($StudentID == $editorID) {
+                    $lastEditedBy = 'You';
+                }
+
+            } else {
+                $lastEditedBy = null;
+            }
+
+        } else {
+
+            $SubmissionModel = Submission::find()->where(['AssignmentID' => $AssignmentID, 'StudentID' => $StudentID])->one();
+
+        }
+
+        if ($StudentID != null && $SubmissionModel) {
+
+            if ($SubmissionModel->AssignmentStatus == 'Submitted') {
+
+                Yii::$app->session->setFlash('danger', 'Submitted Assignment Cant\'t be Edited.');
+                return $this->redirect(['view', 'AssignmentID' => $model->AssignmentID]);
+            }
+
+            $model->AssignmentContent = $SubmissionModel->SubmissionContent;
+            $model->fileURL = $SubmissionModel->fileURL;
+        }
+
+        if (Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
+
+            $model->file = \yii\web\UploadedFile::getInstance($model, 'file');
+
+            if ($model->validate()) {
+                if ($model->file) {
+
+                    if ($model->fileURL) {
+                        unlink(Yii::getAlias('@webroot') . '/attachments/' . $model->fileURL);
+                    }
+
+                    $fileName = 'attachment_' . time() . '.' . $model->file->extension;
+
+                    $model->file->saveAs(Yii::getAlias('@webroot/attachments/') . $fileName);
+
+                    $model->fileURL = $fileName;
+                }
+
+                if ($model->save()) {
+
+                    if ($StudentID != null) {
+                        if (!$SubmissionModel) {
+                            $SubmissionModel = new Submission();
+
+                        }
+
+                        if ($model->assignment == 'Group Assignment') {
+
+                            $SubmissionModel->groupNO = $groupNO;
+
+                        }
+
+                        $SubmissionModel->AssignmentID = $model->AssignmentID;
+                        $SubmissionModel->PreScore = 0;
+                        $SubmissionModel->fileURL = $model->fileURL;
+                        $SubmissionModel->StudentID = $StudentID;
+                        $SubmissionModel->submissionDate = date('Y-m-d H:m');
+                        $SubmissionModel->AssignmentStatus = $Submit ? 'Submitted' : 'Pending';
+                        $SubmissionModel->SubmissionContent = $model->AssignmentContent;
+
+                        $SubmissionModel->SubmissionStatus = 'Not Marked';
+
+                        if ($SubmissionModel->save()) {
+
+                            $model->AssignmentContent = null;
+                            $model->fileURL = null;
+
+                            if ($model->save()) {
+
+                                Yii::$app->session->setFlash('success', $Submit ? 'Assignment Submitted Successfully' : 'Successfully Saved Assignment.');
+                                return $this->redirect(['view', 'AssignmentID' => $model->AssignmentID]);
+                            }
+
+                        } else {
+
+                            Yii::$app->session->setFlash('error', 'Failed to Save Assignment.');
+                            return $this->refresh('#');
+                        }
+                    }
+
+                }
+            }
+        }
+
+        return $this->render('do', [
+            'model' => $model,
+            'editedBy' => empty($lastEditedBy) ? '' : $lastEditedBy,
+        ]);
+    }
+
 }

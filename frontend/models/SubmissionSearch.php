@@ -18,7 +18,7 @@ class SubmissionSearch extends Submission
     public function rules()
     {
         return [
-            [['SubmissionID', 'AssignmentID', 'groupID', 'StudentID', 'score'], 'integer'],
+            [['SubmissionID', 'AssignmentID', 'groupNO', 'StudentID', 'score'], 'integer'],
             [['content', 'submissionDate', 'fileURL', 'status'], 'safe'],
         ];
     }
@@ -75,7 +75,7 @@ class SubmissionSearch extends Submission
         $query->andFilterWhere([
             'SubmissionID' => $this->SubmissionID,
             'AssignmentID' => $this->AssignmentID,
-            'groupID' => $this->groupID,
+            'groupNO' => $this->groupNO,
             'StudentID' => $this->StudentID,
             'submissionDate' => $this->submissionDate,
             'score' => $this->score,
@@ -138,7 +138,7 @@ class SubmissionSearch extends Submission
         $query->andFilterWhere([
             'SubmissionID' => $this->SubmissionID,
             'AssignmentID' => $this->AssignmentID,
-            'groupID' => $this->groupID,
+            'groupNO' => $this->groupNO,
             'StudentID' => $this->StudentID,
             'submissionDate' => $this->submissionDate,
             'score' => $this->score,
@@ -200,7 +200,7 @@ class SubmissionSearch extends Submission
         $query->andFilterWhere([
             'SubmissionID' => $this->SubmissionID,
             'AssignmentID' => $this->AssignmentID,
-            'groupID' => $this->groupID,
+            'groupNO' => $this->groupNO,
             'StudentID' => $this->StudentID,
             'submissionDate' => $this->submissionDate,
             'score' => $this->score,
@@ -213,11 +213,16 @@ class SubmissionSearch extends Submission
         return $dataProvider;
     }
 
-    public function searchGroupMarked($params,$courseCode,$GroupID = null)
+    protected static function getStudentInfo(){
+        $user = User::findByUsername(\Yii::$app->user->identity->username);
+      return \frontend\models\Student::find()->where(['UserID' => $user->UserID])->one();
+    }
+    public function searchGroupMarked($params,$courseCode)
     {
         
         if($this->isInstructor()){
-            $query = Submission::find()
+
+        $query = Submission::find()
         ->joinWith('assignment')
         ->where([
             'Assignment.courseCode' => Course::find()->where([
@@ -226,15 +231,27 @@ class SubmissionSearch extends Submission
                     ])->one()
                 ])->one()->courseCode,
                 'Assignment.assignment' => 'Group Assignment',
+                'Submission.AssignmentStatus' => 'Submitted',
                 'Submission.SubmissionStatus' => 'Marked'
             ]);
 
         }else{
-
+            $groupNO = Group::find()
+            ->where([
+                'StudentID' => self::getStudentInfo()->StudentID,
+                'courseCode' => $courseCode
+                ])
+            ->one()->GroupNO;
+    
             $query = Submission::find()
-        ->joinWith('assignment')
-        ->where(['Assignment.assignment' => 'Group Assignment','Assignment.courseCode' => $courseCode,'Submission.SubmissionStatus' => 'Marked']);
-
+            ->joinWith('assignment')
+            ->where([
+                'Assignment.assignment' => 'Group Assignment',
+                'Assignment.courseCode' => $courseCode,
+                'Submission.AssignmentStatus' => 'Submitted',
+                'Submission.GroupNO' => $groupNO,
+                'Submission.SubmissionStatus' => 'Marked'
+            ]);
         }
         // add conditions that should always apply here
 
@@ -254,7 +271,7 @@ class SubmissionSearch extends Submission
         $query->andFilterWhere([
             'SubmissionID' => $this->SubmissionID,
             'AssignmentID' => $this->AssignmentID,
-            'groupID' => $this->groupID,
+            'groupNO' => $this->groupNO,
             'StudentID' => $this->StudentID,
             'submissionDate' => $this->submissionDate,
             'score' => $this->score,
@@ -273,6 +290,7 @@ class SubmissionSearch extends Submission
         
 
         if($this->isInstructor()){
+
             $query = Submission::find()
         ->joinWith('assignment')
         ->where([
@@ -282,17 +300,26 @@ class SubmissionSearch extends Submission
                     ])->one()
                     ])->one()->courseCode,
                     'Assignment.assignment' => 'Group Assignment',
+                    'Submission.AssignmentStatus' => 'Submitted',
                     'Submission.SubmissionStatus' => 'Not Marked'
                 ]);
         
     }else{
 
-            $query = Submission::find()
+        $groupNO = Group::find()
+        ->where([
+            'StudentID' => self::getStudentInfo()->StudentID,
+            'courseCode' => $courseCode
+            ])
+        ->one()->GroupNO;
+
+        $query = Submission::find()
         ->joinWith('assignment')
         ->where([
             'Assignment.assignment' => 'Group Assignment',
             'Assignment.courseCode' => $courseCode,
-            
+            'Submission.AssignmentStatus' => 'Submitted',
+            'Submission.GroupNO' => $groupNO,
             'Submission.SubmissionStatus' => 'Not Marked'
         ]);
         }
@@ -314,7 +341,7 @@ class SubmissionSearch extends Submission
         $query->andFilterWhere([
             'SubmissionID' => $this->SubmissionID,
             'AssignmentID' => $this->AssignmentID,
-            'groupID' => $this->groupID,
+            'groupNO' => $this->groupNO,
             'StudentID' => $this->StudentID,
             'submissionDate' => $this->submissionDate,
             'score' => $this->score,

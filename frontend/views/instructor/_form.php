@@ -10,7 +10,8 @@ use kartik\file\FileInput;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="instructor-form">
+<div class="card bg-dark text-bg-primary w-100 p-3 m-3 rounded-5 justify-content-between">
+<div class="container text-bold">
 
     <?php $form = ActiveForm::begin([
         'options' => [
@@ -22,17 +23,18 @@ use kartik\file\FileInput;
             'labelOptions' => ['class' => 'col-sm-0 control-label'],
         ],
     ]); ?>
-<div class="col align-self-center">
+<div class="col float-start">
 
 <?= $form->field($model, 'imageFile')->widget(FileInput::class, [
         'options' => ['accept' => 'image/*'], // Accept only image files
         'pluginOptions' => [
             'showUpload' => false, // Hide the upload button
             'showRemove' => true, // Hide the remove button
-            'initialPreview' => isset($model->profileImage) ? Html::img($model->profileImage, ['class' => 'file-preview-image img-circle', 'style' => 'width: 150px; height: 150px;', 'alt' => 'Profile Image']) : null,
+            'initialPreview' => '<img src="'.Yii::$app->request->baseUrl."/profiles/".$model->profileImage.'" class="img-rounded-5">',
+           // 'initialPreview' => true,//isset($model->profileImage) ? Html::img($model->profileImage, ['class' => 'file-preview-image img-circle', 'style' => 'width: 150px; height: 150px;', 'alt' => 'Profile Image']) : null,
             'initialPreviewConfig' => [
                 [
-                    'caption' => basename($model->profileImage),
+                    'caption' => 'Profile',//basename($model->profileImage),
                     'width' => '120px', // Adjust the width as needed
                     //'url' => Yii::$app->urlManager->createUrl(['/controller/delete-profile-image']), // Action to delete the image
                     'key' => 0, // Use 0 if there's only one image
@@ -46,20 +48,21 @@ use kartik\file\FileInput;
         ]
     ]); ?>
 </div>
+<br><br>
 <span class="row">
- <div class="col-sm-4 mb-3 mb-sm-0">
+ <div class="col-sm-6 mb-3 mb-sm-0">
     <?= $form->field($model, 'fname')->textInput(['maxlength' => true]) ?>
  </div>
- <div class="col-sm-3 mb-3 mb-sm-0">
+ <div class="col-sm-6 mb-3 mb-sm-0">
     <?= $form->field($model, 'mname')->textInput(['maxlength' => true]) ?>
  </div>
- <div class="col-sm-5 mb-3 mb-sm-0">
+ <div class="col-sm-6 mt-4 mb-3 mb-sm-0">
     <?= $form->field($model, 'lname')->textInput(['maxlength' => true]) ?>
  </div>
     </span>
 <br><br>
 <span class="row">
-<div class="col-sm-4 mb-3 mb-sm-0">
+<div class="col-sm-6 mb-3 mb-sm-0">
 <?= $form->field($model, 'phoneNumber')->textInput(['maxlength' => true]) ?>
 </div>
 <!-- <div class="col-sm-4 mb-3 mb-sm-0">
@@ -72,16 +75,16 @@ use kartik\file\FileInput;
         ],
     ]); ?>
  </div> -->
-<div class="col-sm-4 mb-3 mb-sm-0">
+<div class="col-sm-6 mb-3 mb-sm-0">
 <?= $form->field($model, 'emailAddress')->textInput(['maxlength' => true]) ?>
 </div>
 </span>
 
 <br><br>
-    <div class="d-flex justify-content-end">
+    <div class="d-flex float-end mt-5">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
-
+</div>
 </div>

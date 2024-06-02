@@ -4,9 +4,9 @@ use yii\helpers\Html;
 
 ?>
 <!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<nav class="nav justify-content-between bg-dark w-100 nav-primary p-3 sticky-top" data-bs-theme="dark" data-bs-version="5.1">
     <!-- Left navbar links -->
-    <ul class="navbar-nav">
+    <ul class="nav m-2">
         <li class="nav-item">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
@@ -16,17 +16,22 @@ use yii\helpers\Html;
        
     </ul>
 
-    <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
+    <div class="col">
+        <p class="text-center"><h3 class="text-center text-primary  ">Assignment Management System</h3></p>
+    </div>
+    <!-- SEARCH FORM
+    <div class="row">
+    <form class="form-inline float-end">
         <div class="input-group input-group-sm">
-            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" disabled>
+            <input class="form-control form-control-nav" type="search" placeholder="Search" aria-label="Search" disabled>
             <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
+                <button class="btn btn-nav" type="submit">
                     <i class="fas fa-search"></i>
                 </button>
             </div>
         </div>
     </form>
+    </div> -->
 
     <!-- Right navbar links -->
     <!-- <ul class="navbar-nav ml-auto"> -->
@@ -137,6 +142,8 @@ use yii\helpers\Html;
                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
             </div>
         </li> -->
+       <div class="row justify-content-end float-end m-2">
+        <!-- <div class="col w-100 "> -->
         <li class="nav-item">
             <?= Html::a('<i class="fas fa-sign-out-alt"></i>', ['/site/logout'], ['data-method' => 'post', 'class' => 'nav-link']) ?>
         </li>
@@ -151,5 +158,7 @@ use yii\helpers\Html;
             </a>
         </li>
     </ul>
+        </div>
+       <!-- </div> -->
 </nav>
 <!-- /.navbar -->

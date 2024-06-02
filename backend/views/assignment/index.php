@@ -10,14 +10,14 @@ use yii\widgets\Pjax;
 /** @var backend\models\Assignments $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('app', 'Assignments');
+$this->title = Yii::t('app', 'All Assignments');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="assignment-index">
 
-    <!-- <h1>< ?= Html::encode($this->title) ?></h1> -->
-
-    <!-- <p>
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
+<!-- 
+    <p>
         < ?= Html::a(Yii::t('app', 'Create Assignment'), ['create'], ['class' => 'btn btn-success']) ?>
     </p> -->
 
@@ -30,18 +30,24 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
+            //'AssignmentID',
+            'courseCode',
             'assignment',
             'title',
-            'assignedDate',
-            'submissionDate',
-            'marks',
-            'courseCode',
-            'status',
+            //'AssignmentContent:ntext',
+            //'description:ntext',
+            //'fileURL',
+            'assignedDate:datetime',
+            'submissionDate:datetime',
+            //'marks',
+            //'status',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Assignment $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'AssignmentID' => $model->AssignmentID]);
-                 }
+                 },
+                 'template' => '{view}{update}',
+
             ],
         ],
     ]); ?>

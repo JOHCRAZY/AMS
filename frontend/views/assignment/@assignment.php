@@ -43,10 +43,10 @@ $isInstructor = frontend\models\User::findByUsername(Yii::$app->user->identity->
             'assignment',
             'title',
             //'content:ntext',
-            'description:ntext',
+            //'description:html',
             //'fileURL',
-            'assignedDate',
-            'submissionDate',
+            'assignedDate:datetime',
+            'submissionDate:datetime',
             'marks',
             $isInstructor ? 'status' : 'status',
             [

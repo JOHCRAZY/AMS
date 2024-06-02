@@ -18,17 +18,18 @@ use Yii;
  * @property string|null $emailAddress
  * @property string|null $gender
  * @property string|null $profileImage
- * @property int|null $groupID
  * @property string $programmeCode
  * @property string $year
  * @property string $semester
  *
- * @property Group $group
  * @property Programme $programmeCode0
+ * @property Submission[] $submissions
  * @property User $user
+ * @property Group[] $groups 
  */
 class Student extends \yii\db\ActiveRecord
 {
+    public $imageFile;
     /**
      * {@inheritdoc}
      */
@@ -43,19 +44,21 @@ class Student extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fname', 'lname', 'programmeCode', 'year', 'semester'], 'required'],
-            [['userID', 'groupID'], 'integer'],
+            ['StudentID', 'default', 'value' => time()],
+            [['fname', 'lname', 'programmeCode','regNo','session','gender', 'year', 'semester'], 'required'],
+            [['userID'], 'integer'],
             [['session', 'gender', 'year', 'semester'], 'string'],
             [['fname', 'mname', 'lname'], 'string', 'max' => 25],
-            [['regNo'], 'string', 'max' => 15],
+            [['regNo'], 'string', 'max' => 20],
             [['phoneNumber'], 'string', 'max' => 16],
+            ['phoneNumber', 'match', 'pattern' => '/^[0-9]{10}$/i'],
             [['emailAddress'], 'string', 'max' => 64],
-            [['profileImage'], 'string', 'max' => 255],
+           // [['profileImage'], 'string', 'max' => 255],
+           [['profileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => ['png','jpg','ico']],
             [['programmeCode'], 'string', 'max' => 5],
             [['regNo'], 'unique'],
             [['emailAddress'], 'unique'],
             [['userID'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['userID' => 'UserID']],
-            [['groupID'], 'exist', 'skipOnError' => true, 'targetClass' => Group::class, 'targetAttribute' => ['groupID' => 'groupID']],
             [['programmeCode'], 'exist', 'skipOnError' => true, 'targetClass' => Programme::class, 'targetAttribute' => ['programmeCode' => 'programmeCode']],
         ];
     }
@@ -67,32 +70,23 @@ class Student extends \yii\db\ActiveRecord
     {
         return [
             'StudentID' => Yii::t('app', 'Student ID'),
-            'fname' => Yii::t('app', 'Fname'),
-            'mname' => Yii::t('app', 'Mname'),
-            'lname' => Yii::t('app', 'Lname'),
+            'fname' => Yii::t('app', 'First Name'),
+            'mname' => Yii::t('app', 'Middle Name'),
+            'lname' => Yii::t('app', 'Last Name'),
             'userID' => Yii::t('app', 'User ID'),
             'session' => Yii::t('app', 'Session'),
-            'regNo' => Yii::t('app', 'Reg No'),
+            'regNo' => Yii::t('app', 'Registration Number'),
             'phoneNumber' => Yii::t('app', 'Phone Number'),
             'emailAddress' => Yii::t('app', 'Email Address'),
             'gender' => Yii::t('app', 'Gender'),
             'profileImage' => Yii::t('app', 'Profile Image'),
-            'groupID' => Yii::t('app', 'Group ID'),
-            'programmeCode' => Yii::t('app', 'Programme Code'),
+            'programmeCode' => Yii::t('app', 'Programme'),
             'year' => Yii::t('app', 'Year'),
             'semester' => Yii::t('app', 'Semester'),
+            'imageFile' => Yii::t('app','Profile image'),
         ];
     }
 
-    /**
-     * Gets query for [[Group]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getGroup()
-    {
-        return $this->hasOne(Group::class, ['groupID' => 'groupID'])->inverseOf('students');
-    }
 
     /**
      * Gets query for [[ProgrammeCode0]].
@@ -105,6 +99,28 @@ class Student extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[Submissions]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubmissions()
+    {
+        return $this->hasMany(Submission::class, ['StudentID' => 'StudentID'])->inverseOf('student');
+    }
+
+
+    /** 
+    * Gets query for [[Groups]]. 
+    * 
+    * @return \yii\db\ActiveQuery 
+    */ 
+   public function getGroups() 
+   { 
+       return $this->hasMany(Group::class, ['StudentID' => 'StudentID'])->inverseOf('student'); 
+   } 
+
+
+    /**
      * Gets query for [[User]].
      *
      * @return \yii\db\ActiveQuery
@@ -112,5 +128,38 @@ class Student extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['UserID' => 'userID'])->inverseOf('students');
+    }
+
+    public function upload()
+    {
+        // if ($this->validate()) {
+        //     $uploadDir = 'uploads/';
+        //     $filePath = $uploadDir . $this->imageFile->baseName . '.' . $this->imageFile->extension;
+        //     if ($this->imageFile->saveAs($filePath)) {
+        //         $this->profileImage = $filePath;
+        //         return true;
+        //     }
+        // }
+        // return false;
+
+        if ($this->validate()) {
+
+            if ($this->imageFile) {
+    
+                if ($this->profileImage) {
+                    unlink(Yii::getAlias('@webroot') . '/profiles/' . $this->profileImage);
+                }
+    
+                $fileName = 'profile_' . time() . '.' . $this->imageFile->extension;
+    
+                $this->imageFile->saveAs(Yii::getAlias('@webroot/profiles/') . $fileName);
+    
+                $this->profileImage = $fileName;
+            }
+
+            return true;
+         }
+
+         return false;
     }
 }

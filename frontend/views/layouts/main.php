@@ -10,11 +10,16 @@ use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 
+
 AppAsset::register($this);
+
+use \hail812\adminlte3\assets\FontAwesomeAsset;
+FontAwesomeAsset::register($this);
+$this->registerJsFile('@web/js/site.js', ['depends' => [\yii\web\JqueryAsset::class]]);
 ?>
 <?php $this->beginPage()?>
 <!DOCTYPE html>
-<html lang="<?=Yii::$app->language?>" class="h-100">
+<html lang="<?=Yii::$app->language?>" class="h-100" data-bs-theme="dark" data-bs-version="5.1">
 <head>
     <meta charset="<?=Yii::$app->charset?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,7 +27,7 @@ AppAsset::register($this);
     <title><?=Html::encode($this->title)?></title>
     <?php $this->head()?>
 </head>
-<body class="d-flex flex-column h-100" style="background-color:#e6e6fa; ">
+<body class="d-flex flex-column h-100">
 <?php $this->beginBody()?>
 
 <header>
@@ -39,7 +44,7 @@ $menu = [
 ];
 $menuItems = [
     ['label' => 'Home', 'url' => ['/site/index']],
-    ['label' => 'About', 'url' => ['/site/about']],
+    //['label' => 'About', 'url' => ['/site/about']],
     ['label' => 'Contact', 'url' => ['/site/contact']],
     ['label' => 'Signup', 'url' => ['/site/signup']],
 
@@ -56,23 +61,30 @@ if (Yii::$app->user->isGuest) {
         'items' => $menu,
     ]);
 }
+echo Html::tag('div', '<i class="fas fa-book"> Assignment Management System </i>', ['class' => ['navbar-nav me-auto mb-2 mb-md-0']]);
 
 if (Yii::$app->user->isGuest) {
-    echo Html::tag('div', Html::a('Login', ['/site/login'], ['class' => ['btn btn-link login text-decoration-none']]), ['class' => ['d-flex']]);
+    echo Html::tag('div', Html::a('<i class="fas fa-sign-in-alt">Login</i>', ['/site/login'], ['class' => ['btn btn-link']]), ['class' => ['d-flex']]);
 } else {
-    echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
-    . Html::submitButton(
-        'Logout (' . Yii::$app->user->identity->username . ')',
-        ['class' => 'btn btn-link logout text-decoration-none']
-    )
-    . Html::endForm();
+    // echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
+    // . Html::submitButton(
+    //     'Logout (' . Yii::$app->user->identity->username . ')',
+    //     ['class' => 'btn btn-link logout text-decoration-none']
+    // )
+    // . Html::endForm();
+    echo '<ul class="nav-item">'
+. Html::a('<i class="fas fa-sign-out-alt">Logout</i>', ['/site/logout'], ['data-method' => 'post', 'class' => 'nav-link d-flex mt-3']);
+
 }
+
 NavBar::end();
 ?>
+
 </header>
-<div class="col d-flex flex-column align-items-stretch mt-4">
-<div class="row">
-<div class="col-md-1 order-0 p-3 position-sticky fixed">
+
+<!-- <div class="col d-flex flex-column align-items-stretch mt-4"> -->
+<div class="row justify-content-between">
+<!-- <div class="col-sm-1 order-0 p-4 position-sticky fixed"> -->
     <?php if (!Yii::$app->user->isGuest): ?>
         <?php
 $user = \frontend\models\User::findByUsername(Yii::$app->user->identity->username);
@@ -81,55 +93,58 @@ if ($user !== null) {
         $student = \frontend\models\Student::find()->where(['UserID' => $user->UserID])->one();
 
         if ($student != null) {
-            echo $this->render('StudentSideNav');
+            echo '<div class="col-sm-1 order-0 p-4 position-sticky fixed">'.$this->render('StudentSideNav').'</div>';
         } else {
 
-            echo '<div class="card m-3 text-bg-warning-subtle p-3 text-center position-fixed">';
+            echo '<div class="col-sm-1 order-0 p-4 position-sticky fixed"><div class="card m-3 text-bg-warning-subtle p-3 text-center position-fixed">';
             echo '<span class="w-100">You\'re Not Yet Registered</span><br>';
             echo '<span class="w-100">Please fill Your Details</span>';
             echo '<br>';
             echo '<a href="' . Yii::$app->urlManager->createUrl(['student/profile']) . '">Register</a>';
-            echo '</div>';
+            echo '</div></div>';
 
-            //echo '<div class="card m-5 text-bg-primary p-3 text-center position-fixed"><span class="w-100">You\'re Not Yet Registered</span><br><span class="w-100">Please fill Your Details</span></div>';
         }
 
     } elseif ($user->role == 'instructor') {
         $instructor = \frontend\models\Instructor::find()->where(['UserID' => $user->UserID])->one();
         if ($instructor !== null && $instructor->Status == 'Verified') {
-            echo $this->render('InstructorSideNav');
+            echo '<div class="col-sm-1 order-0 p-4 position-sticky fixed">'.$this->render('InstructorSideNav').'</div>';
         } else {
 
 
-            echo '<div class="card m-3 text-bg-warning-subtle p-2 text-center mt-5 position-fixed">';
+            echo '<div class="col-sm-1 order-0 p-4 position-sticky fixed"><div class="card m-3 text-bg-warning-subtle p-2 text-center mt-5 position-fixed">';
             echo '<span class="w-100">You\'re Not Yet Verified</span><br>';
             echo '<span class="w-100">Please fill Your Details and Contact Administrator for Verification</span>';
             echo '<a href="' . Yii::$app->urlManager->createUrl(['instructor/profile']) . '">Register</a>';
-            echo '</div>';
-            //echo '<div class="card bg-dark text-bg-primary col-md-1 order-0 p-3  mt-5"><span class="w-100">You\'re Not Yet Verified</span><br><span class="w-100">Contact Administrator For Verification</span></div>';
+            echo '</div></div>';
         }
     }
 }
 ?>
     <?php endif;?>
-</div>
+<!-- </div> -->
 
 
-<div class="col order-1">
-<main role="main" class="flex-shrink-0">
+<div class="col-sm-10 order-1 p-4">
+<main role="main" class="wrapper">
 
 
-<div class="container">
+<div class="container w-100" data-bs-theme="dark">
     <?=Breadcrumbs::widget([
     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+    'options' => ['class' => 'bg-dark text-primary']
 ])?>
-    <?=Alert::widget()?>
-    <?=$content?>
+
+<div class="col text-lg-center">
+<?=Alert::widget()?>
+
+</div>
+<?=$content?>
 </div>
 </main>
 </div>
 </div>
-</div>
+<!-- </div> -->
 
 
 <footer class="footer mt-auto py-3 text-muted bg-dark sticky-bottom" style="color:aquamarine">

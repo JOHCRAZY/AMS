@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\WindowController;
 use frontend\models\Instructor;
 use frontend\models\Instructors;
 use yii\web\Controller;
@@ -14,6 +15,7 @@ use yii;
  */
 class InstructorController extends Controller
 {
+    use WindowController;
     //public $layout = 'instructor';
     /**
      * @inheritDoc

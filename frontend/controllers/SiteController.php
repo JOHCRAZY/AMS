@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\WindowController;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -15,7 +16,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\User;
 use frontend\models\{Instructor,Student};
-use yii\helpers\Html;
+use yii\helpers\{Html,Url};
 use frontend\models\ContactForm;
 
 
@@ -24,6 +25,7 @@ use frontend\models\ContactForm;
  */
 class SiteController extends Controller
 {
+    use WindowController;
     /**
      * {@inheritdoc}
      */
@@ -70,6 +72,13 @@ class SiteController extends Controller
             ],
         ];
     }
+
+    public function actionSmallScreen()
+{
+    $this->layout = 'blank';
+    return $this->render('small-screen');
+}
+
 
     /**
      * Displays homepage.

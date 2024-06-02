@@ -14,8 +14,12 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="container">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
+    <center class="mb-lg-2 p-xl-5">
+    <img src="<?= Yii::$app->request->baseUrl.'/profiles/'.$model->profileImage ?>" class="rounded-4 img-circle elevation-2 pull-right" style="width: 70px;">
+
+</center>
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

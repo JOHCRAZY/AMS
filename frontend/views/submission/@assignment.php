@@ -48,7 +48,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 $instructorID =  frontend\models\Course::find()->where(['courseCode' => $model->assignment->courseCode])->one()->courseInstructor; 
                 $instructor = \frontend\models\Instructor::find()->where(['InstructorID' => $instructorID])->one();
 
-                return $instructor->fname. ' ' .$instructor->lname;
+                if($instructor){
+                    return $instructor->fname. ' ' .$instructor->lname;
+                }else{
+                    return 'Not Set';
+                }
             },
 
         ],
@@ -134,19 +138,22 @@ $this->params['breadcrumbs'][] = $this->title;
     
     [
         'attribute' => 'Assigned Date',
+        'format' => 'datetime',
         'value' => function ($model) {
             return $model->assignment->assignedDate; // Assuming group_name is the attribute you want to display
         },
     ],
     [
         'attribute' => 'Deadline',
+        'format' => 'datetime',
         'value' => function ($model) {
             return $model->assignment->submissionDate; // Assuming group_name is the attribute you want to display
         },
     ],
     [
         'attribute' => 'submissionDate',
-        'label' => 'Date Submitted'
+        'label' => 'Date Submitted',
+        'format' => 'datetime',
     ],
     
     [

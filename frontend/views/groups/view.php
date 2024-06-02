@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
+    <!-- < ?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'GroupID',
@@ -35,6 +35,25 @@ $this->params['breadcrumbs'][] = $this->title;
             'StudentID',
             'courseCode',
         ],
-    ]) ?>
+    ]) ?> -->
+
+<?php
+echo DetailView::widget([
+    'model' => $model, // Assuming $model contains the data of a specific group
+    'attributes' => [
+        'GroupNO',
+        'groupName',
+        [
+            'label' => 'Members',
+            'value' => function ($model) {
+                $members = [];
+                foreach ($model->student as $student) {
+                    $members[] = $student;//->fname . ' ' . $student->lname;
+                }
+                return implode('\n', $members);
+            },
+        ],
+    ],
+]); ?>
 
 </div>

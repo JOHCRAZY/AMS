@@ -17,8 +17,8 @@ class Groups extends Group
     public function rules()
     {
         return [
-            [['groupID', 'groupNo'], 'integer'],
-            [['courseCode', 'groupName'], 'safe'],
+            [['GroupID', 'GroupNO', 'StudentID'], 'integer'],
+            [['groupName', 'courseCode'], 'safe'],
         ];
     }
 
@@ -58,13 +58,14 @@ class Groups extends Group
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'groupID' => $this->groupID,
-            'groupNo' => $this->groupNo,
+            'GroupID' => $this->GroupID,
+            'GroupNO' => $this->GroupNO,
+            'StudentID' => $this->StudentID,
         ]);
 
-        $query->andFilterWhere(['like', 'courseCode', $this->courseCode])
-            ->andFilterWhere(['like', 'groupName', $this->groupName]);
-
+        $query->andFilterWhere(['like', 'groupName', $this->groupName])
+            ->andFilterWhere(['like', 'courseCode', $this->courseCode]);
+        //$query->groupBy(['groupName']);
         return $dataProvider;
     }
 }

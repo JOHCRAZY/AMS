@@ -10,11 +10,13 @@ $this->title = $model->fname. ' '. $model->lname;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Students'), 'url' => ['profile']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+
+
 ?>
-<div class="card rounded-5 p-1" >
+<div class="bg-dark text-bg-primary" >
 
 <center class="mb-lg-2 p-xl-5">
-    <img src="<?= Yii::$app->request->baseUrl.'/'.$model->profileImage ?>" class="img-circle rounded-4 elevation-2 pull-right" style="width: 70px;">
+    <img src="<?= Yii::$app->request->baseUrl.'/profiles/'.$model->profileImage ?>" class="rounded-4 mt-1" style="width: 70px;">
 
 </center>
     <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
@@ -34,9 +36,24 @@ $this->params['breadcrumbs'][] = $this->title;
             'gender',
             //'profileImage',
             //'groupID',
-            'programmeCode',
+        [           
+            'attribute' => 'Programme',
+            'label' => 'Programme',
+            'value'=> function ($model){
+                return $model->programmeCode0->programmeName;  
+            }            
+        ],        
+            [
+                'attribute' => 'programmeCode',
+                'label' => 'Programme Code'
+        ],
             'year',
             'semester',
         ],
-    ]) ?>
+    //     'template' => "<div class='m-1 row gap-1'>
+    //     <div class='col ml-0 p-1 bg-dark text-secondary'> {label} </div>
+    //     <br/>
+    //     <div class='col ml-0 p-1 bg-dark text-secondary'> {value} </div>
+    // </div>",   
+     ]) ?>
 </div>

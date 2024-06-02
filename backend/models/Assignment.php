@@ -11,7 +11,7 @@ use Yii;
  * @property string $courseCode
  * @property string $assignment
  * @property string $title
- * @property string|null $content
+ * @property string|null $AssignmentContent
  * @property string|null $description
  * @property string|null $fileURL
  * @property string|null $assignedDate
@@ -39,7 +39,7 @@ class Assignment extends \yii\db\ActiveRecord
     {
         return [
             [['courseCode', 'assignment', 'title', 'marks'], 'required'],
-            [['assignment', 'content', 'description', 'status'], 'string'],
+            [['assignment', 'AssignmentContent', 'description', 'status'], 'string'],
             [['assignedDate', 'submissionDate'], 'safe'],
             [['marks'], 'integer'],
             [['courseCode'], 'string', 'max' => 12],
@@ -58,7 +58,7 @@ class Assignment extends \yii\db\ActiveRecord
             'courseCode' => Yii::t('app', 'Course Code'),
             'assignment' => Yii::t('app', 'Assignment'),
             'title' => Yii::t('app', 'Title'),
-            'content' => Yii::t('app', 'Content'),
+            'AssignmentContent' => Yii::t('app', 'Assignment Content'),
             'description' => Yii::t('app', 'Description'),
             'fileURL' => Yii::t('app', 'File Url'),
             'assignedDate' => Yii::t('app', 'Assigned Date'),

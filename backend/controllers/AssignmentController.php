@@ -7,7 +7,7 @@ use backend\models\Assignments;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii;
+
 /**
  * AssignmentController implements the CRUD actions for Assignment model.
  */
@@ -22,7 +22,7 @@ class AssignmentController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::class,
+                    'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
                     ],

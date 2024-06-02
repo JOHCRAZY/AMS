@@ -6,10 +6,10 @@ use yii\helpers\Html;
 /** @var backend\models\Group $model */
 
 $this->title = Yii::t('app', 'Update Group: {name}', [
-    'name' => $model->groupID,
+    'name' => $model->GroupID,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Groups'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->groupID, 'url' => ['view', 'groupID' => $model->groupID]];
+$this->params['breadcrumbs'][] = ['label' => $model->GroupID, 'url' => ['view', 'GroupID' => $model->GroupID]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="group-update">
