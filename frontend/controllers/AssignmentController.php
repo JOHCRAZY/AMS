@@ -14,13 +14,12 @@ use yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use common\models\WindowController;
+
 /**
  * AssignmentController implements the CRUD actions for Assignment model.
  */
 class AssignmentController extends Controller
 {
-    use WindowController;
     //public $layout = "student";
     /**
      * @inheritDoc
@@ -40,7 +39,7 @@ class AssignmentController extends Controller
                     'class' => \yii\filters\AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index', 'view', 'view-file', 'load-file', 'create', 'update', 'group', 'individual', 'do', 'submit'],
+                            'actions' => ['index', 'view','i','g', 'view-file', 'load-file', 'create', 'update', 'group', 'individual', 'do', 'submit'],
                             'allow' => true,
                             'matchCallback' => function ($rule, $action) {
                                 // Custom logic to determine access
@@ -116,6 +115,9 @@ class AssignmentController extends Controller
         $user = User::findByUsername(Yii::$app->user->identity->username);
         return Student::find()->where(['UserID' => $user->UserID])->one();
     }
+
+
+
     /**
      * Lists all Assignment models.
      *
@@ -143,7 +145,27 @@ class AssignmentController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+public function actionI(){
 
+    $searchModel = new AssignmentSearch();
+        $dataProvider = $searchModel->i($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+}
+
+public function actionG(){
+    
+    $searchModel = new AssignmentSearch();
+        $dataProvider = $searchModel->g($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+}
     /**
      * Displays a single Assignment model.
      * @param int $AssignmentID Assignment ID
@@ -181,14 +203,14 @@ class AssignmentController extends Controller
         }
 
         $group = Group::find()
-                ->where(['StudentID' => self::getStudent()->StudentID, 'courseCode' => $courseCode])->one();
+            ->where(['StudentID' => self::getStudent()->StudentID, 'courseCode' => $courseCode])->one();
 
-            if ($group == null) {
+        if ($group == null) {
 
-                //throw new yii\web\NotFoundHttpException(Yii::t('app', '( Group Not Found ) You\'re Not Assigned to Any Group in This Course'.'<br>'.'Contact Your Lecture for Assistance'));
-                Yii::$app->session->setFlash('info', '( Group Not Found ) You\'re Not Assigned to Any Group in This Course<br>Contact Your Lecture for Assistance');
-                 return $this->goBack();
-            }
+            //throw new yii\web\NotFoundHttpException(Yii::t('app', '( Group Not Found ) You\'re Not Assigned to Any Group in This Course'.'<br>'.'Contact Your Lecture for Assistance'));
+            Yii::$app->session->setFlash('info', '( Group Not Found ) You\'re Not Assigned to Any Group in This Course<br>Contact Your Lecture for Assistance');
+            return $this->goBack();
+        }
         $searchModel = new AssignmentSearch();
         $dataProvider = $searchModel->searchGroupAssignmentPending(Yii::$app->request->queryParams, $courseCode);
 
@@ -303,6 +325,15 @@ class AssignmentController extends Controller
     {
         $AssignmentModel = $this->findModel($AssignmentID);
 
+        $submissionDateTime = new \DateTime($AssignmentModel->submissionDate);
+        $currentDateTime = new \DateTime('now');
+
+         if ($submissionDateTime->getTimestamp() < $currentDateTime->getTimestamp()) {
+            Yii::$app->session->setFlash('danger', 'Submission failed due to invalid Assignment Deadline');
+            return $this->goBack();
+
+        }
+        
         if ($this->request->isPost) {
             $AssignmentModel->load($this->request->post());
             if ($StudentID != null) {
@@ -320,6 +351,17 @@ class AssignmentController extends Controller
                     $SubmissionModel->SubmissionContent = $AssignmentModel->AssignmentContent;
                     $SubmissionModel->fileURL = $AssignmentModel->fileURL;
                     $SubmissionModel->StudentID = $StudentID;
+
+                    $submissionDateTime = new \DateTime($AssignmentModel->submissionDate);
+                    $currentDateTime = new \DateTime('now');
+            
+                     if ($submissionDateTime->getTimestamp() < $currentDateTime->getTimestamp()) {
+                        Yii::$app->session->setFlash('danger', 'Submission failed due to invalid  Deadline');
+                        return $this->goBack();
+            
+                    }
+
+
 
                     if ($SubmissionModel->save()) {
 
@@ -396,26 +438,26 @@ class AssignmentController extends Controller
 
             if ($group == null) {
 
-                throw new NotFoundHttpException(Yii::t('app','(Group Assignment)  You\'re Not Assigned to Any Group in This Course.'));
+                throw new NotFoundHttpException(Yii::t('app', '(Group Assignment)  You\'re Not Assigned to Any Group in This Course.'));
+                // Yii::$app->session->setFlash('info',' You\'re Not Assigned to Any Group in This Course');
+                // return $this->goBack();
 
             }
             $groupNO = $group->GroupNO;
-                $courseName = Course::find()
-            ->where(['courseCode' => $model->courseCode])->one()->courseName;
+            $courseName = Course::find()
+                ->where(['courseCode' => $model->courseCode])->one()->courseName;
 
-        $groupName = Group::find()
-            ->where(['StudentID' => self::getStudent()->StudentID,'courseCode' => $model->courseCode])->one()->groupName;    
+            $groupName = Group::find()
+                ->where(['StudentID' => self::getStudent()->StudentID, 'courseCode' => $model->courseCode])->one()->groupName;
 
-        
-            
-        $studentIDs = Group::find()
-            ->select('StudentID')
-            ->where(['GroupNO' => $groupNO,'courseCode' => $model->courseCode])->all();
+            $studentIDs = Group::find()
+                ->select('StudentID')
+                ->where(['GroupNO' => $groupNO, 'courseCode' => $model->courseCode])->all();
 
-        $students = Student::find()
-            ->where(['IN','StudentID',$studentIDs])->all();
+            $students = Student::find()
+                ->where(['IN', 'StudentID', $studentIDs])->all();
 
-        GroupMembers::ShowGroupMembers($students,$courseName,$groupName,$groupNO);
+            GroupMembers::ShowGroupMembers($students, $courseName, $groupName, $groupNO);
             $SubmissionModel = Submission::find()
                 ->where(['AssignmentID' => $AssignmentID, 'groupNO' => $groupNO])
                 ->andWhere(['IN', 'StudentID',
@@ -492,7 +534,7 @@ class AssignmentController extends Controller
                         $SubmissionModel->PreScore = 0;
                         $SubmissionModel->fileURL = $model->fileURL;
                         $SubmissionModel->StudentID = $StudentID;
-                        $SubmissionModel->submissionDate = date('Y-m-d H:m');
+                        $SubmissionModel->submissionDate = date('Y-m-d H:i');
                         $SubmissionModel->AssignmentStatus = $Submit ? 'Submitted' : 'Pending';
                         $SubmissionModel->SubmissionContent = $model->AssignmentContent;
 

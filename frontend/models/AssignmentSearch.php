@@ -48,7 +48,10 @@ class AssignmentSearch extends Assignment
 
     }
 
-    
+    protected static function instructorCourseCode(){
+        $instructorID = Instructor::findOne(['UserID' => Yii::$app->user->getId()])->InstructorID;
+        return Course::findOne(['courseInstructor' => $instructorID])->courseCode;
+    }
     /**
      * Creates data provider instance with search query applied
      *
@@ -116,6 +119,77 @@ class AssignmentSearch extends Assignment
         return $dataProvider;
     }
 
+    public function i($params){
+        $query = Assignment::find()
+        ->where(['courseCode' => self::instructorCourseCode(),'assignment' => 'Individual Assignment']);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'AssignmentID' => $this->AssignmentID,
+            'assignedDate' => $this->assignedDate,
+            'submissionDate' => $this->submissionDate,
+            'marks' => $this->marks,
+        ]);
+
+        $query->andFilterWhere(['like', 'courseCode', $this->courseCode])
+            ->andFilterWhere(['like', 'assignment', $this->assignment])
+            ->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'content', $this->AssignmentContent])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'fileURL', $this->fileURL])
+            ->andFilterWhere(['like', 'status', $this->status]);
+
+        return $dataProvider;
+    }
+
+
+
+    public function g($params){
+        $query = Assignment::find()
+        ->where(['courseCode' => self::instructorCourseCode(),'assignment' => 'Group Assignment']);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'AssignmentID' => $this->AssignmentID,
+            'assignedDate' => $this->assignedDate,
+            'submissionDate' => $this->submissionDate,
+            'marks' => $this->marks,
+        ]);
+
+        $query->andFilterWhere(['like', 'courseCode', $this->courseCode])
+            ->andFilterWhere(['like', 'assignment', $this->assignment])
+            ->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'content', $this->AssignmentContent])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'fileURL', $this->fileURL])
+            ->andFilterWhere(['like', 'status', $this->status]);
+
+        return $dataProvider;
+    }
 
     public function searchIndividualAssignmentPending($params,$courseCode)
     {

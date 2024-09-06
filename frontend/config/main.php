@@ -18,12 +18,12 @@ return [
         ],
         'user' => [
             'identityClass' => 'frontend\models\User',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
-            'name' => 'advanced-frontend',
+            'name' => 'AMS-frontend',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -35,11 +35,16 @@ return [
             ],
         ],
         'errorHandler' => [
+            'class' => 'frontend\components\CustomErrorHandler',
             'errorAction' => 'site/error',
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            //'suffix' => '.ams',
+              //  'baseUrl' => 'http://ams.eastc',
+               // 'hostInfo' => 'http://ams.eastc',
+             //   'scriptUrl' => '/index.php',
             'rules' => [
                 // Add your URL rules here
                 'custom-page' => 'site/custom', // Example: maps /custom-page to site/custom

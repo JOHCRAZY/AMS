@@ -15,30 +15,32 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    
+
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            //'SubmissionID',
+           // 'AssignmentID',
+           // 'groupID',
+            //'StudentID',
+            'content:ntext',
+            'submissionDate:date',
+            'fileURL',
+            'status',
+            'score',
+        ],
+    ]) ?>
+
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'SubmissionID' => $model->SubmissionID], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Update'), ['update', 'SubmissionID' => $model->SubmissionID], ['class' => 'btn btn-outline-primary']) ?>
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'SubmissionID' => $model->SubmissionID], [
-            'class' => 'btn btn-danger',
+            'class' => 'btn btn-outline-danger',
             'data' => [
                 'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
                 'method' => 'post',
             ],
         ]) ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'SubmissionID',
-            'AssignmentID',
-            'groupID',
-            'StudentID',
-            'content:ntext',
-            'submissionDate',
-            'fileURL',
-            'status',
-            'score',
-        ],
-    ]) ?>
 
 </div>

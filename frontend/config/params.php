@@ -10,5 +10,5 @@ return [
     'user.passwordResetTokenExpire' => 3600,
     'user.passwordMinLength' => 8,
     'bsVersion' => '5.x',
-    'bsDependencyEnabled' => false 
+    'bsDependencyEnabled' => true 
 ];

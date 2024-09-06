@@ -1,126 +1,176 @@
 <?php
 use yii\helpers\Url;
-$instructor = frontend\models\Instructor::findOne(['UserID' => Yii::$app->user->identity->getId()]);
-
 ?>
-<nav class="m-5 text-center position-fixed bg-dark" aria-label="Sidebar navigation">
-    <ul class="">
-    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#sidenav" aria-expanded="false" aria-controls="pendingAssignments"> 
-    <?php
-        if ($instructor !== null && $instructor->profileImage !== null) {
-            echo '<img src="' . Yii::$app->request->baseUrl . '/profiles/' . $instructor->profileImage . '" class="card rounded-4" style="width: 50px;">';
-        } else {
-            echo 'Navigate';
-        }
-        ?>
-    </a>
+<aside class="main-sidebar nav-sidebar elevation-2" style="width: 17%; height: 100vh;">
+    <div class="sidebar mt-5 align-items-center">
+        <!-- Sidebar user panel -->
+        <div class="user-panel mt-4 mb-2 ml-3 d-flex">
+            <?php
+$instructor = frontend\models\Instructor::findOne(['UserID' => Yii::$app->user->identity->getId()]);
+if ($instructor !== null && $instructor->profileImage !== null) {
+                echo '<img src="' . Yii::$app->request->baseUrl . '/profiles/' . $instructor->profileImage . '" class="card rounded-4" style="width: 50px;">';
+            } else {
+                echo 'Navigate';
+            }
+            ?>
+            <div class="info mt-2">
+                <a class="d-block"><?= Yii::$app->user->identity->username ?></a>
+            </div>
+            
+        </div>
 
+        <!-- Sidebar Search Form -->
+        <div class="form-inline ml-3">
+            <div class="input-group" data-widget="sidebar-search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-sidebar">
+                        <i class="fas fa-search fa-fw"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
 
-    <div class="card collapse" id="sidenav">
-    <ul class="nav flex-column mt-3">
-        <li class="nav-item border-bottom border-primary">
-            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#viewAssignments" aria-expanded="false" aria-controls="viewAssignments">View Assignments</a>
-            <div class="collapse" id="viewAssignments">
-                <ul class="nav flex-column ms-3">
-                    <li class="nav-item border-bottom border-primary">
-                        <a class="nav-link" href="<?= Url::to(['/assignment/']) ?>">All Assignments</a>
-                    </li>
-                    <li class="nav-item border-bottom border-primary">
-                        <a class="nav-link" href="<?= Url::to(['/assignment/create']) ?>">Create New Assignment</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="nav-item border-bottom border-primary">
-            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#submittedAssignments" aria-expanded="false" aria-controls="submittedAssignments"> Submitted Assignments</a>
-            <div class="collapse" id="submittedAssignments">
-                <ul class="nav flex-column ms-3">
-                    <li class="nav-item border-bottom border-primary">
-                        <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#individualSubmitted" aria-expanded="false" aria-controls="individualSubmitted">Individual Assignment</a>
-                        <div class="collapse" id="individualSubmitted">
-                            <ul class="nav flex-column ms-3">
-                                <li class="nav-item border-bottom border-primary">
-                                    <a class="nav-link" href="<?= Url::to(['/submission/individual-marked']) ?>">Marked</a>
-                                </li>
-                                <li class="nav-item border-bottom border-primary">
-                                    <a class="nav-link" href="<?= Url::to(['/submission/individual-not-marked']) ?>">Not Marked</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item border-bottom border-primary">
-                        <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#groupSubmitted" aria-expanded="false" aria-controls="groupSubmitted">Group Assignment</a>
-                        <div class="collapse" id="groupSubmitted">
-                            <ul class="nav flex-column ms-3">
-                                <li class="nav-item border-bottom border-primary">
-                                    <a class="nav-link" href="<?= Url::to(['/submission/group-marked']) ?>">Marked</a>
-                                </li>
-                                <li class="nav-item border-bottom border-primary">
-                                    <a class="nav-link" href="<?= Url::to(['/submission/group-not-marked']) ?>">Not Marked</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="nav-item border-bottom border-primary">
-            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#markAssignments" aria-expanded="false" aria-controls="markAssignments">Mark Assignments</a>
-            <div class="collapse" id="markAssignments">
-                <ul class="nav flex-column ms-3">
-                    <li class="nav-item border-bottom border-primary">
-                        <a class="nav-link" href="<?= Url::to(['/submission/individual-not-marked']) ?>">Individual Assignments</a>
-                    </li>
-                    <li class="nav-item border-bottom border-primary">
-                        <a class="nav-link" href="<?= Url::to(['/submission/group-not-marked']) ?>">Group Assignments</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="nav-item border-bottom border-primary">
-            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#markedAssignments" aria-expanded="false" aria-controls="markedAssignments">Marked Assignments</a>
-            <div class="collapse" id="markedAssignments">
-                <ul class="nav flex-column ms-3">
-                    <li class="nav-item border-bottom border-primary">
-                        <a class="nav-link" href="<?= Url::to(['/submission/individual-marked']) ?>">Individual Assignments</a>
-                    </li>
-                    <li class="nav-item border-bottom border-primary">
-                        <a class="nav-link" href="<?= Url::to(['/submission/group-marked']) ?>">Group Assignments</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="nav-item border-bottom border-primary">
-            <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#studentGroups" aria-expanded="false" aria-controls="studentGroups"> <!--<span class="badge float-end">3</span> -->Student Groups</a>
-            <div class="collapse" id="studentGroups">
-                <ul class="nav flex-column ms-3">
-                    <li class="nav-item border-bottom border-primary">
-                        <a class="nav-link" href="<?= Url::to(['/groups/create']) ?>">Create New Groups</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="nav-item border-bottom border-primary">
-            <a class="nav-link" href="<?= Url::to(['/instructor/profile']) ?>">Profile</a>
-        </li>
-    </ul>
+        <!-- Sidebar Menu -->
+        <nav class="sidebar-menu d-flex flex-column align-items-stretch mt-2">
+            <?= \hail812\adminlte\widgets\Menu::widget([
+                'items' => [
+                    [
+                        'label' => 'Create New Assignment',
+                        'icon' => 'plus',
+                        'url' => Url::to(['/assignment/create']),
+                    ],
+                    [
+                        'label' => 'View Assignments',
+                        'icon' => 'tasks',
+                        'items' => [
+                            [
+                                'label' => 'All Assignments',
+                                'icon' => 'list',
+                                'url' => Url::to(['/assignment/']),
+                            ],
+                            [
+                                'label' => 'Individual Assignments',
+                                'icon' => 'user',
+                                'url' => Url::to(['/assignment/i']),
+                            ],
+                            [
+                                'label' => 'Group Assignments',
+                                'icon' => 'users',
+                                'url' => Url::to(['/assignment/g']),
+                            ],
+                            
+                        ],
+                    ],
+                    [
+                        'label' => 'Submitted Assignments',
+                        'icon' => 'clipboard-check',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'Individual Assignments',
+                                'icon' => 'user',
+                                'url' => '#',
+                                'items' => [
+                                    [
+                                        'label' => 'Marked',
+                                        'icon' => 'check-circle',
+                                        'url' => Url::to(['/submission/individual-marked']),
+                                    ],
+                                    [
+                                        'label' => 'Not Marked',
+                                        'icon' => 'exclamation-circle',
+                                        'url' => Url::to(['/submission/individual-not-marked']),
+                                    ],
+                                ],
+                            ],
+                            [
+                                'label' => 'Group Assignments',
+                                'icon' => 'users',
+                                'url' => '#',
+                                'items' => [
+                                    [
+                                        'label' => 'Marked',
+                                        'icon' => 'check-circle',
+                                        'url' => Url::to(['/submission/group-marked']),
+                                    ],
+                                    [
+                                        'label' => 'Not Marked',
+                                        'icon' => 'exclamation-circle',
+                                        'url' => Url::to(['/submission/group-not-marked']),
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    [
+                        'label' => 'Mark Assignments',
+                        'icon' => 'marker',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'Individual Assignments',
+                                'icon' => 'user',
+                                'url' => Url::to(['/submission/mark-individual']),
+                            ],
+                            [
+                                'label' => 'Group Assignments',
+                                'icon' => 'users',
+                                'url' => Url::to(['/submission/group-not-marked']),
+                            ],
+                        ],
+                    ],
+                    [
+                        'label' => 'Marked Assignments',
+                        'icon' => 'check',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'Individual Assignments',
+                                'icon' => 'user',
+                                'url' => Url::to(['/submission/individual-marked']),
+                            ],
+                            [
+                                'label' => 'Group Assignments',
+                                'icon' => 'users',
+                                'url' => Url::to(['/submission/group-marked']),
+                            ],
+                        ],
+                    ],
+                    [
+                        'label' => 'Student Groups',
+                        'icon' => 'users',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'Create New Groups',
+                                'icon' => 'plus',
+                                'url' => Url::to(['/groups/create']),
+                            ],
+                        ],
+                    ],
+                    [
+                        'label' => 'Profile',
+                        'icon' => 'user',
+                        'url' => Url::to(['/instructor/profile']),
+                    ],
+                    
+                ],
+                
+            ]) ?>
+            
+        </nav>
+
     </div>
-    </ul>
+</aside>
 
-    
-</nav>
 
-<style>
-    .nav{
-        align-items: start;
-    }
-  .nav-link:hover {
-    color: green;
-  }
-  .border-bottom {
-    border-bottom: 1px solid;
-  }
-  .nav-item .collapse {
-    background-color: black;
-  }
-</style>
+
+
+
+
+<!--
+'<a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                  <i class="fas fa-th-large"></i>
+              </a>'
+               -->

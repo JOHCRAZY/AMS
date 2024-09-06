@@ -53,6 +53,7 @@ use kartik\file\FileInput;
     ]); ?>
 </div>
 <br><br>
+<?php if(!$update): ?>
  <span class="row">
  <div class="col-sm-6 mb-3 mb-sm-0">
     <?= $form->field($model, 'fname')->textInput(['maxlength' => true]) ?>
@@ -135,7 +136,7 @@ use kartik\file\FileInput;
    
 
 
-    
+    <?php endif; ?>
 
     <br><br>
 

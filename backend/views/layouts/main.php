@@ -64,3 +64,4 @@ $this->registerJsFile($publishedRes[1].'/control_sidebar.js', ['depends' => '\ha
 <!-- </html> -->
 <?php $this->endPage() ?>
 
+

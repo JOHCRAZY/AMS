@@ -43,6 +43,7 @@ class StudentInfo {
 
     public static function ShowStudentInfo($StudentID)
     {
+        
         echo self::renderModal($StudentID);
 
         // Add the trigger script for showing the modal

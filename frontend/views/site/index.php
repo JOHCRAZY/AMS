@@ -10,12 +10,12 @@ $this->title = 'Assignment Management System';
 
 <div class="container">
 
-    <header class="jumbotron text-center">
-        <h1><?= Html::encode($this->title) ?></h1>
-        <p class="lead">Streamline your assignments and boost academic success.</p>
-        <?php if(Yii::$app->user->isGuest): ?>
-        <p><?= Html::a('Get Started', ['/site/login'], ['class' => 'btn btn-lg btn-primary']) ?></p>
-        <?php endif; ?>
+    <header class="mt-4">
+        <!-- <h1>< ?= Html::encode($this->title) ?></h1> -->
+        <!-- <p class="lead">Streamline your assignments and boost academic success.</p> -->
+        <!-- < ?php if(Yii::$app->user->isGuest): ?>
+        <p>< ?= Html::a('Get Started', ['/site/login'], ['class' => 'btn btn-lg btn-primary']) ?></p>
+        < ?php endif; ?> -->
     </header>
 
     <main class="container">

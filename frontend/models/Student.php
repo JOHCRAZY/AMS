@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use Exception;
 use Yii;
 
 /**
@@ -147,7 +148,12 @@ class Student extends \yii\db\ActiveRecord
             if ($this->imageFile) {
     
                 if ($this->profileImage) {
-                    unlink(Yii::getAlias('@webroot') . '/profiles/' . $this->profileImage);
+
+                    try{
+                        unlink(Yii::getAlias('@webroot') . '/profiles/' . $this->profileImage);
+                    }catch(Exception $e){
+                        
+                    }
                 }
     
                 $fileName = 'profile_' . time() . '.' . $this->imageFile->extension;

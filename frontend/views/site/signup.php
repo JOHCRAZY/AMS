@@ -7,20 +7,17 @@
 use yii\bootstrap5\Html;
 use yii\bootstrap5\ActiveForm;
 
-$this->title = 'Signup';
+$this->title = 'AMS | Signup';
 ?>
-<div class="container mt-8" style="margin-left: auto">
 
-    <div class="row justify-content-center">
-        <div class="col-sm-4 mt-5">
-            <div class="card rounded-5 text-white bg-dark border-success mb-3">
+            <div class="text border-primary p-4">
             <?php $form = ActiveForm::begin([
                                 'options' => ['class' => 'card-body'],
 
             ]); ?>
 
-            <div class="text-center">
-                    <h1 class="title">SignUp</h1>
+            <div class="text-center text-primary">
+                    <h1 class="title">SignUp to AMS</h1>
                     <p class="lead">Assignment Management System</p>
                 </div>
                 <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
@@ -31,18 +28,15 @@ $this->title = 'Signup';
 
                 <?= $form->field($model, 'role')->dropDownList(['student'=> 'Student','instructor'=> 'Instructor'],['prompt' => '---Select---']) ?>
 
-                <div class="form-group">
-                    <?= Html::submitButton('Signup', ['class' => 'btn btn-lg btn-primary mt-4 mb-1 w-100', 'name' => 'signup-button']) ?>
+                <div class="text-center">
+                    <?= Html::submitButton('Signup', ['class' => 'btn btn-lg btn-outline-primary m-2 w-100', 'name' => 'signup-button']) ?>
                 </div>
 
             <?php ActiveForm::end(); ?>
-            <div class="text-center mb-5" style="color:#999;">
-            Already have account  <?= Html::a('login here', ['site/login']) ?>.
+            <div class="text-center">
+            Already have account  <?= Html::a('Login Here', ['site/login'],['class' => 'btn btn-link fw-bold','style' => 'text-decoration: none;']) ?>
 
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 
 

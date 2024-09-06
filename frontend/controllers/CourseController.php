@@ -11,7 +11,6 @@ use yii\helpers\Html;
 use yii\bootstrap5\Modal;
 use frontend\models\Student;
 use frontend\controllers\Selector;
-use common\models\WindowController;
 
 include_once('Selector.php');
 /**
@@ -19,7 +18,7 @@ include_once('Selector.php');
  */
 class CourseController extends Controller
 {
-    use WindowController;
+
     /**
      * @inheritDoc
      */

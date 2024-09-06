@@ -96,7 +96,7 @@ class User extends ActiveRecord implements IdentityInterface
             'UserID' => Yii::t('app', 'User ID'),
             'username' => Yii::t('app', 'Username'),
             'password' => Yii::t('app', 'Password'),
-            'role' => Yii::t('app', 'Sign As'),
+            'role' => Yii::t('app', ' Role'),
             'password_hash' => Yii::t('app', 'Password'),
             'password_reset_token' => Yii::t('app', 'Password Reset Token'),
             'verification_token' => Yii::t('app', 'Verification Token'),

@@ -17,9 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Submission'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <!-- <p>
+        < ?= Html::a(Yii::t('app', 'Create Submission'), ['create'], ['class' => 'btn btn-success']) ?>
+    </p> -->
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -30,12 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'SubmissionID',
-            'AssignmentID',
-            'groupID',
-            'StudentID',
+            //'SubmissionID',
+           // 'AssignmentID',
+            //'groupID',
+            //'StudentID',
             'content:ntext',
-            //'submissionDate',
+            'submissionDate:date',
             //'fileURL',
             //'status',
             //'score',

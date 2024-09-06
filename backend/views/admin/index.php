@@ -16,10 +16,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="admin-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+<!-- 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Admin'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+        < ?= Html::a(Yii::t('app', 'Create Admin'), ['create'], ['class' => 'btn btn-success']) ?>
+    </p> -->
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -32,9 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
             'username',
-            'password',
-            'password_hash',
-            'password_reset_token',
+            //'password',
+            //'password_hash',
+            //'password_reset_token',
             //'verification_token',
             'email:email',
             //'email_verified:email',
@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'urlCreator' => function ($action, Admin $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  },
-                 'template' => '{view}{update}',
+                 'template' => '',
 
             ],
         ],

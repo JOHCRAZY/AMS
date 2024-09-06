@@ -60,7 +60,7 @@ class Submissions extends Submission
         $query->andFilterWhere([
             'SubmissionID' => $this->SubmissionID,
             'AssignmentID' => $this->AssignmentID,
-            'groupID' => $this->groupID,
+           // 'groupID' => $this->groupID,
             'StudentID' => $this->StudentID,
             'submissionDate' => $this->submissionDate,
             'score' => $this->score,

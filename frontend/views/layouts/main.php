@@ -10,151 +10,115 @@ use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 
-
 AppAsset::register($this);
 
 use \hail812\adminlte3\assets\FontAwesomeAsset;
 FontAwesomeAsset::register($this);
-$this->registerJsFile('@web/js/site.js', ['depends' => [\yii\web\JqueryAsset::class]]);
+\hail812\adminlte3\assets\AdminLteAsset::register($this);
+
+$this->registerCssFile('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback');
+
+$assetDir = Yii::$app->request->baseUrl;
+
+$publishedRes = Yii::$app->assetManager->publish('@vendor/hail812/yii2-adminlte3/src/web/js');
+$this->registerJsFile($publishedRes[1] . '/control_sidebar.js', ['depends' => '\hail812\adminlte3\assets\AdminLteAsset']);
+
 ?>
 <?php $this->beginPage()?>
 <!DOCTYPE html>
-<html lang="<?=Yii::$app->language?>" class="h-100" data-bs-theme="dark" data-bs-version="5.1">
+<html lang="<?=Yii::$app->language?>">
 <head>
     <meta charset="<?=Yii::$app->charset?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags()?>
     <title><?=Html::encode($this->title)?></title>
     <?php $this->head()?>
 </head>
-<body class="d-flex flex-column h-100">
+<body class="container-fluid hold-transition nav-child-indent layout-fixed mb-4 mt-2">
 <?php $this->beginBody()?>
 
 <header>
+    
     <?php
 NavBar::begin([
     'brandLabel' => Yii::$app->name,
     'brandUrl' => '#',
     'options' => [
-        'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
+        'class' => 'navbar navbar-expand navbar-primary fixed-top elevation-5',
     ],
 ]);
-$menu = [
-    ['label' => 'Home', 'url' => ['/site/index']],
-];
+
+echo '<a class="nav-link" data-widget="pushmenu" href="#" role="button">
+            <i class="fas fa-bars"></i>
+            </a>';
+
+
+
 $menuItems = [
     ['label' => 'Home', 'url' => ['/site/index']],
-    //['label' => 'About', 'url' => ['/site/about']],
     ['label' => 'Contact', 'url' => ['/site/contact']],
     ['label' => 'Signup', 'url' => ['/site/signup']],
-
 ];
-if (Yii::$app->user->isGuest) {
-    // $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
-        'items' => $menuItems,
-    ]);
-} else {
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
-        'items' => $menu,
-    ]);
-}
-echo Html::tag('div', '<i class="fas fa-book"> Assignment Management System </i>', ['class' => ['navbar-nav me-auto mb-2 mb-md-0']]);
+
+echo Nav::widget([
+    'options' => ['class' => 'navbar-nav m-auto mb-2 mb-md-0'],
+    'items' => Yii::$app->user->isGuest ? $menuItems : [
+       // ['label' => 'Home', 'url' => ['/site/index']],
+    ],
+]);
+
+//echo Html::tag('div', '<i class="fas fa-book"> Assignment Management System </i>', ['class' => 'navbar-nav me-auto mb-2 mb-md-0']);
 
 if (Yii::$app->user->isGuest) {
-    echo Html::tag('div', Html::a('<i class="fas fa-sign-in-alt">Login</i>', ['/site/login'], ['class' => ['btn btn-link']]), ['class' => ['d-flex']]);
+    echo Html::tag('div', Html::a('<i class="fas fa-sign-in-alt"> Login</i>', ['/site/login'], ['class' => 'btn btn-link']), ['class' => 'd-flex']);
 } else {
-    // echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
-    // . Html::submitButton(
-    //     'Logout (' . Yii::$app->user->identity->username . ')',
-    //     ['class' => 'btn btn-link logout text-decoration-none']
-    // )
-    // . Html::endForm();
-    echo '<ul class="nav-item">'
-. Html::a('<i class="fas fa-sign-out-alt">Logout</i>', ['/site/logout'], ['data-method' => 'post', 'class' => 'nav-link d-flex mt-3']);
+    
 
+    echo '<a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                  <i class="fas fa-cog"></i>
+              </a>';
+              echo '<a class="nav-link" data-widget="fullscreen" href="#" role="button">
+              <i class="fas fa-expand-arrows-alt"></i>
+          </a>';
+    echo Html::a('<i class="fas fa-sign-out-alt"> Logout</i>', ['/site/logout'], ['data-method' => 'post', 'class' => 'nav-link d-flex ']);
 }
 
 NavBar::end();
 ?>
-
 </header>
 
-<!-- <div class="col d-flex flex-column align-items-stretch mt-4"> -->
-<div class="row justify-content-between">
-<!-- <div class="col-sm-1 order-0 p-4 position-sticky fixed"> -->
-    <?php if (!Yii::$app->user->isGuest): ?>
-        <?php
-$user = \frontend\models\User::findByUsername(Yii::$app->user->identity->username);
-if ($user !== null) {
-    if ($user->role == 'student') {
-        $student = \frontend\models\Student::find()->where(['UserID' => $user->UserID])->one();
+<div class="container-fluid">
+    <div class="row row-cols-auto gap-0">
+        <?php if(!Yii::$app->user->isGuest): ?>
+        <div class="col order-0">
+        <?=$this->render('sideNav', ['assetDir' => $assetDir])?>
+            <?php $class = 'col-10';?>
+        </div>
+        <?php else: ?>
+          <?php   $class = 'col'; ?>
+        <?php endif; ?>
+        <!-- <div class="< ?=$class ?>"> -->
+    <?=$this->render('control-sidebar')?>
 
-        if ($student != null) {
-            echo '<div class="col-sm-1 order-0 p-4 position-sticky fixed">'.$this->render('StudentSideNav').'</div>';
-        } else {
-
-            echo '<div class="col-sm-1 order-0 p-4 position-sticky fixed"><div class="card m-3 text-bg-warning-subtle p-3 text-center position-fixed">';
-            echo '<span class="w-100">You\'re Not Yet Registered</span><br>';
-            echo '<span class="w-100">Please fill Your Details</span>';
-            echo '<br>';
-            echo '<a href="' . Yii::$app->urlManager->createUrl(['student/profile']) . '">Register</a>';
-            echo '</div></div>';
-
-        }
-
-    } elseif ($user->role == 'instructor') {
-        $instructor = \frontend\models\Instructor::find()->where(['UserID' => $user->UserID])->one();
-        if ($instructor !== null && $instructor->Status == 'Verified') {
-            echo '<div class="col-sm-1 order-0 p-4 position-sticky fixed">'.$this->render('InstructorSideNav').'</div>';
-        } else {
-
-
-            echo '<div class="col-sm-1 order-0 p-4 position-sticky fixed"><div class="card m-3 text-bg-warning-subtle p-2 text-center mt-5 position-fixed">';
-            echo '<span class="w-100">You\'re Not Yet Verified</span><br>';
-            echo '<span class="w-100">Please fill Your Details and Contact Administrator for Verification</span>';
-            echo '<a href="' . Yii::$app->urlManager->createUrl(['instructor/profile']) . '">Register</a>';
-            echo '</div></div>';
-        }
-    }
-}
-?>
-    <?php endif;?>
-<!-- </div> -->
-
-
-<div class="col-sm-10 order-1 p-4">
-<main role="main" class="wrapper">
-
-
-<div class="container w-100" data-bs-theme="dark">
-    <?=Breadcrumbs::widget([
+    <main role="main" class="<?=$class ?> container-fluid mb-4">
+        <div class="container-fluid">
+            <?=Breadcrumbs::widget([
     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-    'options' => ['class' => 'bg-dark text-primary']
+    'options' => ['class' => 'bg-dark text-primary'],
 ])?>
-
-<div class="col text-lg-center">
-<?=Alert::widget()?>
-
-</div>
-<?=$content?>
-</div>
-</main>
-</div>
-</div>
-<!-- </div> -->
-
-
-<footer class="footer mt-auto py-3 text-muted bg-dark sticky-bottom" style="color:aquamarine">
-    <div class="container" style="color:aqua">
-        <p class="float-start">&copy; <?=Html::encode(Yii::$app->name)?> <?=date('Y')?></p>
-        <p class="float-end"><?='Assignment Management System'?></p>
+            <div class="col text-lg-center mt-2 elevation-5">
+                <?=Alert::widget()?>
+            </div>
+            <?=$content?>
+        </div>
+    </main>
+        <!-- </div> -->
     </div>
-</footer>
+</div>
+
+<?=$this->render('footer')?>
 
 <?php $this->endBody()?>
 </body>
 </html>
-<?php $this->endPage();
+<?php $this->endPage()?>

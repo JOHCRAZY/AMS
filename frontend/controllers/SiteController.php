@@ -2,7 +2,6 @@
 
 namespace frontend\controllers;
 
-use common\models\WindowController;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -16,7 +15,6 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\User;
 use frontend\models\{Instructor,Student};
-use yii\helpers\{Html,Url};
 use frontend\models\ContactForm;
 
 
@@ -25,7 +23,6 @@ use frontend\models\ContactForm;
  */
 class SiteController extends Controller
 {
-    use WindowController;
     /**
      * {@inheritdoc}
      */
@@ -80,6 +77,11 @@ class SiteController extends Controller
 }
 
 
+public function actionError(){
+    $this->layout = 'blank';
+    return $this->render('error');
+}
+
     /**
      * Displays homepage.
      *
@@ -110,10 +112,10 @@ class SiteController extends Controller
                 $student = Student::find()->where(['UserID' => $user->UserID])->one();
                 if($student != null){
 
-                    Yii::$app->session->setFlash('success', 'you\'re Now Logged in');
-                    return $this->redirect(['/site/index']);
+                    Yii::$app->session->setFlash('success', 'Hello '.Yii::$app->user->identity->username.',  Welcome to AMS');
+                    return $this->redirect(['/assignment/index']);
                 }else{
-                    Yii::$app->session->setFlash('success', 'Fill you\'re Profile details to continue');
+                    Yii::$app->session->setFlash('success', 'Welcome '.Yii::$app->user->identity->username.',  PLease Fill your Profile details to continue to AMS');
 
                     return $this->redirect(['/student/profile']);
 
@@ -124,11 +126,11 @@ class SiteController extends Controller
                 $instructor = Instructor::find()->where(['UserID' => $user->UserID])->one();
 
                 if($instructor != null){
-                    Yii::$app->session->setFlash('success', 'you\'re Now Logged in');
-                    return $this->redirect(['/site/index']);
+                    Yii::$app->session->setFlash('success', 'Hello '.Yii::$app->user->identity->username.',  Welcome to AMS');
+                    return $this->redirect(['/assignment/index']);
                 }else{
 
-                    Yii::$app->session->setFlash('success', 'Complete you\'re Details for verification');
+                    Yii::$app->session->setFlash('success', 'Welcome '.Yii::$app->user->identity->username.',  PLease Fill your Profile details to continue to AMS');
                     return $this->redirect(['/instructor/profile']);
                 }
                 

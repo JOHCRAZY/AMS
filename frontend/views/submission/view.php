@@ -3,87 +3,82 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\ActiveForm;
+use frontend\models\User;
+use frontend\models\Course;
+use frontend\models\Instructor;
 
 /** @var yii\web\View $this */
 /** @var frontend\models\Submission $model */
 
 $this->title = $model->assignment->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Submissions'), 'url' => null];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Submissions'), 'url' => ['submission/index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 
-$isInstructor = frontend\models\User::findByUsername(Yii::$app->user->identity->username)->role == 'instructor' ;
+$isInstructor = User::findByUsername(Yii::$app->user->identity->username)->role == 'instructor';
+
+$course = Course::findOne(['courseCode' => $model->getAssignment()->one()->courseCode]);
+$courseName = $course->courseName ?? 'N/A';
+$instructor = Instructor::findOne(['InstructorID' => $course->courseInstructor]);
 
 ?>
 
-    <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
-
-    <!-- <p>
-        < ?= Html::a(Yii::t('app', 'Update'), ['update', 'SubmissionID' => $model->SubmissionID], ['class' => 'btn btn-primary']) ?>
-        < ?= Html::a(Yii::t('app', 'Delete'), ['delete', 'SubmissionID' => $model->SubmissionID], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p> -->
-
-    <?= DetailView::widget([
-    'model' => $model,
-    // 'options' => [
-    //     
-    // ],
-    'attributes' => [
-        //'SubmissionID',
-        //'AssignmentID',
-        [
-            'attribute' => 'assignment.courseCode',
-            'label' => 'Course Code', // Optionally, you can specify a custom label for the attribute
-        ],
-        //'groupID',
-        //'StudentID',
-        [
-            'attribute' => 'Student Name',
-            'label' => $model->assignment->assignment == 'Group Assignment' ? 'Submitted By' : 'Student Name',
-           
-            'value' => function ($model) {
-                return $model->student->fname . '   ' .$model->student->lname;
-            },
-        ],
-        'student.regNo',
-        [
-            'attribute' => 'SubmissionContent',
-            'format' => 'html',
+<div class="container-fluid mb-5">
+    <div class="card custom-card shadow-lg mb-5 rounded-3 elevation-4 p-4">
+        <div class="card-header">
+            <h2 class="text-center"><?= Html::encode($this->title) ?></h2>
+        </div>
+        <blockquote class="text-center rounded-5 pl-3 mt-2">
+            <p><?= Html::encode($courseName) ?></p>
+            <footer class="blockquote-footer">INSTRUCTOR :- 
+                <cite title="Source Title"><?= Html::encode($instructor->fname . ' ' . $instructor->mname . ' ' . $instructor->lname) ?></cite>
+            </footer>
+        </blockquote>
+        <div class="row">
+            <div class="col-4">
+                <p><i class="fas fa-book"></i> <strong>Course Code:</strong> <?= Html::encode($model->assignment->courseCode) ?></p>
+            </div>
+            <div class="col-4">
+                <p><i class="fas fa-user-graduate"></i> <strong><?= Html::encode($model->assignment->assignment == 'Group Assignment' ? 'Submitted By' : 'Student Name') ?>:</strong> <?= Html::encode($model->student->fname . ' ' . $model->student->lname) ?></p>
+            </div>
+            <div class="col-4">
+                <p><i class="fas fa-id-badge"></i> <strong>Student Reg. No:</strong> <?= Html::encode($model->student->regNo) ?></p>
+            </div>
             
-        ],
-        [
-            'attribute' => 'submissionDate',
-            'label' => 'Date submitted'
-        ],
-        [
-            'attribute' => 'fileURL',
-            'label' => 'Attached File',
-            'value' => function ($model) {
-                if (!empty($model->fileURL)){
-                    return $model->fileURL;
-                }else{
-                    return 'No file Attached';
-                }
-            },
-        ],
-        'SubmissionStatus',
-        'score',
-    ],
-]) ?>
-<br><br>
-<?php if($isInstructor): ?>
-<div class="d-flex justify-content-center">
-    <div class="text-center">
-    <?php $form = ActiveForm::begin(['action' => ['mark', 'SubmissionID' => $model->SubmissionID], 'method' => 'post']) ?>
-            <?= Html::submitButton(Yii::t('app', 'mark Assignment'), ['class' => 'btn btn-lg btn-outline-primary mt-4 mb-1 w-10']) ?>
-        <?php ActiveForm::end(); ?>
-    </div>
-</div>
-<?php endif;?>
+            <div class="col-4">
+                <p><i class="fas fa-calendar-alt"></i> <strong>Date Submitted:</strong> <?= Yii::$app->formatter->asDatetime($model->submissionDate) ?></p>
+            </div>
+            <div class="col-4">
+                <p><i class="fas fa-paperclip"></i> <strong>Attached File:</strong> <?= !empty($model->fileURL) ? Html::a('Download', ['download', 'id' => $model->SubmissionID], ['class' => 'btn btn-link']) : 'No file Attached' ?></p>
+            </div>
+            <div class="col-4">
+                <p><i class="fas fa-check-circle"></i> <strong>Submission Status:</strong> 
+                <?= $model->SubmissionStatus == 'Marked' ? ('<span class="text-success">Marked</span>') : ('<span class="text-danger">Not Marked</span>'); ?>
+                </p>
+            </div>
+            <div class="col-4">
+                <p><i class="fas fa-percent"></i> <strong>Score:</strong> <?= Html::encode($model->score) ?></p>
+            </div>
+            <div class="col-6">
+                                <p class="card-text">
+                                    <i class="fas fa-percent"></i>
+                                    <strong>Out of:</strong> <?= Html::encode($model->assignment->marks) ?>
+                                </p>
+                            </div>
+        </div>
 
+        <?php if ($isInstructor && $model->SubmissionStatus !== 'Marked'): ?>
+            <div class="card-footer text-center">
+                <?php $form = ActiveForm::begin(['action' => ['mark', 'SubmissionID' => $model->SubmissionID], 'method' => 'post']) ?>
+                    <?= Html::submitButton(Yii::t('app', 'Mark Assignment'), ['class' => 'btn btn-outline-primary']) ?>
+                <?php ActiveForm::end(); ?>
+            </div>
+        <?php endif; ?>
+    </div>
+    <div class="col-12">
+                <p><i class="fas fa-file-alt"></i> <strong>Student Work:</strong></p>
+                <div class="submission-content">
+                    <?= $model->SubmissionContent ?>
+                </div>
+            </div>
+</div>

@@ -24,6 +24,7 @@ $programme = \frontend\models\Programme::find()->all();//->select(['programmeCod
         'model' => $model,
         'courseCodes' => $courses,
         'programme' => $programme,
+        'update' => false,
     ]) ?>
 
 </div>

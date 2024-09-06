@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 $courses = \frontend\models\Course::find()->select(['courseCode','courseName'])->indexBy('courseCode')->column();
 $programme = \frontend\models\Programme::find()->all()//->select(['programmeCode'])->indexBy('programmeCode')->column();
 ?>
-<div class="container">
+<div class="container-fluid">
 
     <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
@@ -28,6 +28,7 @@ $programme = \frontend\models\Programme::find()->all()//->select(['programmeCode
         'model' => $model,
         'courseCodes' => $courses,
         'programme' => $programme,
+        'update' => true, 
     ]) ?>
 
 </div>

@@ -41,10 +41,15 @@ class SubmissionSearch extends Submission
 
     }
 
-    protected static function getStudentID(){
+    protected static function StudentID(){
 
         $user = User::findByUsername(\Yii::$app->user->identity->username);
-      return \frontend\models\Student::find()->where(['UserID' => $user->UserID])->one();
+      return \frontend\models\Student::find()->where(['UserID' => $user->UserID])->one()->StudentID;
+    }
+
+    protected static function instructorCourseCode(){
+        $instructorID = Instructor::findOne(['UserID' => \Yii::$app->user->getId()])->InstructorID;
+        return Course::findOne(['courseInstructor' => $instructorID])->courseCode;
     }
     /**
      * Creates data provider instance with search query applied
@@ -55,8 +60,31 @@ class SubmissionSearch extends Submission
      */
     public function search($params)
     {
-        $query = Submission::find();
+        //$query = Submission::find();
 
+        if($this->isInstructor()){ 
+
+            $query = Submission::find()
+            ->joinWith('assignment')
+            ->where([
+               'Assignment.courseCode' => self::instructorCourseCode(),
+                       //'Assignment.assignment' => 'Individual Assignment',
+                       'Submission.AssignmentStatus' => 'Submitted',
+                      // 'Submission.SubmissionStatus' => 'Marked'
+                   ]);
+   
+           }else{
+   
+               $query = Submission::find()
+           ->joinWith('assignment')
+           ->where([
+               //'Assignment.assignment' => 'Individual Assignment',
+               //'Assignment.courseCode' => $courseCode,
+               'StudentID' => self::StudentID(),
+               'Submission.AssignmentStatus' => 'Submitted',
+               //'Submission.SubmissionStatus' => 'Marked'
+           ]);
+           }
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -114,7 +142,7 @@ class SubmissionSearch extends Submission
         ->where([
             'Assignment.assignment' => 'Individual Assignment',
             'Assignment.courseCode' => $courseCode,
-            'StudentID' => self::getStudentID()->StudentID,
+            'StudentID' => self::StudentID(),
             'Submission.AssignmentStatus' => 'Submitted',
             'Submission.SubmissionStatus' => 'Marked'
         ]);
@@ -150,7 +178,7 @@ class SubmissionSearch extends Submission
 
         return $dataProvider;
     }
-    public function searchIndividualNotMarked($params,$courseCode)
+    public function searchIndividualNotMarked($params,$courseCode,$AssignmentID = null)
     {
 
         
@@ -159,24 +187,34 @@ class SubmissionSearch extends Submission
             $query = Submission::find()
         ->joinWith('assignment')
         ->where([
-            'Assignment.courseCode' => Course::find()->where([
-                'courseInstructor' => Instructor::find()->where([
-                    'UserID' => \Yii::$app->user->getId()
-                    ])->one()
-                    ])->one()->courseCode,
+            'Assignment.courseCode' => self::instructorCourseCode(),
                     'Assignment.assignment' => 'Individual Assignment',
                     'Submission.AssignmentStatus' => 'Submitted',
-                    'Submission.SubmissionStatus' => 'Not Marked'
+                    'Assignment.Status' => 'Assigned',
+                    //'Submission.SubmissionStatus' => 'Not Marked'
                 ]);
         
+                if($AssignmentID == null){
+                    $query->andWhere(['Submission.SubmissionStatus' => 'Not Marked']);
+                }else{
+                    $exist = Submission::findAll(['AssignmentID' => $AssignmentID]);
+
+                  // if($exist){
+                    $query->andWhere(['Submission.AssignmentID' => $AssignmentID]);
+                  // }else{
+
+                 //  }
+                }
+     
     }else{
 
         $query = Submission::find()
         ->joinWith('assignment')
         ->where([
             'Assignment.assignment' => 'Individual Assignment',
+            'Assignment.Status' => 'Assigned',
             'Assignment.courseCode' => $courseCode,
-            'StudentID' => self::getStudentID()->StudentID,
+            'StudentID' => self::StudentID(),
             'Submission.AssignmentStatus' => 'Submitted',
             'Submission.SubmissionStatus' => 'Not Marked'
         ]);

@@ -11,14 +11,14 @@ use Yii;
 use yii\helpers\Json;
 use frontend\models\Group;
 use frontend\controllers\{StudentList,StudentInfo};
-use common\models\WindowController;
+
 
 /**
  * StudentController implements the CRUD actions for Student model.
  */
 class StudentController extends Controller
 {
-    use WindowController;
+
     //public $layout = "student";
     /**
      * @inheritDoc
@@ -58,13 +58,14 @@ class StudentController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new students();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        return $this->goBack();
+        // $searchModel = new students();
+        // $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        // return $this->render('index', [
+        //     'searchModel' => $searchModel,
+        //     'dataProvider' => $dataProvider,
+        // ]);
     }
 
     /**
@@ -89,10 +90,10 @@ class StudentController extends Controller
 
     
     public function actionInfo($StudentID)
-    {        
+    {        $this->layout = 'blank';
         StudentInfo::ShowStudentInfo($StudentID);
 
-        $this->layout = 'bg_blank';
+        //$this->layout = 'bg_blank';
         return $this->render('_info', [
             'model' => $this->findModel($StudentID),
         ]);

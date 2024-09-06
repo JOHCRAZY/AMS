@@ -12,6 +12,7 @@ use yii\bootstrap5\BootstrapAsset;
 /** @var mixed $editedBy */
 
 BootstrapAsset::register($this);
+$this->registerJsFile('@web/js/ckeditor.js', ['depends' => [\yii\web\JqueryAsset::class]]);
 
 $this->registerJs(<<<JS
 $(document).ready(function(){
@@ -43,8 +44,8 @@ $description = Html::decode($model->description);
 <?php endif; ?>
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'AssignmentContent')->widget(Summernote::class, [
+    <?= $form->field($model, 'AssignmentContent')->textarea(['id' => 'editor', 'rows' => 40]) ?>
+    <!-- < ?= $form->field($model, 'AssignmentContent')->widget(Summernote::class, [
     'options' => [
         'placeholder' => Yii::t('app', 'Write here...'),
         //'style' => 'width: 50%; height: 900px;',
@@ -67,7 +68,7 @@ $description = Html::decode($model->description);
             'onChange' => Yii::$app->session->setFlash('info', 'Remember to save Your Assignment before  Submit.'),
         ],
     ],
-]); ?>
+]); ?> -->
 <br>
 
 <div class="row row-cols-6 justify-content-between">

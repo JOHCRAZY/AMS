@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Mark Assignment');
 
 <h1 class="text-center"><?= Html::encode($model->assignment) ?></h1>
 
-<div class="container text-center">
+<div class="container-fluid">
 
 
     <?= $this->render('_mark', [
@@ -24,5 +24,5 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Mark Assignment');
 
 </div>
 <div class="m-5 text-center">
-    <?= date('Y-m-d H:m')?>
+    <?= Yii::$app->formatter->asDatetime(time())?>
 </div>

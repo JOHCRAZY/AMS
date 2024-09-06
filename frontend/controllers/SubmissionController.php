@@ -2,14 +2,13 @@
 
 namespace frontend\controllers;
 
-use common\models\WindowController;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use frontend\models\Submission;
 use yii\web\NotFoundHttpException;
 use frontend\models\SubmissionSearch;
 use frontend\models\User;
-use frontend\models\{Student,Group};
+use frontend\models\{Student,Assignment,Group,Instructor,Course};
 use yii;
 
 /**
@@ -17,7 +16,6 @@ use yii;
  */
 class SubmissionController extends Controller
 {
-    use WindowController;
     //public $layout = 'student';
     /**
      * @inheritDoc
@@ -37,7 +35,7 @@ class SubmissionController extends Controller
                     'class' => \yii\filters\AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index','mark', 'view', 'create', 'update','individual-not-marked','group-marked','group-not-marked','individual-marked'],
+                            'actions' => ['index','mark', 'view','mark-individual', 'create', 'update','individual-not-marked','group-marked','group-not-marked','individual-marked'],
                             'allow' => true,
                             'matchCallback' => function ($rule, $action) {
                                 // Custom logic to determine access
@@ -185,6 +183,29 @@ class SubmissionController extends Controller
         ]);
     }
 
+    protected static function instructorCourseCode(){
+        $instructorID = Instructor::findOne(['UserID' => Yii::$app->user->getId()])->InstructorID;
+        return Course::findOne(['courseInstructor' => $instructorID])->courseCode;
+    }
+
+    public function actionMarkIndividual($AssignmentID = null){
+
+        Yii::info('Assignment ID: ' . $AssignmentID, __METHOD__);
+        $searchModel = new SubmissionSearch();
+
+        if(!$this->isStudent()){
+            $dataProvider = $searchModel->searchIndividualNotMarked(Yii::$app->request->queryParams,null,$AssignmentID);
+        }else{
+            return $this->goHome();
+
+        }
+        return $this->render('/submission/@individual',[
+           'dataProvider'=>$dataProvider,
+           'searchModel'=>$searchModel,
+           'models' =>  Assignment::findAll(['courseCode' => self::instructorCourseCode(),'assignment' => 'Individual Assignment']),
+           'AssignmentID' => $AssignmentID ?? 1,
+        ]);
+    }
     public function actionGroupMarked($courseCode = null){
 
         if($courseCode == null && !$this->isInstructor()){
