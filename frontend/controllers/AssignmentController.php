@@ -110,6 +110,7 @@ class AssignmentController extends Controller
 
     }
 
+    
     protected static function getStudent()
     {
         $user = User::findByUsername(Yii::$app->user->identity->username);
@@ -426,7 +427,20 @@ public function actionG(){
 
     public function actionDo($AssignmentID, $StudentID = null, $Submit = false)
     {
+        
         $model = $this->findModel($AssignmentID);
+
+        if($Submit){
+
+            $now = new \DateTime(yii::$app->formatter->asDatetime(time()));
+            $submissionDate = new \DateTime($model->submissionDate);
+
+            if($now->getTimestamp() > $submissionDate->getTimestamp()){
+
+                Yii::$app->session->setFlash('danger', 'Submission failed, You\'re out of deadline.');
+            return $this->redirect(['view', 'AssignmentID' => $model->AssignmentID]);
+            }
+        }
 
         if ($model->assignment == 'Group Assignment') {
             // $groupNO = Group::find()

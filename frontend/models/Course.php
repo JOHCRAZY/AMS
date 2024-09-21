@@ -54,11 +54,11 @@ class Course extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'courseCode' => Yii::t('app', 'Course Code'),
-            'courseName' => Yii::t('app', 'Course Name'),
+            'courseCode' => Yii::t('app', 'Module Code'),
+            'courseName' => Yii::t('app', 'Module Name'),
             'semester' => Yii::t('app', 'Semester'),
             'year' => Yii::t('app', 'Year'),
-            'courseInstructor' => Yii::t('app', 'Course Instructor'),
+            'courseInstructor' => Yii::t('app', 'Module Instructor'),
             'programmeCode' => Yii::t('app', 'Programme Code'),
         ];
     }

@@ -7,6 +7,9 @@ use kartik\editors\Summernote;
 /** @var yii\web\View $this */
 /** @var frontend\models\Assignment $model */
 /** @var yii\widgets\ActiveForm $form */
+
+$this->registerJsFile('@web/js/ckeditor.js', ['depends' => [\yii\web\JqueryAsset::class]]);
+
 ?>
 
 <div class="container-fluid">
@@ -38,7 +41,7 @@ use kartik\editors\Summernote;
             'options' => ['placeholder' => 'Enter submission date ...'],
             'pluginOptions' => [
                 'autoclose' => true,
-                'format' => 'yyyy-mm-dd hh:ii:ss'
+                'format' => 'yyyy-mm-dd hh:ii'
             ]
         ]) ?>
     </div>

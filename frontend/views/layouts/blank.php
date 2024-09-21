@@ -20,13 +20,14 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="container">
+<body style="margin:0px; background-color: rgb(82, 86, 89);">
 <?php $this->beginBody() ?>
-<div class="row justify-content-center p-2">
-<div class="card elevation-5 rounded-5 m-5 shadow-sm">
+    <!-- <div class="text-lg-center mt-5 w-25"> -->
+    <!-- </div> -->
+
+<!-- <div class="row justify-content-between p-2"> -->
 <?= $content ?>
-</div>
-</div>
+<!-- </div> -->
 
 <?php $this->endBody() ?>
 </body>

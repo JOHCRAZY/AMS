@@ -47,7 +47,8 @@ class InstructorController extends Controller
             ]
         );
         }
-
+      
+      
     /**
      * Lists all Instructor models.
      *

@@ -12,7 +12,7 @@ use yii\widgets\Pjax;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 /** @var string $title */
 
-$this->title = Yii::t('app', $title);
+$this->title = Yii::t('app',$title);
 $this->params['breadcrumbs'][] = $this->title;
 $isInstructor = frontend\models\User::findByUsername(Yii::$app->user->identity->username)->role == 'instructor' ;
 
@@ -24,11 +24,17 @@ $student = frontend\models\Student::find()->where(['UserID' => $user->UserID])->
 
 ?>
 
-<h1 class="text-center"><?= Html::encode($this->title) ?></h1>
+<!-- <h1 class="text-center">< ?= Html::encode($this->title) ?></h1> -->
 
 <div class="container-fluid mb-5">
     <?php Pjax::begin(); ?>
     <div class="row">
+        <?php if(empty($dataProvider->models)): ?>
+            <div class="text-center p-5 m-5">
+            <i class="fas fa-tasks fa-10x text-muted"></i>
+            <p class="mt-5 text-muted"><h5>No <?= $this->title ?> yet.</h5></p>
+        </div>
+        <?php else: ?>
         <?php foreach ($dataProvider->models as $model): ?>
             <?php
             $course = frontend\models\Course::findOne(['courseCode' => $model->courseCode]);
@@ -108,6 +114,7 @@ $student = frontend\models\Student::find()->where(['UserID' => $user->UserID])->
 
             </div>
         <?php endforeach; ?>
+        <?php endif; ?>
     </div>
     <?php Pjax::end(); ?>
 </div>

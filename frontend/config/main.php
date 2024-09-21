@@ -14,16 +14,16 @@ return [
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'request' => [
-            'csrfParam' => '_csrf-frontend',
+            'csrfParam' => '_csrf-AMS-frontend',
         ],
         'user' => [
             'identityClass' => 'frontend\models\User',
             'enableAutoLogin' => false,
-            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+            'identityCookie' => ['name' => '_identity-AMS-frontend', 'httpOnly' => true],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
-            'name' => 'AMS-frontend',
+            'name' => 'AMS',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

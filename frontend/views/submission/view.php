@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\ActiveForm;
 use frontend\models\User;
-use frontend\models\Course;
+use frontend\models\{Course, Student, Group, Assignment};
 use frontend\models\Instructor;
 
 /** @var yii\web\View $this */
@@ -24,15 +24,51 @@ $instructor = Instructor::findOne(['InstructorID' => $course->courseInstructor])
 ?>
 
 <div class="container-fluid mb-5">
-    <div class="card custom-card shadow-lg mb-5 rounded-3 elevation-4 p-4">
+    <div class="card shadow-lg mb-5 rounded-3 elevation-4 p-4" style="background: transparent">
         <div class="card-header">
             <h2 class="text-center"><?= Html::encode($this->title) ?></h2>
         </div>
-        <blockquote class="text-center rounded-5 pl-3 mt-2">
-            <p><?= Html::encode($courseName) ?></p>
+        <blockquote class="text-center rounded-5 pl-3 mt-2" style="background: transparent">
+            <?php if($model->assignment->assignment == 'Group Assignment'): ?>
+            <div class="row">
+                <div class="col-sm-6">
+                <p class="text-primary"><?= Html::encode($courseName) ?></p>
             <footer class="blockquote-footer">INSTRUCTOR :- 
                 <cite title="Source Title"><?= Html::encode($instructor->fname . ' ' . $instructor->mname . ' ' . $instructor->lname) ?></cite>
             </footer>
+                </div>
+                <div class="col-sm-6 text-center">
+        <?php    $courseCode = Assignment::find()
+                                    ->where(['AssignmentID' => $model->assignment->AssignmentID])->one()->courseCode;
+                    $group = Group::find()
+                                    ->where(['StudentID' => $model->student->StudentID, 'courseCode' => $courseCode])->one();
+
+                    $GroupMember = Student::find()
+                                    ->where(['IN','StudentID',
+                                    Group::find()->select('StudentID')
+                                    ->where(['GroupNO' => $group->GroupNO, 'courseCode' => $courseCode])])->all();
+                    $students = '';
+                    foreach($GroupMember as $student){
+
+                 $students .= '<p>
+                <footer class="blockquote-footer"> <strong>'.$student->fname.' '.$student->lname.'</strong> => REG NO:
+                    <cite title="Source Title">' . Html::encode($student->regNo) . '</cite>
+                </footer></p>';
+
+                    }
+
+                    echo '<p class="text-primary">'.$group->groupName.'</p>'.$students;
+                ?>
+
+        </div>
+            </div>
+
+            <?php else: ?>
+                <p class="text-primary"><?= Html::encode($courseName) ?></p>
+            <footer class="blockquote-footer">INSTRUCTOR :- 
+                <cite title="Source Title"><?= Html::encode($instructor->fname . ' ' . $instructor->mname . ' ' . $instructor->lname) ?></cite>
+            </footer>
+            <?php endif; ?>
         </blockquote>
         <div class="row">
             <div class="col-4">
@@ -49,7 +85,11 @@ $instructor = Instructor::findOne(['InstructorID' => $course->courseInstructor])
                 <p><i class="fas fa-calendar-alt"></i> <strong>Date Submitted:</strong> <?= Yii::$app->formatter->asDatetime($model->submissionDate) ?></p>
             </div>
             <div class="col-4">
-                <p><i class="fas fa-paperclip"></i> <strong>Attached File:</strong> <?= !empty($model->fileURL) ? Html::a('Download', ['download', 'id' => $model->SubmissionID], ['class' => 'btn btn-link']) : 'No file Attached' ?></p>
+                <p><i class="fas fa-paperclip"></i> 
+                <strong>Attached File:</strong> 
+                <?= !empty($model->fileURL) ? Html::a('View Attachment', 
+                        [Yii::$app->request->baseUrl.'/attachments/'.$model->fileURL], 
+                        ['class' => 'btn btn-link','target' => '_blank']) : 'No file Attached' ?></p>
             </div>
             <div class="col-4">
                 <p><i class="fas fa-check-circle"></i> <strong>Submission Status:</strong> 
@@ -57,7 +97,8 @@ $instructor = Instructor::findOne(['InstructorID' => $course->courseInstructor])
                 </p>
             </div>
             <div class="col-4">
-                <p><i class="fas fa-percent"></i> <strong>Score:</strong> <?= Html::encode($model->score) ?></p>
+            <?php $placeholder = '<span class="text-danger">-:- -:-</span>'; ?>
+                <p><i class="fas fa-percent"></i> <strong>Score:</strong> <?= $model->score ?? $placeholder ?></p>
             </div>
             <div class="col-6">
                                 <p class="card-text">

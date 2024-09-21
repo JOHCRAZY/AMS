@@ -12,8 +12,8 @@ $this->registerJsFile('@web/js/ckeditor.js', ['depends' => [\yii\web\JqueryAsset
 
 ?>
 
-<?php $form = ActiveForm::begin(['action' => ['mark', 'Marked' => true, 'SubmissionID' => $model->SubmissionID]]); ?>
-<?= $form->field($model, 'SubmissionContent')->textarea(['id' => 'editor', 'rows' => 40]) ?>
+<?php $form = ActiveForm::begin(['action' => ['mark', 'Marked' => true, 'SubmissionID' => $model->SubmissionID,'AssignmentID' => $model->AssignmentID]]); ?>
+<?= $form->field($model, 'SubmissionContent')->textarea(['id' => 'editor'])?>
 
 
     <?php if ($model->fileURL && pathinfo($model->fileURL, PATHINFO_EXTENSION) == 'pdf') : ?>

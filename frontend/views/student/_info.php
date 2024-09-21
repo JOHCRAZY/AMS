@@ -13,9 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 ?>
-<div class="bg-dark text-bg-primary" >
+<div class="text-primary P-3" >
 
-<center class="mb-lg-2 p-xl-5">
+<center class="mb-2">
     <img src="<?= Yii::$app->request->baseUrl.'/profiles/'.$model->profileImage ?>" class="rounded-4 mt-1" style="width: 70px;">
 
 </center>
@@ -24,18 +24,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-           // 'StudentID',
             'fname',
             'mname',
             'lname',
-           // 'userID',
             'session',
             'regNo',
             'phoneNumber',
             'emailAddress:email',
             'gender',
-            //'profileImage',
-            //'groupID',
         [           
             'attribute' => 'Programme',
             'label' => 'Programme',
@@ -49,11 +45,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
             'year',
             'semester',
-        ],
-    //     'template' => "<div class='m-1 row gap-1'>
-    //     <div class='col ml-0 p-1 bg-dark text-secondary'> {label} </div>
-    //     <br/>
-    //     <div class='col ml-0 p-1 bg-dark text-secondary'> {value} </div>
-    // </div>",   
+        ], 
      ]) ?>
 </div>

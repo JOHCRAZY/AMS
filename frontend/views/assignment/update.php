@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assignments'), 'url'
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'AssignmentID' => $model->AssignmentID]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
-<div class="container">
+<div class="container-fluid">
 
     <h1 class="text-center"><?= Html::encode($model->title) ?></h1>
 

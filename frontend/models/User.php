@@ -33,7 +33,7 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 10;
     const STATUS_ACTIVE = 10;
-    
+    public $VerifyPassword;
     private $_user; // Holds the user object if it is authenticated.
     public bool $rememberMe = true;
 
@@ -102,7 +102,7 @@ class User extends ActiveRecord implements IdentityInterface
             'verification_token' => Yii::t('app', 'Verification Token'),
             'email' => Yii::t('app', 'Email'),
             'email_verified' => Yii::t('app', 'Email Verified'),
-            'auth_key' => Yii::t('app', 'Auth Key'),
+            'auth_key' => Yii::t('app', 'Authentication Key'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),

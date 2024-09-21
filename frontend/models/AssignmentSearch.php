@@ -70,17 +70,13 @@ class AssignmentSearch extends Assignment
 
 
        if(self::getStudent() != null){
-
-        $query = Assignment::find()
-        ->joinWith('submissions')
-        ->where(['IN', 'courseCode', 
-        Course::find()
+        $enrolledCourses = Course::find()
         ->select('courseCode')
-        ->where(['programmeCode' => self::getStudent()->programmeCode,'year' => self::getStudent()->year,'semester' => self::getStudent()->semester])]
-       )
-       ->andFilterWhere(['status' => 'Assigned'])
-      //->andFilterWhere([]);
-    ;
+        ->where(['programmeCode' => self::getStudent()->programmeCode,'year' => self::getStudent()->year,'semester' => self::getStudent()->semester])->all();
+        
+        $query = Assignment::find()
+        ->where(['IN', 'courseCode', $enrolledCourses ])
+        ->andFilterWhere(['status' => 'Assigned']);
        }
     }
             // ->joinWith('courseCode0')

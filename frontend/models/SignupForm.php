@@ -15,6 +15,7 @@ class SignupForm extends Model
     public $email;
     public $role;
     public $password;
+    public $VerifyPassword;
 
 
     /**
@@ -24,7 +25,7 @@ class SignupForm extends Model
     {
         return [
             ['username', 'trim'],
-            ['username', 'required'],
+            [['username','role'], 'required'],
             ['username', 'unique', 'targetClass' => '\frontend\models\User', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 5, 'max' => 255],
 
@@ -35,9 +36,28 @@ class SignupForm extends Model
             ['email', 'unique', 'targetClass' => '\frontend\models\User', 'message' => 'This email address has already been taken.'],
 
             ['password', 'required'],
-            ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+            ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength'],'max' => 12],
+            ['VerifyPassword','verifyPassword'],
         ];
     }
+
+
+    /**
+     * Validates the password.
+     * This method serves as the inline validation for password.
+     *
+     * @param string $attribute the attribute currently being validated
+     * @param array $params the additional name-value pairs given in the rule
+     */
+    public function verifyPassword($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            if ($this->password !== $this->VerifyPassword) {
+                $this->addError($attribute, 'Password doesn\'t match.');
+            }
+        }
+    }
+
 
     /**
      * Signs user up.

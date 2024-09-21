@@ -26,14 +26,18 @@
         "kartik-v/yii2-editors": "@dev",
         "kartik-v/yii2-password": "dev-master",
         "kartik-v/yii2-grid": "dev-master",
-        "kartik-v/yii2-mpdf": "dev-master"
+        "yiisoft/yii2-redis": "^2.0",
+        "bower-asset/fullcalendar": "^4.4",
+        "philippfrenzel/yii2fullcalendar":"*",
+        "bower-asset/moment": "^2.30",
+        "edofre/yii2-fullcalendar": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
         "yiisoft/yii2-gii": "~2.2.0",
         "yiisoft/yii2-faker": "~2.0.0",
         "phpunit/phpunit": "~9.5.0",
-        "codeception/codeception": "^5.0.0 || ^4.0",
+        "codeception/codeception": "^5.0",
         "codeception/lib-innerbrowser": "^4.0 || ^3.0 || ^1.1",
         "codeception/module-asserts": "^3.0 || ^1.1",
         "codeception/module-yii2": "^1.1",

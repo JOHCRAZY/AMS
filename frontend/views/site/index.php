@@ -1,139 +1,227 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
 
 /** @var yii\web\View $this */
 
-$this->title = 'Assignment Management System';
+$this->title = 'AMS | Home';
 ?>
 
-<div class="container">
+<div class="container" id="home-container">
 
-    <header class="mt-4">
-        <!-- <h1>< ?= Html::encode($this->title) ?></h1> -->
-        <!-- <p class="lead">Streamline your assignments and boost academic success.</p> -->
-        <!-- < ?php if(Yii::$app->user->isGuest): ?>
-        <p>< ?= Html::a('Get Started', ['/site/login'], ['class' => 'btn btn-lg btn-primary']) ?></p>
-        < ?php endif; ?> -->
+    <header id="main-header" class="mt-4">
+        <h1 class="text-center animated-title">Welcome to the Assignment Management System (AMS)</h1>
+        <p class="lead text-center">Simplify your workflow with an intuitive platform that empowers instructors to manage assignments efficiently and helps students stay on top of their coursework.</p>
     </header>
 
-    <main class="container">
+    <main id="main-content" class="container">
 
-        <section class="row features">
-            <div class="col-md-4">
-                <!-- < ?= Html::icon('book') ?> -->
+        <!-- Features Section -->
+        <section id="features-section" class="row features py-5">
+            <div id="feature-assignment" class="col-md-4 text-center feature-box">
+                <i class="fas fa-book fa-3x mb-3 icon-feature"></i> <!-- FontAwesome icon for a book -->
                 <h3>Effortless Assignment Creation</h3>
-                <p>Create, distribute, and manage assignments with ease. Our intuitive interface saves instructors valuable time.</p>
-                <!-- < ?= Html::a('Learn more', ['/site/about'], ['class' => 'btn btn-outline-primary']) ?> -->
+                <p>With our system, instructors can create assignments in just a few clicks. Whether managing large classes or complex coursework, our interface streamlines assignment creation. No more paperwork—just clear, easy-to-use tools that save time and effort.</p>
+                <p>Assignments can be customized with deadlines, resources, and grading rubrics, providing a flexible yet structured approach to coursework management.</p>
             </div>
-            <div class="col-md-4">
-                <!-- < ?= Html::icon('upload') ?> -->
+            <div id="feature-submission" class="col-md-4 text-center feature-box">
+                <i class="fas fa-upload fa-3x mb-3 icon-feature"></i> <!-- FontAwesome icon for upload -->
                 <h3>Organized Submission Tracking</h3>
-                <p>Effortlessly track submissions and manage grading. Our system provides comprehensive features for monitoring student progress and delivering timely feedback.</p>
-                <!-- < ?= Html::a('Explore features', ['/site/about'], ['class' => 'btn btn-outline-primary']) ?> -->
+                <p>Keep track of every student's submission effortlessly. The platform automatically records submissions, provides notifications for late submissions, and allows easy review. Get detailed insights on class performance.</p>
+                <p>Ensure no submission is missed and grading is done efficiently with automated tools.</p>
             </div>
-            <div class="col-md-4">
-                <!-- < ?= Html::icon('calendar-alt') ?> -->
+            <div id="feature-calendar" class="col-md-4 text-center feature-box">
+                <i class="fas fa-calendar-alt fa-3x mb-3 icon-feature"></i> <!-- FontAwesome icon for calendar -->
                 <h3>Seamless Calendar Integration</h3>
-                <p>Stay on top of deadlines with calendar integration. Sync due dates with your preferred calendar to ensure everyone stays organized.</p>
-                <!-- < ?= Html::a('Get started', ['/site/calendar'], ['class' => 'btn btn-outline-primary']) ?> -->
+                <p>Never miss a deadline with calendar integration. Sync due dates with calendar apps, making it easier for both instructors and students to stay organized.</p>
+                <p>Set reminders and deadlines, with students receiving automatic notifications for smooth workflow.</p>
             </div>
         </section>
 
         <hr class="my-5">
 
-        <section class="row benefits">
-            <div class="col-md-6">
+        <!-- Benefits Section -->
+        <section id="benefits-section" class="row benefits py-5">
+            <article id="benefits-instructors" class="col-md-6">
+                <i class="fas fa-chalkboard-teacher fa-3x mb-3 icon-feature"></i> <!-- FontAwesome icon for instructor -->
                 <h2>Benefits for Instructors</h2>
-                <ul>
-                    <li>Save time creating and managing assignments</li>
-                    <li>Effortlessly track submissions and student progress</li>
-                    <li>Provide timely feedback with efficient grading tools</li>
-                    <li>Enhance communication and collaboration with students</li>
+                <ul class="unstyled-list">
+                    <li>Save time by automating assignment distribution and collection.</li>
+                    <li>Track student submissions effortlessly with detailed class performance analytics.</li>
+                    <li>Provide timely feedback with efficient grading tools.</li>
+                    <li>Enhance communication with students through easy messaging tools.</li>
                 </ul>
-            </div>
-            <div class="col-md-6">
+                <p>Whether you're managing a small class or hundreds of students, AMS scales with your needs, making it ideal for any teaching environment.</p>
+            </article>
+            <article id="benefits-students" class="col-md-6">
+                <i class="fas fa-user-graduate fa-3x mb-3 icon-feature"></i> <!-- FontAwesome icon for students -->
                 <h2>Benefits for Students</h2>
-                <ul>
-                    <li>Stay organized with clear and visible assignment deadlines</li>
-                    <li>Submit assignments electronically and receive feedback efficiently</li>
-                    <li>Easily track their progress and performance throughout the course</li>
-                    <li>Seamlessly communicate with instructors</li>
+                <ul class="unstyled-list">
+                    <li>Easily access and view upcoming assignments and deadlines.</li>
+                    <li>Submit assignments electronically for secure and timely submissions.</li>
+                    <li>Track progress and performance throughout the course.</li>
+                    <li>Communicate easily with instructors and peers.</li>
                 </ul>
-            </div>
+                <p>AMS empowers students with the tools they need to succeed in their academic journey.</p>
+            </article>
         </section>
 
         <hr class="my-5">
 
-        <section class="row">
-            <div class="col-md-6">
+        <!-- Additional Resources and Security Section -->
+        <section id="resources-security-section" class="row py-5">
+            <article id="additional-resources" class="col-md-6">
+                <i class="fas fa-info-circle fa-3x mb-3 icon-feature"></i> <!-- FontAwesome icon for info -->
                 <h2>Additional Resources</h2>
-                <p>Our comprehensive Help Center provides guides, FAQs, and support resources. Additionally, our dedicated support team is available 24/7 to assist you.</p>
-                <?= Html::a('Visit Help Center', ['/site/contact'], ['class' => 'btn btn-secondary']) ?>
-            </div>
-            <div class="col-md-6">
+                <p>Our Help Center provides guides, FAQs, video tutorials, and detailed documentation. We offer a 24/7 support team to assist with questions or technical issues.</p>
+                <p>Whether new to AMS or exploring advanced features, our resources support you every step of the way.</p>
+            </article>
+            <article id="security-privacy" class="col-md-6">
+                <i class="fas fa-shield-alt fa-3x mb-3 icon-feature"></i> <!-- FontAwesome icon for security -->
                 <h2>Security and Privacy</h2>
-                <p>We take the security and privacy of your data extremely seriously. Learn more about our security measures and privacy policies here.</p>
-                <!-- < ?= Html::a('Security & Privacy', ['/site/about'], ['class' => 'btn btn-secondary']) ?> -->
-            </div>
+                <p>We prioritize your data security and privacy. AMS uses encryption, secure storage, and role-based access controls to protect your data.</p>
+                <p>Feel confident knowing your sensitive information is secure, with robust documentation on our privacy and security measures.</p>
+            </article>
         </section>
 
     </main>
 
 </div>
 
+<style>
 
+    /* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    color: teal;
+    background-color: #f7f7f7;
+}
 
-<!-- < ?php
+#home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
 
-/** @var yii\web\View $this */
+/* Header */
+#main-header h1 {
+    font-size: 2.5em;
+    color: #007bff;
+    animation: fadeInDown 1s ease-in-out;
+}
 
-$this->title = 'My Yii Application';
-?>
-<div class="site-index">
-    <div class="p-5 mb-4 bg-transparent rounded-3">
-        <div class="container-fluid py-5 text-center">
-            <h1 class="display-4">Congratulations!</h1>
-            <p class="fs-5 fw-light">You have successfully created your Yii-powered application.</p>
-            <p><a class="btn btn-lg btn-success" href="https://www.yiiframework.com">Get started with Yii</a></p>
-        </div>
-    </div>
+#main-header p.lead {
+    color: teal;
+    margin-top: 15px;
+}
 
-    <div class="body-content">
+/* Features Section */
+/* #features-section {
+    display: flex;
+    justify-content: space-around;
+}
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+.feature-box {
+    padding: 20px;
+    /* background-color: white; * /
+    border-radius: 10px;
+    /* box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); * /
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+.feature-box:hover {
+    transform: translateY(-10px);
+    /* box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2); * /
+} */
 
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+.icon-feature {
+    color: #007bff;
+    margin-bottom: 10px;
+}
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+#features-section h3 {
+    color: #007bff;
+}
 
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+#features-section p,
+#resources-security-section p,
+#benefits-section p {
+    color: teal;
+}
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+/* Benefits Section */
+#benefits-section h2 {
+    font-size: 1.75em;
+    color: #007bff;
+}
 
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
+.unstyled-list {
+    list-style-type: none;
+    padding-left: 0;
+    color: teal;
+}
 
-    </div>
-</div> -->
+.unstyled-list li {
+    font-size: 1.1em;
+    padding-left: 25px;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.unstyled-list li:before {
+    content: "\f00c"; /* FontAwesome check icon */
+    font-family: FontAwesome;
+    position: absolute;
+    left: 0;
+    color: #28a745;
+}
+
+/* Additional Resources and Security Section */
+#resources-security-section h2 {
+    font-size: 1.75em;
+    color: #007bff;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Section Animations */
+/* .feature-box, */
+#benefits-section,
+#features-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* .feature-box:hover, */
+#benefits-section:hover,
+#features-section:hover {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Global Styling Adjustments */
+hr {
+    border-top: 1px solid #ddd;
+}
+
+h2 {
+    margin-top: 30px;
+    color: #007bff;
+}
+
+/* p {
+    color: #555;
+} */
+
+</style>

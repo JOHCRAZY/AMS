@@ -3,9 +3,9 @@
 use yii\helpers\Html;
 use yii\bootstrap5\Modal;
 
-/* @var $this yii\web\View */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $programmeCode string */
+/** @var  yii\web\View $this*/
+/** @var $dataProvider yii\data\ActiveDataProvider */
+/** @var $programmeCode string */
 
 $this->title = 'Select Course';
 $this->params['breadcrumbs'][] = ['label' => 'Programmes', 'url' => ['programme/index']];

@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $isStudent = frontend\models\User::find()->where(['UserID' => yii::$app->user->id])->one()->role == 'student';
 ?>
 
-<h1 class="text-center"><?= Html::encode($this->title) ?></h1>
+<!-- <h1 class="text-center">< ?= Html::encode($this->title) ?></h1> -->
 
 <div class="container-fluid mb-5">
     <?php Pjax::begin(); ?>

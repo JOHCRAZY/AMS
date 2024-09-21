@@ -35,7 +35,7 @@ class SubmissionController extends Controller
                     'class' => \yii\filters\AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index','mark', 'view','mark-individual', 'create', 'update','individual-not-marked','group-marked','group-not-marked','individual-marked'],
+                            'actions' => ['index','mark', 'view','mark-individual','mark-group', 'create', 'update','individual-not-marked','group-marked','group-not-marked','individual-marked'],
                             'allow' => true,
                             'matchCallback' => function ($rule, $action) {
                                 // Custom logic to determine access
@@ -190,7 +190,6 @@ class SubmissionController extends Controller
 
     public function actionMarkIndividual($AssignmentID = null){
 
-        Yii::info('Assignment ID: ' . $AssignmentID, __METHOD__);
         $searchModel = new SubmissionSearch();
 
         if(!$this->isStudent()){
@@ -206,6 +205,25 @@ class SubmissionController extends Controller
            'AssignmentID' => $AssignmentID ?? 1,
         ]);
     }
+
+    public function actionMarkGroup($AssignmentID = null){
+
+        $searchModel = new SubmissionSearch();
+
+        if(!$this->isStudent()){
+            $dataProvider = $searchModel->searchGroupNotMarked(Yii::$app->request->queryParams,null,$AssignmentID);
+        }else{
+            return $this->goHome();
+
+        }
+        return $this->render('/submission/@group',[
+           'dataProvider'=>$dataProvider,
+           'searchModel'=>$searchModel,
+           'models' =>  Assignment::findAll(['courseCode' => self::instructorCourseCode(),'assignment' => 'Group Assignment']),
+           'AssignmentID' => $AssignmentID ?? 1,
+        ]);
+    }
+
     public function actionGroupMarked($courseCode = null){
 
         if($courseCode == null && !$this->isInstructor()){
@@ -253,7 +271,7 @@ class SubmissionController extends Controller
             }
         }
         $searchModel = new SubmissionSearch();
-        $dataProvider = $searchModel->searchGroupNotMarked(Yii::$app->request->queryParams,$courseCode);
+        $dataProvider = $searchModel->searchGroupNotMarked(Yii::$app->request->queryParams,$courseCode,null);
 
         return $this->render('/submission/@assignment',[
            'dataProvider'=>$dataProvider,
@@ -278,7 +296,8 @@ class SubmissionController extends Controller
 
 
 
-    public function actionMark($SubmissionID,$Marked = false){
+    public function actionMark($SubmissionID,$Marked = false,$AssignmentID = null){
+
         $model = $this->findModel($SubmissionID);
 
 
@@ -290,7 +309,13 @@ class SubmissionController extends Controller
         if($Marked && $this->isInstructor() && $this->request->isPost){
 
             $model->load($this->request->post());
-            $model->SubmissionStatus = 'Marked';
+
+            $total_marks = Assignment::findOne(['AssignmentID' => $AssignmentID])->marks;
+            if($model->PreScore > $total_marks){
+                Yii::$app->session->setFlash('info', 'Invalid Score, Score can\'t be greater than total marks.('.$total_marks.')');
+            }else{
+
+                $model->SubmissionStatus = 'Marked';
             $model->score = $model->PreScore;
 
             if($model->save()){
@@ -298,7 +323,11 @@ class SubmissionController extends Controller
                 Yii::$app->session->setFlash('success', 'Assignment Marked.');
                 return $this->redirect(['view','SubmissionID' => $SubmissionID]);
 
+            }else{
+                Yii::$app->session->setFlash('error', 'Something went Wrong. Please enter valid Marks');
             }
+            }
+            
         }
         return $this->render('mark',[
         'model' => $model

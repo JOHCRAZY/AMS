@@ -323,24 +323,46 @@ class SubmissionSearch extends Submission
     }
 
 
-    public function searchGroupNotMarked($params,$courseCode)
+    public function searchGroupNotMarked($params,$courseCode,$AssignmentID = null)
     {
         
 
-        if($this->isInstructor()){
+        // if($this->isInstructor()){
 
+        //     $query = Submission::find()
+        // ->joinWith('assignment')
+        // ->where([
+        //     'Assignment.courseCode' => Course::find()->where([
+        //         'courseInstructor' => Instructor::find()->where([
+        //             'UserID' => \Yii::$app->user->getId()
+        //             ])->one()
+        //             ])->one()->courseCode,
+        //             'Assignment.assignment' => 'Group Assignment',
+        //             'Submission.AssignmentStatus' => 'Submitted',
+        //             'Submission.SubmissionStatus' => 'Not Marked'
+        //         ]);
+        if($this->isInstructor()){
             $query = Submission::find()
         ->joinWith('assignment')
         ->where([
-            'Assignment.courseCode' => Course::find()->where([
-                'courseInstructor' => Instructor::find()->where([
-                    'UserID' => \Yii::$app->user->getId()
-                    ])->one()
-                    ])->one()->courseCode,
+            'Assignment.courseCode' => self::instructorCourseCode(),
                     'Assignment.assignment' => 'Group Assignment',
                     'Submission.AssignmentStatus' => 'Submitted',
-                    'Submission.SubmissionStatus' => 'Not Marked'
+                    'Assignment.Status' => 'Assigned',
+                    //'Submission.SubmissionStatus' => 'Not Marked'
                 ]);
+        
+                if($AssignmentID == null){
+                    $query->andWhere(['Submission.SubmissionStatus' => 'Not Marked']);
+                }else{
+                    $exist = Submission::findAll(['AssignmentID' => $AssignmentID]);
+
+                  // if($exist){
+                    $query->andWhere(['Submission.AssignmentID' => $AssignmentID]);
+                  // }else{
+
+                 //  }
+                }
         
     }else{
 

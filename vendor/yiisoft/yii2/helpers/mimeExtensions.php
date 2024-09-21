@@ -1041,7 +1041,6 @@ return [
     'model/vnd.dwf' => 'dwf',
     'model/vnd.gdl' => 'gdl',
     'model/vnd.gtw' => 'gtw',
-    'model/vnd.mts' => 'mts',
     'model/vnd.vtu' => 'vtu',
     'model/vrml' => [
         'wrl',
@@ -1164,6 +1163,12 @@ return [
     'video/mj2' => [
         'mj2',
         'mjp2',
+    ],
+    'video/mp2t' => [
+        'ts',
+        'm2t',
+        'm2ts',
+        'mts',
     ],
     'video/mp4' => [
         'mp4',

@@ -26,8 +26,8 @@ class AppAsset extends AssetBundle
         'js/ckeditor5/ckeditor5.js.map',
         'js/ckeditor5/ckeditor5.umd.js',
         'js/ckeditor5/ckeditor5.js',
-        'js/ckeditor5/ckeditor5.umd.js.map',
-        'js/ckeditor5-premium-features/ckeditor5-premium-features.js'
+       // 'js/ckeditor5/ckeditor5.umd.js.map',
+        //'js/ckeditor5-premium-features/ckeditor5-premium-features.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

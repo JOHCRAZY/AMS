@@ -12,7 +12,7 @@ use kartik\file\FileInput;
 /** @var [] $courseCodes */
 /** @var $programme */
 ?>
-<div class="card w-100 p-5 m-2 rounded-3 justify-content-center border-secondary">
+<div class=" w-100 p-5 m-2 rounded-3 justify-content-center border-secondary">
 <div class="row d-grid">
 
 

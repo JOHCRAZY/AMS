@@ -116,7 +116,7 @@ if ($instructor !== null && $instructor->profileImage !== null) {
                             [
                                 'label' => 'Group Assignments',
                                 'icon' => 'users',
-                                'url' => Url::to(['/submission/group-not-marked']),
+                                'url' => Url::to(['/submission/mark-group']),
                             ],
                         ],
                     ],
@@ -136,6 +136,11 @@ if ($instructor !== null && $instructor->profileImage !== null) {
                                 'url' => Url::to(['/submission/group-marked']),
                             ],
                         ],
+                    ],
+                    [
+                        'label' => 'Track Assignments',
+                        'icon' => 'fas fa-calendar', 
+                        'url' => Url::to(['/calendar/']),
                     ],
                     [
                         'label' => 'Student Groups',

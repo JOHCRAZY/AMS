@@ -32,11 +32,11 @@ $this->registerJsFile($publishedRes[1] . '/control_sidebar.js', ['depends' => '\
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags()?>
     <title><?=Html::encode($this->title)?></title>
+
     <?php $this->head()?>
 </head>
-<body class="container-fluid hold-transition nav-child-indent layout-fixed mb-4 mt-2">
+<body class="container-fluid hold-transition nav-child-indent layout-fixed mb-4 mt-2" style="height: 100%; width: 100%; margin:0px; background-color: rgba(200, 220, 225,0.1);">
 <?php $this->beginBody()?>
-
 <header>
     
     <?php
@@ -44,7 +44,7 @@ NavBar::begin([
     'brandLabel' => Yii::$app->name,
     'brandUrl' => '#',
     'options' => [
-        'class' => 'navbar navbar-expand navbar-primary fixed-top elevation-5',
+        'class' => 'navbar navbar-expand navbar-info fixed-top elevation-5',
     ],
 ]);
 
@@ -70,7 +70,7 @@ echo Nav::widget([
 //echo Html::tag('div', '<i class="fas fa-book"> Assignment Management System </i>', ['class' => 'navbar-nav me-auto mb-2 mb-md-0']);
 
 if (Yii::$app->user->isGuest) {
-    echo Html::tag('div', Html::a('<i class="fas fa-sign-in-alt"> Login</i>', ['/site/login'], ['class' => 'btn btn-link']), ['class' => 'd-flex']);
+    echo Html::a('<i class="fas fa-sign-in-alt"> Login</i>', ['/site/login'], ['class' => 'nav-link d-flex']);
 } else {
     
 
@@ -106,8 +106,10 @@ NavBar::end();
     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
     'options' => ['class' => 'bg-dark text-primary'],
 ])?>
-            <div class="col text-lg-center mt-2 elevation-5">
-                <?=Alert::widget()?>
+            <div class="col text-lg-center mt-2">
+                <?=Alert::widget([
+                    'options' => ['class' => 'elevation-5 p-2']
+                ])?>
             </div>
             <?=$content?>
         </div>
@@ -120,5 +122,6 @@ NavBar::end();
 
 <?php $this->endBody()?>
 </body>
+
 </html>
 <?php $this->endPage()?>

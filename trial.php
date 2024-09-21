@@ -1,4 +1,5 @@
 <?php
+use yii;
 
 $datetime1 = new DateTime('2009-10-11 12:12:00');
 $datetime2 = new DateTime('2009-10-12 12:12:00');
@@ -12,5 +13,5 @@ $diff = $datetime1->getTimestamp() - $datetime2->getTimestamp();
 echo "DIFF = ".$diff."\n";
 
 
-$dateTime = new DateTime('2016-05-20');
+$dateTime = new DateTime(yii::$app->formatter->asDatetime(time()));
 echo $dateTime->getTimestamp();

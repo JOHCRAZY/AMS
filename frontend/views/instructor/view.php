@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="container-fluid mt-5 mb-4">
-    <div class="card custom-card shadow-sm border-primary">
+    <div class="">
         <div class="card-body">
             <div class="row ">
                 <div class="col-md-4 text-center">

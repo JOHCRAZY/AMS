@@ -11,8 +11,6 @@ use yii\helpers\Html;
 use yii\bootstrap5\Modal;
 use frontend\models\Student;
 use frontend\controllers\Selector;
-
-include_once('Selector.php');
 /**
  * CourseController implements the CRUD actions for Course model.
  */
@@ -37,20 +35,47 @@ class CourseController extends Controller
         );
     }
 
+    /** @return void|\yii\web\Response */
+    protected function isGuest(){
+
+        if(\Yii::$app->user->isGuest){
+            return $this->redirect(['site/login']);
+        }
+    }
+      
+
+
+    public function beforeAction($action)
+    {
+    // your custom code here, if you want the code to run before action filters,
+    // which are triggered on the [[EVENT_BEFORE_ACTION]] event, e.g. PageCache or AccessControl
+    
+    if (!parent::beforeAction($action)) {
+    return false;
+    }
+    
+    // other custom code here
+    self::isGuest();
+    
+    return true; // or false to not run the action
+    }
+
+
     protected function isInstructor()
     {
         return User::findByUsername(\Yii::$app->user->identity->username)->role == 'instructor';
 
     }
 
-
-    /**
+  /**
      * Lists all Course models.
      *
-     * @return string
+     * @return string|\yii\web\Response
      */
     public function actionIndex()
     {
+        self::isGuest();
+
        $student =  Student::find()->where(['userID' => \Yii::$app->user->id])->one();
         $searchModel = new CourseSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, $student->semester,$student->year,$student->programmeCode);
@@ -63,8 +88,11 @@ class CourseController extends Controller
         ]);
     }
 
+
     public function actionSelect($ctrAct)
     {
+       self::isGuest();
+
        $student =  Student::find()->where(['userID' => \Yii::$app->user->id])->one();
         $searchModel = new CourseSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, $student->semester,$student->year,$student->programmeCode);
@@ -77,14 +105,17 @@ class CourseController extends Controller
     /**
      * Displays a single Course model.
      * @param string $courseCode Course Code
-     * @return string
+     * @return string| \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($courseCode)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($courseCode),
-        ]);
+
+       self::isGuest();
+        throw new NotFoundHttpException(\Yii::t('app', 'You\'re Not allowed to perform this action.'));
+        // return $this->render('view', [
+        //     'model' => $this->findModel($courseCode),
+        // ]);
     }
 
     /**
@@ -94,24 +125,24 @@ class CourseController extends Controller
      */
     public function actionCreate()
     {
-        if(!$this->isInstructor()){
 
+        self::isGuest();
             throw new NotFoundHttpException(\Yii::t('app', 'You\'re Not allowed to perform this action.'));
 
-        }
-        $model = new Course();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'courseCode' => $model->courseCode]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
+        // $model = new Course();
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        // if ($this->request->isPost) {
+        //     if ($model->load($this->request->post()) && $model->save()) {
+        //         return $this->redirect(['view', 'courseCode' => $model->courseCode]);
+        //     }
+        // } else {
+        //     $model->loadDefaultValues();
+        // }
+
+        // return $this->render('create', [
+        //     'model' => $model,
+        // ]);
     }
 
     /**
@@ -123,20 +154,19 @@ class CourseController extends Controller
      */
     public function actionUpdate($courseCode)
     {
-        if(!$this->isInstructor()){
+        self::isGuest();
 
             throw new NotFoundHttpException(\Yii::t('app', 'You\'re Not allowed to perform this action.'));
 
-        }
-        $model = $this->findModel($courseCode);
+        // $model = $this->findModel($courseCode);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'courseCode' => $model->courseCode]);
-        }
+        // if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        //     return $this->redirect(['view', 'courseCode' => $model->courseCode]);
+        // }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        // return $this->render('update', [
+        //     'model' => $model,
+        // ]);
     }
 
     /**
@@ -148,6 +178,8 @@ class CourseController extends Controller
      */
     public function actionDelete($courseCode)
     {
+      self::isGuest();
+
         throw new NotFoundHttpException(\Yii::t('app', 'You\'re Not allowed to perform this action.'));
 
         
@@ -165,10 +197,7 @@ class CourseController extends Controller
      */
     protected function findModel($courseCode)
     {
-        if (($model = Course::findOne(['courseCode' => $courseCode])) !== null) {
-            return $model;
-        }
-
+       self::isGuest();
         throw new NotFoundHttpException(\Yii::t('app', 'The requested page does not exist.'));
     }
 

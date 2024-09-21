@@ -50,10 +50,10 @@ class Group extends \yii\db\ActiveRecord
     {
         return [
             'GroupID' => Yii::t('app', 'Group ID'),
-            'GroupNO' => Yii::t('app', 'Group No'),
+            'GroupNO' => Yii::t('app', 'Group Number'),
             'groupName' => Yii::t('app', 'Group Name'),
             'StudentID' => Yii::t('app', 'Student ID'),
-            'courseCode' => Yii::t('app', 'Course Code'),
+            'courseCode' => Yii::t('app', 'Module Code'),
         ];
     }
 

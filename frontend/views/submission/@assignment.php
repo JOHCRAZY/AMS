@@ -14,18 +14,24 @@ $this->params['breadcrumbs'][] = $this->title;
 $isStudent = frontend\models\User::find()->where(['UserID' => yii::$app->user->id])->one()->role == 'student';
 ?>
 
-<h1 class="text-center"><?= Html::encode($this->title) ?></h1>
+<!-- <h1 class="text-center">< ?= Html::encode($this->title) ?></h1> -->
 
 <div class="container-fluid mb-5">
     <?php Pjax::begin(); ?>
     <div class="row">
+    <?php if(empty($dataProvider->models)): ?>
+            <div class="text-center p-5 m-5">
+            <i class="fas fa-tasks fa-10x text-muted"></i>
+            <p class="mt-5 text-muted"><h5>No Assignments yet.</h5></p>
+        </div>
+        <?php else: ?>
         <?php foreach ($dataProvider->models as $model): ?>
             <?php
             $course = frontend\models\Course::findOne(['courseCode' => $model->assignment->courseCode]);
             $instructor = frontend\models\Instructor::findOne(['InstructorID' => $course->courseInstructor]);
             ?>
             <div class="col-sm-4 mb-3">
-                <div class="card custom-card shadow-sm elevation-4" style="min-width: 15rem;">
+                <div class="card custom-card shadow-sm elevation-4" style="min-width: 15rem; background: transparent;">
                     <div class="card-header">
                         <h3 class="text-center"><?= Html::encode($model->assignment->title) ?></h3>
                     </div>
@@ -67,8 +73,8 @@ $isStudent = frontend\models\User::find()->where(['UserID' => yii::$app->user->i
                             <div class="col-6">
                                 <p class="card-text">
                                     <i class="fas fa-percent"></i>
-                                    <strong>Score:</strong> <?= Html::encode($model->score) ?>
-                                    <strong>Out of:</strong> <?= Html::encode($model->assignment->marks) ?>
+                                    <?php $placeholder = '<span class="text-danger">-:- -:-</span>'; ?>
+                                    <strong>Score:</strong> <?= $model->score ?? $placeholder   ?>
                                 </p>
                             </div>
                             <div class="col-6">
@@ -84,10 +90,10 @@ $isStudent = frontend\models\User::find()->where(['UserID' => yii::$app->user->i
                                 </p>
                             </div>
                             
-                            <div class="col-6">
+                            <div class="col-6 mt-5">
                                 <p class="card-text">
                                     <i class="fas fa-check-circle"></i>
-                                    <strong>Status:</strong> <?= $model->SubmissionStatus == 'Marked' ? ('<span class="text-success">Marked</span>') : ('<span class="text-danger">Pending</span>'); ?>
+                                    <strong>Status:</strong> <?= $model->SubmissionStatus == 'Marked' ? ('<span class="text-success">Marked</span>') : ('<span class="text-danger">Not Marked</span>'); ?>
                                 </p>
                             </div>
                         </div>
@@ -98,12 +104,13 @@ $isStudent = frontend\models\User::find()->where(['UserID' => yii::$app->user->i
                 </div>
             </div>
         <?php endforeach; ?>
+        <?php endif; ?>
     </div>
     <?php Pjax::end(); ?>
 </div>
 
 <style>
-.custom-card {
+/* .custom-card {
     border: 1px solid #ddd;
     border-radius: 10px;
     background: #fff;
@@ -113,7 +120,7 @@ $isStudent = frontend\models\User::find()->where(['UserID' => yii::$app->user->i
 .custom-card:hover {
     transform: translate(-2px,-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
+} */
 
 .card-title {
     color: #343a40;

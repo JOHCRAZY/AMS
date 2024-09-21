@@ -40,37 +40,31 @@ use yii\helpers\Url;
                         'url' => Url::to(['/assignment/']),
                     ],
                     [
-                        'label' => 'Assignments',
-                        'icon' => 'clipboard-list',
+                        'label' => 'Pending Assignments',
+                        'icon' => 'clock',
+                        'items' => [
+                            ['label' => 'Individual Assignments', 'icon' => 'user', 'url' => Url::to(['/assignment/individual']), 'iconStyle' => 'far'],
+                            ['label' => 'Group Assignments', 'icon' => 'users', 'url' => Url::to(['/assignment/group']), 'iconStyle' => 'far'],
+                        ],
+                    ],
+                    [
+                        'label' => 'Submitted Assignments',
+                        'icon' => 'check',
                         'items' => [
                             [
-                                'label' => 'Pending Assignments',
-                                'icon' => 'clock',
+                                'label' => 'Individual Assignments',
+                                'icon' => 'file-alt',
                                 'items' => [
-                                    ['label' => 'Individual Assignments', 'icon' => 'user', 'url' => Url::to(['/assignment/individual']), 'iconStyle' => 'far'],
-                                    ['label' => 'Group Assignments', 'icon' => 'users', 'url' => Url::to(['/assignment/group']), 'iconStyle' => 'far'],
+                                    ['label' => 'Marked', 'icon' => 'check-circle', 'url' => Url::to(['/submission/individual-marked']), 'iconStyle' => 'far'],
+                                    ['label' => 'Not Marked', 'icon' => 'exclamation-circle', 'url' => Url::to(['/submission/individual-not-marked']), 'iconStyle' => 'far'],
                                 ],
                             ],
                             [
-                                'label' => 'Submitted Assignments',
-                                'icon' => 'check',
+                                'label' => 'Group Assignments',
+                                'icon' => 'file-alt',
                                 'items' => [
-                                    [
-                                        'label' => 'Individual Assignments',
-                                        'icon' => 'file-alt',
-                                        'items' => [
-                                            ['label' => 'Marked', 'icon' => 'check-circle', 'url' => Url::to(['/submission/individual-marked']), 'iconStyle' => 'far'],
-                                            ['label' => 'Not Marked', 'icon' => 'exclamation-circle', 'url' => Url::to(['/submission/individual-not-marked']), 'iconStyle' => 'far'],
-                                        ],
-                                    ],
-                                    [
-                                        'label' => 'Group Assignments',
-                                        'icon' => 'file-alt',
-                                        'items' => [
-                                            ['label' => 'Marked', 'icon' => 'check-circle', 'url' => Url::to(['/submission/group-marked']), 'iconStyle' => 'far'],
-                                            ['label' => 'Not Marked', 'icon' => 'exclamation-circle', 'url' => Url::to(['/submission/group-not-marked']), 'iconStyle' => 'far'],
-                                        ],
-                                    ],
+                                    ['label' => 'Marked', 'icon' => 'check-circle', 'url' => Url::to(['/submission/group-marked']), 'iconStyle' => 'far'],
+                                    ['label' => 'Not Marked', 'icon' => 'exclamation-circle', 'url' => Url::to(['/submission/group-not-marked']), 'iconStyle' => 'far'],
                                 ],
                             ],
                         ],
@@ -79,6 +73,11 @@ use yii\helpers\Url;
                         'label' => 'Group Members',
                         'icon' => 'users',
                         'url' => Url::to(['/groups/members']),
+                    ],
+                    [
+                        'label' => 'Track Assignments', 
+                        'icon' => 'fas fa-calendar', 
+                        'url' => Url::to(['/calendar/']), 
                     ],
                     [
                         'label' => 'Profile',

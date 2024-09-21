@@ -418,6 +418,8 @@ $mimeTypes = [
     'm1v' => 'video/mpeg',
     'm21' => 'application/mp21',
     'm2a' => 'audio/mpeg',
+    'm2t' => 'video/mp2t',
+    'm2ts' => 'video/mp2t',
     'm2v' => 'video/mpeg',
     'm3a' => 'audio/mpeg',
     'm3u' => 'audio/x-mpegurl',
@@ -503,7 +505,7 @@ $mimeTypes = [
     'msi' => 'application/x-msdownload',
     'msl' => 'application/vnd.mobius.msl',
     'msty' => 'application/vnd.muvee.style',
-    'mts' => 'model/vnd.mts',
+    'mts' => 'video/mp2t',
     'mus' => 'application/vnd.musician',
     'musicxml' => 'application/vnd.recordare.musicxml+xml',
     'mvb' => 'application/x-msmediaview',
@@ -818,6 +820,7 @@ $mimeTypes = [
     'tr' => 'text/troff',
     'tra' => 'application/vnd.trueapp',
     'trm' => 'application/x-msterminal',
+    'ts' => 'video/mp2t',
     'tsd' => 'application/timestamped-data',
     'tsv' => 'text/tab-separated-values',
     'ttc' => 'font/collection',
@@ -1008,7 +1011,7 @@ $mimeTypes = [
 
 # fix for bundled libmagic bug, see also https://github.com/yiisoft/yii2/issues/19925
 if ((PHP_VERSION_ID >= 80100 && PHP_VERSION_ID < 80122) || (PHP_VERSION_ID >= 80200 && PHP_VERSION_ID < 80209)) {
-    $mimeTypes = array_replace($mimeTypes, array('xz' => 'application/octet-stream'));
+    $mimeTypes = array_replace($mimeTypes, ['xz' => 'application/octet-stream']);
 }
 
 return $mimeTypes;

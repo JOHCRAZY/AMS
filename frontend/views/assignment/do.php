@@ -11,7 +11,7 @@ $this->title = Yii::t('app', 'Edit | {name}', [
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assignments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'AssignmentID' => $model->AssignmentID]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'DO');
+$this->params['breadcrumbs'][] = Yii::t('app', 'Edit');
 ?>
 
 <h1 class="text-center"><?= Html::encode($model->title) ?></h1>

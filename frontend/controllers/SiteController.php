@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use frontend\models\ResendVerificationEmailForm;
+use frontend\models\SignupForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
@@ -200,27 +201,18 @@ public function actionError(){
     {
         $this->layout = 'blank';
 
-        $model = new User();//SignupForm();
-
-        if ($model->load(Yii::$app->request->post())/* && $model->signup()*/) {
-           // if($model->role  == "student"){
-                $model->setPassword($model->password);
-                $model->generateAuthKey();
-                $model->generateEmailVerificationToken();
-                $model->created_at = $model->updated_at =  time();
-                if($model->validate() && $model->save()) {
-                    Yii::$app->session->setFlash('success', 'You have successfully signup.');
-                //return $this->goHome();
-                    return $this->redirect(['site/login']);
-                }else{
-                    Yii::$app->session->setFlash('error', 'Sorry, Something went wrong, please try again.');
-                  // var_dump($model->getErrors());
+        //$model = new User();//SignupForm();
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+        
+            if($model->signup()){
+                Yii::$app->session->setFlash('success', 'You have successfully signup.');
+                return $this->redirect(['site/login']);
+            }else{
+                    Yii::$app->session->setFlash('danger', 'Sorry, Something went wrong, please try again.');
 
                 }
-            // }else{
 
-            // }
-            
         }
 
         return $this->render('signup', [

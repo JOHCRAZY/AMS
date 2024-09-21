@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use frontend\models\User;
 use frontend\models\Course;
 use frontend\models\Instructor;
+use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var frontend\models\Assignment $model */
@@ -19,14 +20,15 @@ $courseName = $course->courseName ?? 'N/A';
 $instructor = Instructor::findOne(['InstructorID' => $course->courseInstructor]);
 $isInstructor = Instructor::findOne(['UserID' => Yii::$app->getUser()->id]);
 $status = null;
+$submit = false;
 ?>
 
 <div class="container-fluid mb-5">
-    <div class="card custom-card shadow-lg mb-5 rounded-3 elevation-4 p-4">
+    <div class="card shadow-lg mb-5 rounded-3 elevation-4 p-4" style="background: transparent;">
         <div class="card-header">
             <h2 class="text-center"><?= Html::encode($model->title) ?></h2>
         </div>
-        <blockquote class="text-center rounded-5 pl-3 mt-2">
+        <blockquote class="text-center rounded-5 pl-3 mt-2" style="background: transparent;">
             <p><?= Html::encode($courseName) ?></p>
             <footer class="blockquote-footer">INSTRUCTOR :- 
                 <cite title="Source Title"><?= Html::encode($instructor->fname . ' ' . $instructor->mname . ' ' . $instructor->lname) ?></cite>
@@ -60,6 +62,7 @@ $status = null;
         
         if ($submission) {
             $status = $submission->AssignmentStatus;
+            $submit = true;
             ?>
             <p><i class="fas fa-check-circle"></i> <strong>Status:</strong> 
             <?= $status !== 'Pending' ? '<span class="text-success">Submitted</span>' : '<span class="text-danger">Pending</span>' ?></p>
@@ -92,12 +95,26 @@ $status = null;
 
                         <?= Html::a(Yii::t('app', 'Update Assignment'), ['update', 'AssignmentID' => $model->AssignmentID], ['class' => 'btn btn-outline-primary']) ?>
                         <?php else: ?>
+                            <?php if($model->assignment == 'Individual Assignment'): ?>
                             <?= Html::a(Yii::t('app', 'View Students submitted this assignment'), ['submission/mark-individual', 'AssignmentID' => $model->AssignmentID], ['class' => 'btn btn-outline-primary']) ?>
+                            <?php else: ?>
+                                <?= Html::a(Yii::t('app', 'View Students submitted this assignment'), ['submission/mark-group', 'AssignmentID' => $model->AssignmentID], ['class' => 'btn btn-outline-primary']) ?>
+                            <?php endif; ?>
+                        
                         <?php endif; ?>
-                            <?php elseif($status): ?>
+
+
                     <?php else: ?>
+                        <?php if($status == 'Pending' || $status == null): ?>
                         <?= Html::a(Yii::t('app', 'Take Assignment'), ['do', 'AssignmentID' => $model->AssignmentID, 'StudentID' => frontend\models\Student::find()->where(['userID' => Yii::$app->user->id])->one()->StudentID], ['class' => 'btn btn-outline-primary']) ?>
-                    <?php endif; ?>
+                        <?php endif; ?>
+                        <?php if($submit && $status == 'Pending' ): ?>
+
+             <?php $form = ActiveForm::begin(['action' => ['do','Submit' => true, 'AssignmentID' => $model->AssignmentID, 'StudentID' => frontend\models\Student::find()->where(['userID' => yii::$app->user->id])->one()->StudentID], 'method' => 'post']) ?>
+            <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-lg btn-outline-primary float-end']) ?>
+        <?php ActiveForm::end(); ?>
+                            <?php endif; ?>
+                        <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -105,7 +122,7 @@ $status = null;
 
     <div class="container-fluid">
         <div class="col-10">
-            <p><i class="fas fa-align-left"></i> <strong>Assignment: </strong> <?= ($model->description) ?></p>
+            <p><i class="fas fa-align-left"></i> <strong>Assignment: </strong> <?=$model->description?></p>
         </div>
     </div>
 </div>

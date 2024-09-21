@@ -222,9 +222,7 @@ trait BootstrapTrait
     {
         $ver = $this->configureBsVersion();
         $this->_defaultIconPrefix = 'glyphicon glyphicon-';
-       // $this->_defaultBtnCss = 'btn-default';
-        $this->_defaultBtnCss = 'btn-link';
-
+        $this->_defaultBtnCss = 'btn-default';
         $ext = $this->getBsExtBasename();
         if (!class_exists("yii\\{$ext}\\Alert")) {
             $message = "You must install 'yiisoft/yii2-{$ext}' extension for Bootstrap {$ver}.x version support. ".
@@ -238,7 +236,7 @@ trait BootstrapTrait
         }
         if ($this->getBsVer() > 3) {
             $this->_defaultIconPrefix = 'fas fa-';
-            $this->_defaultBtnCss = 'btn-outline-primary';
+            $this->_defaultBtnCss = 'btn-outline-secondary';
         }
         $interface = BootstrapInterface::class;
         if (!($this instanceof $interface)) {

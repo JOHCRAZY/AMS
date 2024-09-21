@@ -32747,3 +32747,1130 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1725528375.3398
     'REQUEST_TIME' => 1725528375
 ]
+2024-09-07 02:10:39 [::1][1][ctpbtd22l8hpq7p55nm4e9ijpa][error][yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Getting unknown property: backend\models\Submissions::groupID in /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Component.php:154
+Stack trace:
+#0 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/BaseActiveRecord.php(296): yii\base\Component->__get('groupID')
+#1 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/validators/Validator.php(257): yii\db\BaseActiveRecord->__get('groupID')
+#2 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Model.php(368): yii\validators\Validator->validateAttributes(Object(backend\models\Submissions), Array)
+#3 /opt/lampp/htdocs/AMS/backend/models/Submissions.php(53): yii\base\Model->validate()
+#4 /opt/lampp/htdocs/AMS/backend/controllers/SubmissionController.php(42): backend\models\Submissions->search(Array)
+#5 [internal function]: backend\controllers\SubmissionController->actionIndex()
+#6 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#7 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#8 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('', Array)
+#9 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('submission', Array)
+#10 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /opt/lampp/htdocs/AMS/backend/web/index.php(18): yii\base\Application->run()
+#12 {main}
+2024-09-07 02:10:39 [::1][1][ctpbtd22l8hpq7p55nm4e9ijpa][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity-backend' => '1c6ad29cb037de1b745afaa380011cc458e48f0c4a3122d781c7f02715444c49a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"9pOPaRA1HfBc86BXU5QDK-8SgvFgjLTo\",2592000]\";}'
+    'AMS-frontend' => '8amtuubalc4v6tcr2sek2k3kt1'
+    '_csrf-frontend' => '0a53928eb141a7d378714c779a983e235255fb2405b073bb50f7f3cf5d8cec35a:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"a7tFkl5UCpQxtosRmh5IctGMvPwBXKYJ\";}'
+    'dark-mode' => 'false'
+    'advanced-backend' => 'ctpbtd22l8hpq7p55nm4e9ijpa'
+    '_csrf-backend' => '5f1840e99b301c110ac44f850e51b4e81a7e6b8ec02b82b061fb2bb9cc6e84bda:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"beHpYB2csSExLwDqnGa2Td4-d1063hSn\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    '__authKey' => '9pOPaRA1HfBc86BXU5QDK-8SgvFgjLTo'
+]
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'ZtuZ_0dcqa-og94p6F82cwAAAAI'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'ZtuZ_0dcqa-og94p6F82cwAAAAI'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Linux\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => '_identity-backend=1c6ad29cb037de1b745afaa380011cc458e48f0c4a3122d781c7f02715444c49a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%229pOPaRA1HfBc86BXU5QDK-8SgvFgjLTo%22%2C2592000%5D%22%3B%7D; AMS-frontend=8amtuubalc4v6tcr2sek2k3kt1; _csrf-frontend=0a53928eb141a7d378714c779a983e235255fb2405b073bb50f7f3cf5d8cec35a%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22a7tFkl5UCpQxtosRmh5IctGMvPwBXKYJ%22%3B%7D; dark-mode=false; advanced-backend=ctpbtd22l8hpq7p55nm4e9ijpa; _csrf-backend=5f1840e99b301c110ac44f850e51b4e81a7e6b8ec02b82b061fb2bb9cc6e84bda%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22beHpYB2csSExLwDqnGa2Td4-d1063hSn%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'
+    'LD_LIBRARY_PATH' => '/opt/lampp/lib:/opt/lampp/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.58 (Unix) OpenSSL/1.1.1w PHP/8.2.12 mod_perl/2.0.12 Perl/v5.34.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/opt/lampp/htdocs/AMS/backend/web/index.php'
+    'REMOTE_PORT' => '47720'
+    'REDIRECT_URL' => '/AMS/backend/web/submission'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/AMS/backend/web/submission'
+    'SCRIPT_NAME' => '/AMS/backend/web/index.php'
+    'PHP_SELF' => '/AMS/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1725667839.1668
+    'REQUEST_TIME' => 1725667839
+]
+2024-09-12 19:24:43 [::1][-][-][error][yii\db\Exception] PDOException: SQLSTATE[HY000] [1698] Access denied for user 'root'@'localhost' in /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php:722
+Stack trace:
+#0 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(722): PDO->__construct('mysql:host=127....', 'root', Object(SensitiveParameterValue), NULL)
+#1 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(637): yii\db\Connection->createPdoInstance()
+#2 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(1067): yii\db\Connection->open()
+#3 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(1054): yii\db\Connection->getMasterPdo()
+#4 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(261): yii\db\Connection->getSlavePdo(true)
+#5 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(1181): yii\db\Command->prepare(true)
+#6 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(417): yii\db\Command->queryInternal('fetchAll', NULL)
+#7 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/mysql/Schema.php(328): yii\db\Command->queryAll()
+#8 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/mysql/Schema.php(133): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#9 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Schema.php(756): yii\db\mysql\Schema->loadTableSchema('Admin')
+#10 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Schema.php(192): yii\db\Schema->getTableMetadata('{{%Admin}}', 'schema', false)
+#11 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(439): yii\db\Schema->getTableSchema('{{%Admin}}')
+#12 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(266): yii\db\ActiveRecord::getTableSchema()
+#13 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(238): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), Array)
+#14 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(195): yii\db\ActiveRecord::filterCondition(Array, Array)
+#15 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/BaseActiveRecord.php(110): yii\db\ActiveRecord::findByCondition(Array)
+#16 /opt/lampp/htdocs/AMS/backend/models/Admin.php(67): yii\db\BaseActiveRecord::findOne(Array)
+#17 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(602): backend\models\Admin::findIdentity(1)
+#18 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(321): yii\web\User->getIdentityAndDurationFromCookie()
+#19 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(727): yii\web\User->loginByCookie()
+#20 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(199): yii\web\User->renewAuthStatus()
+#21 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(367): yii\web\User->getIdentity()
+#22 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Component.php(139): yii\web\User->getIsGuest()
+#23 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/panels/UserPanel.php(83): yii\base\Component->__get('isGuest')
+#24 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\debug\panels\UserPanel->init()
+#25 [internal function]: yii\base\BaseObject->__construct(Array)
+#26 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#27 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('yii\\debug\\panel...', Array, Array)
+#28 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('yii\\debug\\panel...', Array, Array)
+#29 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/Module.php(253): yii\BaseYii::createObject(Array)
+#30 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/Module.php(225): yii\debug\Module->initPanels()
+#31 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\debug\Module->init()
+#32 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(161): yii\base\BaseObject->__construct(Array)
+#33 [internal function]: yii\base\Module->__construct('debug', Object(yii\web\Application), Array)
+#34 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(411): ReflectionClass->newInstanceArgs(Array)
+#35 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('yii\\debug\\Modul...', Array, Array)
+#36 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('yii\\debug\\Modul...', Array, Array)
+#37 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(445): yii\BaseYii::createObject(Array, Array)
+#38 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(313): yii\base\Module->getModule('debug')
+#39 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/Application.php(69): yii\base\Application->bootstrap()
+#40 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(271): yii\web\Application->bootstrap()
+#41 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\base\Application->init()
+#42 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#43 /opt/lampp/htdocs/AMS/backend/web/index.php(18): yii\base\Application->__construct(Array)
+#44 {main}
+
+Next yii\db\Exception: SQLSTATE[HY000] [1698] Access denied for user 'root'@'localhost' in /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php:648
+Stack trace:
+#0 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(1067): yii\db\Connection->open()
+#1 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(1054): yii\db\Connection->getMasterPdo()
+#2 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(261): yii\db\Connection->getSlavePdo(true)
+#3 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(1181): yii\db\Command->prepare(true)
+#4 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(417): yii\db\Command->queryInternal('fetchAll', NULL)
+#5 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/mysql/Schema.php(328): yii\db\Command->queryAll()
+#6 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/mysql/Schema.php(133): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#7 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Schema.php(756): yii\db\mysql\Schema->loadTableSchema('Admin')
+#8 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Schema.php(192): yii\db\Schema->getTableMetadata('{{%Admin}}', 'schema', false)
+#9 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(439): yii\db\Schema->getTableSchema('{{%Admin}}')
+#10 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(266): yii\db\ActiveRecord::getTableSchema()
+#11 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(238): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), Array)
+#12 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(195): yii\db\ActiveRecord::filterCondition(Array, Array)
+#13 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/BaseActiveRecord.php(110): yii\db\ActiveRecord::findByCondition(Array)
+#14 /opt/lampp/htdocs/AMS/backend/models/Admin.php(67): yii\db\BaseActiveRecord::findOne(Array)
+#15 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(602): backend\models\Admin::findIdentity(1)
+#16 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(321): yii\web\User->getIdentityAndDurationFromCookie()
+#17 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(727): yii\web\User->loginByCookie()
+#18 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(199): yii\web\User->renewAuthStatus()
+#19 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(367): yii\web\User->getIdentity()
+#20 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Component.php(139): yii\web\User->getIsGuest()
+#21 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/panels/UserPanel.php(83): yii\base\Component->__get('isGuest')
+#22 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\debug\panels\UserPanel->init()
+#23 [internal function]: yii\base\BaseObject->__construct(Array)
+#24 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#25 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('yii\\debug\\panel...', Array, Array)
+#26 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('yii\\debug\\panel...', Array, Array)
+#27 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/Module.php(253): yii\BaseYii::createObject(Array)
+#28 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/Module.php(225): yii\debug\Module->initPanels()
+#29 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\debug\Module->init()
+#30 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(161): yii\base\BaseObject->__construct(Array)
+#31 [internal function]: yii\base\Module->__construct('debug', Object(yii\web\Application), Array)
+#32 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(411): ReflectionClass->newInstanceArgs(Array)
+#33 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('yii\\debug\\Modul...', Array, Array)
+#34 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('yii\\debug\\Modul...', Array, Array)
+#35 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(445): yii\BaseYii::createObject(Array, Array)
+#36 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(313): yii\base\Module->getModule('debug')
+#37 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/Application.php(69): yii\base\Application->bootstrap()
+#38 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(271): yii\web\Application->bootstrap()
+#39 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\base\Application->init()
+#40 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#41 /opt/lampp/htdocs/AMS/backend/web/index.php(18): yii\base\Application->__construct(Array)
+#42 {main}
+Additional Information:
+Array
+(
+    [0] => HY000
+    [1] => 1698
+    [2] => Access denied for user 'root'@'localhost'
+)
+
+2024-09-12 19:24:42 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity-backend' => '1c6ad29cb037de1b745afaa380011cc458e48f0c4a3122d781c7f02715444c49a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"9pOPaRA1HfBc86BXU5QDK-8SgvFgjLTo\",2592000]\";}'
+    'dark-mode' => 'false'
+    'sidebar-collapse' => 'false'
+]
+
+$_SERVER = [
+    'UNIQUE_ID' => 'ZuMj2fgfd_kEVJjN_yPdOwAAAAI'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Linux\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => '_identity-backend=1c6ad29cb037de1b745afaa380011cc458e48f0c4a3122d781c7f02715444c49a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%229pOPaRA1HfBc86BXU5QDK-8SgvFgjLTo%22%2C2592000%5D%22%3B%7D; dark-mode=false; sidebar-collapse=false'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'
+    'LD_LIBRARY_PATH' => '/opt/lampp/lib:/opt/lampp/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.58 (Unix) OpenSSL/1.1.1w PHP/8.2.12 mod_perl/2.0.12 Perl/v5.34.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/opt/lampp/htdocs/AMS/backend/web/index.php'
+    'REMOTE_PORT' => '36094'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/AMS/backend/web/'
+    'SCRIPT_NAME' => '/AMS/backend/web/index.php'
+    'PHP_SELF' => '/AMS/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1726161881.7683
+    'REQUEST_TIME' => 1726161881
+]
+2024-09-12 19:40:00 [::1][-][-][error][yii\db\Exception] PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php:722
+Stack trace:
+#0 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(722): PDO->__construct('mysql:host=127....', 'root', Object(SensitiveParameterValue), NULL)
+#1 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(637): yii\db\Connection->createPdoInstance()
+#2 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(1067): yii\db\Connection->open()
+#3 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(1054): yii\db\Connection->getMasterPdo()
+#4 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(261): yii\db\Connection->getSlavePdo(true)
+#5 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(1181): yii\db\Command->prepare(true)
+#6 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(417): yii\db\Command->queryInternal('fetchAll', NULL)
+#7 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/mysql/Schema.php(328): yii\db\Command->queryAll()
+#8 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/mysql/Schema.php(133): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#9 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Schema.php(756): yii\db\mysql\Schema->loadTableSchema('Admin')
+#10 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Schema.php(192): yii\db\Schema->getTableMetadata('{{%Admin}}', 'schema', false)
+#11 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(439): yii\db\Schema->getTableSchema('{{%Admin}}')
+#12 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(266): yii\db\ActiveRecord::getTableSchema()
+#13 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(238): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), Array)
+#14 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(195): yii\db\ActiveRecord::filterCondition(Array, Array)
+#15 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/BaseActiveRecord.php(110): yii\db\ActiveRecord::findByCondition(Array)
+#16 /opt/lampp/htdocs/AMS/backend/models/Admin.php(67): yii\db\BaseActiveRecord::findOne(Array)
+#17 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(602): backend\models\Admin::findIdentity(1)
+#18 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(321): yii\web\User->getIdentityAndDurationFromCookie()
+#19 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(727): yii\web\User->loginByCookie()
+#20 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(199): yii\web\User->renewAuthStatus()
+#21 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(367): yii\web\User->getIdentity()
+#22 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Component.php(139): yii\web\User->getIsGuest()
+#23 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/panels/UserPanel.php(83): yii\base\Component->__get('isGuest')
+#24 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\debug\panels\UserPanel->init()
+#25 [internal function]: yii\base\BaseObject->__construct(Array)
+#26 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#27 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('yii\\debug\\panel...', Array, Array)
+#28 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('yii\\debug\\panel...', Array, Array)
+#29 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/Module.php(253): yii\BaseYii::createObject(Array)
+#30 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/Module.php(225): yii\debug\Module->initPanels()
+#31 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\debug\Module->init()
+#32 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(161): yii\base\BaseObject->__construct(Array)
+#33 [internal function]: yii\base\Module->__construct('debug', Object(yii\web\Application), Array)
+#34 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(411): ReflectionClass->newInstanceArgs(Array)
+#35 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('yii\\debug\\Modul...', Array, Array)
+#36 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('yii\\debug\\Modul...', Array, Array)
+#37 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(445): yii\BaseYii::createObject(Array, Array)
+#38 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(313): yii\base\Module->getModule('debug')
+#39 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/Application.php(69): yii\base\Application->bootstrap()
+#40 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(271): yii\web\Application->bootstrap()
+#41 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\base\Application->init()
+#42 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#43 /opt/lampp/htdocs/AMS/backend/web/index.php(18): yii\base\Application->__construct(Array)
+#44 {main}
+
+Next yii\db\Exception: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php:648
+Stack trace:
+#0 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(1067): yii\db\Connection->open()
+#1 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(1054): yii\db\Connection->getMasterPdo()
+#2 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(261): yii\db\Connection->getSlavePdo(true)
+#3 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(1181): yii\db\Command->prepare(true)
+#4 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(417): yii\db\Command->queryInternal('fetchAll', NULL)
+#5 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/mysql/Schema.php(328): yii\db\Command->queryAll()
+#6 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/mysql/Schema.php(133): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#7 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Schema.php(756): yii\db\mysql\Schema->loadTableSchema('Admin')
+#8 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Schema.php(192): yii\db\Schema->getTableMetadata('{{%Admin}}', 'schema', false)
+#9 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(439): yii\db\Schema->getTableSchema('{{%Admin}}')
+#10 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(266): yii\db\ActiveRecord::getTableSchema()
+#11 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(238): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), Array)
+#12 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(195): yii\db\ActiveRecord::filterCondition(Array, Array)
+#13 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/BaseActiveRecord.php(110): yii\db\ActiveRecord::findByCondition(Array)
+#14 /opt/lampp/htdocs/AMS/backend/models/Admin.php(67): yii\db\BaseActiveRecord::findOne(Array)
+#15 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(602): backend\models\Admin::findIdentity(1)
+#16 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(321): yii\web\User->getIdentityAndDurationFromCookie()
+#17 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(727): yii\web\User->loginByCookie()
+#18 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(199): yii\web\User->renewAuthStatus()
+#19 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(367): yii\web\User->getIdentity()
+#20 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Component.php(139): yii\web\User->getIsGuest()
+#21 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/panels/UserPanel.php(83): yii\base\Component->__get('isGuest')
+#22 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\debug\panels\UserPanel->init()
+#23 [internal function]: yii\base\BaseObject->__construct(Array)
+#24 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#25 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('yii\\debug\\panel...', Array, Array)
+#26 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('yii\\debug\\panel...', Array, Array)
+#27 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/Module.php(253): yii\BaseYii::createObject(Array)
+#28 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/Module.php(225): yii\debug\Module->initPanels()
+#29 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\debug\Module->init()
+#30 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(161): yii\base\BaseObject->__construct(Array)
+#31 [internal function]: yii\base\Module->__construct('debug', Object(yii\web\Application), Array)
+#32 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(411): ReflectionClass->newInstanceArgs(Array)
+#33 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('yii\\debug\\Modul...', Array, Array)
+#34 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('yii\\debug\\Modul...', Array, Array)
+#35 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(445): yii\BaseYii::createObject(Array, Array)
+#36 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(313): yii\base\Module->getModule('debug')
+#37 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/Application.php(69): yii\base\Application->bootstrap()
+#38 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(271): yii\web\Application->bootstrap()
+#39 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\base\Application->init()
+#40 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#41 /opt/lampp/htdocs/AMS/backend/web/index.php(18): yii\base\Application->__construct(Array)
+#42 {main}
+Additional Information:
+Array
+(
+    [0] => HY000
+    [1] => 1045
+    [2] => Access denied for user 'root'@'localhost' (using password: NO)
+)
+
+2024-09-12 19:40:00 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity-backend' => '1c6ad29cb037de1b745afaa380011cc458e48f0c4a3122d781c7f02715444c49a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"9pOPaRA1HfBc86BXU5QDK-8SgvFgjLTo\",2592000]\";}'
+    'dark-mode' => 'false'
+    'sidebar-collapse' => 'false'
+]
+
+$_SERVER = [
+    'UNIQUE_ID' => 'ZuMncFwR2o7d_88-5eyZGgAAAAQ'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Linux\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => '_identity-backend=1c6ad29cb037de1b745afaa380011cc458e48f0c4a3122d781c7f02715444c49a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%229pOPaRA1HfBc86BXU5QDK-8SgvFgjLTo%22%2C2592000%5D%22%3B%7D; dark-mode=false; sidebar-collapse=false'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'
+    'LD_LIBRARY_PATH' => '/opt/lampp/lib:/opt/lampp/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.58 (Unix) OpenSSL/1.1.1w PHP/8.2.12 mod_perl/2.0.12 Perl/v5.34.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/opt/lampp/htdocs/AMS/backend/web/index.php'
+    'REMOTE_PORT' => '56824'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/AMS/backend/web/'
+    'SCRIPT_NAME' => '/AMS/backend/web/index.php'
+    'PHP_SELF' => '/AMS/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1726162800.0028
+    'REQUEST_TIME' => 1726162800
+]
+2024-09-12 19:40:05 [::1][-][-][error][yii\db\Exception] PDOException: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php:722
+Stack trace:
+#0 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(722): PDO->__construct('mysql:host=127....', 'root', Object(SensitiveParameterValue), NULL)
+#1 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(637): yii\db\Connection->createPdoInstance()
+#2 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(1067): yii\db\Connection->open()
+#3 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(1054): yii\db\Connection->getMasterPdo()
+#4 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(261): yii\db\Connection->getSlavePdo(true)
+#5 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(1181): yii\db\Command->prepare(true)
+#6 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(417): yii\db\Command->queryInternal('fetchAll', NULL)
+#7 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/mysql/Schema.php(328): yii\db\Command->queryAll()
+#8 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/mysql/Schema.php(133): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#9 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Schema.php(756): yii\db\mysql\Schema->loadTableSchema('Admin')
+#10 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Schema.php(192): yii\db\Schema->getTableMetadata('{{%Admin}}', 'schema', false)
+#11 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(439): yii\db\Schema->getTableSchema('{{%Admin}}')
+#12 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(266): yii\db\ActiveRecord::getTableSchema()
+#13 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(238): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), Array)
+#14 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(195): yii\db\ActiveRecord::filterCondition(Array, Array)
+#15 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/BaseActiveRecord.php(110): yii\db\ActiveRecord::findByCondition(Array)
+#16 /opt/lampp/htdocs/AMS/backend/models/Admin.php(67): yii\db\BaseActiveRecord::findOne(Array)
+#17 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(602): backend\models\Admin::findIdentity(1)
+#18 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(321): yii\web\User->getIdentityAndDurationFromCookie()
+#19 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(727): yii\web\User->loginByCookie()
+#20 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(199): yii\web\User->renewAuthStatus()
+#21 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(367): yii\web\User->getIdentity()
+#22 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Component.php(139): yii\web\User->getIsGuest()
+#23 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/panels/UserPanel.php(83): yii\base\Component->__get('isGuest')
+#24 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\debug\panels\UserPanel->init()
+#25 [internal function]: yii\base\BaseObject->__construct(Array)
+#26 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#27 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('yii\\debug\\panel...', Array, Array)
+#28 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('yii\\debug\\panel...', Array, Array)
+#29 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/Module.php(253): yii\BaseYii::createObject(Array)
+#30 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/Module.php(225): yii\debug\Module->initPanels()
+#31 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\debug\Module->init()
+#32 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(161): yii\base\BaseObject->__construct(Array)
+#33 [internal function]: yii\base\Module->__construct('debug', Object(yii\web\Application), Array)
+#34 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(411): ReflectionClass->newInstanceArgs(Array)
+#35 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('yii\\debug\\Modul...', Array, Array)
+#36 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('yii\\debug\\Modul...', Array, Array)
+#37 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(445): yii\BaseYii::createObject(Array, Array)
+#38 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(313): yii\base\Module->getModule('debug')
+#39 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/Application.php(69): yii\base\Application->bootstrap()
+#40 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(271): yii\web\Application->bootstrap()
+#41 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\base\Application->init()
+#42 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#43 /opt/lampp/htdocs/AMS/backend/web/index.php(18): yii\base\Application->__construct(Array)
+#44 {main}
+
+Next yii\db\Exception: SQLSTATE[HY000] [1045] Access denied for user 'root'@'localhost' (using password: NO) in /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php:648
+Stack trace:
+#0 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(1067): yii\db\Connection->open()
+#1 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Connection.php(1054): yii\db\Connection->getMasterPdo()
+#2 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(261): yii\db\Connection->getSlavePdo(true)
+#3 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(1181): yii\db\Command->prepare(true)
+#4 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Command.php(417): yii\db\Command->queryInternal('fetchAll', NULL)
+#5 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/mysql/Schema.php(328): yii\db\Command->queryAll()
+#6 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/mysql/Schema.php(133): yii\db\mysql\Schema->findColumns(Object(yii\db\TableSchema))
+#7 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Schema.php(756): yii\db\mysql\Schema->loadTableSchema('Admin')
+#8 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/Schema.php(192): yii\db\Schema->getTableMetadata('{{%Admin}}', 'schema', false)
+#9 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(439): yii\db\Schema->getTableSchema('{{%Admin}}')
+#10 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(266): yii\db\ActiveRecord::getTableSchema()
+#11 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(238): yii\db\ActiveRecord::filterValidColumnNames(Object(yii\db\Connection), Array)
+#12 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/ActiveRecord.php(195): yii\db\ActiveRecord::filterCondition(Array, Array)
+#13 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/db/BaseActiveRecord.php(110): yii\db\ActiveRecord::findByCondition(Array)
+#14 /opt/lampp/htdocs/AMS/backend/models/Admin.php(67): yii\db\BaseActiveRecord::findOne(Array)
+#15 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(602): backend\models\Admin::findIdentity(1)
+#16 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(321): yii\web\User->getIdentityAndDurationFromCookie()
+#17 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(727): yii\web\User->loginByCookie()
+#18 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(199): yii\web\User->renewAuthStatus()
+#19 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/User.php(367): yii\web\User->getIdentity()
+#20 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Component.php(139): yii\web\User->getIsGuest()
+#21 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/panels/UserPanel.php(83): yii\base\Component->__get('isGuest')
+#22 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\debug\panels\UserPanel->init()
+#23 [internal function]: yii\base\BaseObject->__construct(Array)
+#24 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(419): ReflectionClass->newInstanceArgs(Array)
+#25 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('yii\\debug\\panel...', Array, Array)
+#26 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('yii\\debug\\panel...', Array, Array)
+#27 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/Module.php(253): yii\BaseYii::createObject(Array)
+#28 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2-debug/src/Module.php(225): yii\debug\Module->initPanels()
+#29 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\debug\Module->init()
+#30 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(161): yii\base\BaseObject->__construct(Array)
+#31 [internal function]: yii\base\Module->__construct('debug', Object(yii\web\Application), Array)
+#32 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(411): ReflectionClass->newInstanceArgs(Array)
+#33 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/di/Container.php(170): yii\di\Container->build('yii\\debug\\Modul...', Array, Array)
+#34 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/BaseYii.php(365): yii\di\Container->get('yii\\debug\\Modul...', Array, Array)
+#35 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(445): yii\BaseYii::createObject(Array, Array)
+#36 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(313): yii\base\Module->getModule('debug')
+#37 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/Application.php(69): yii\base\Application->bootstrap()
+#38 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(271): yii\web\Application->bootstrap()
+#39 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/BaseObject.php(109): yii\base\Application->init()
+#40 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(204): yii\base\BaseObject->__construct(Array)
+#41 /opt/lampp/htdocs/AMS/backend/web/index.php(18): yii\base\Application->__construct(Array)
+#42 {main}
+Additional Information:
+Array
+(
+    [0] => HY000
+    [1] => 1045
+    [2] => Access denied for user 'root'@'localhost' (using password: NO)
+)
+
+2024-09-12 19:40:05 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity-backend' => '1c6ad29cb037de1b745afaa380011cc458e48f0c4a3122d781c7f02715444c49a:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"9pOPaRA1HfBc86BXU5QDK-8SgvFgjLTo\",2592000]\";}'
+    'dark-mode' => 'false'
+    'sidebar-collapse' => 'false'
+]
+
+$_SERVER = [
+    'UNIQUE_ID' => 'ZuMndaSS1KgXZChC0MnrzQAAAAU'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Linux\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => '_identity-backend=1c6ad29cb037de1b745afaa380011cc458e48f0c4a3122d781c7f02715444c49a%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%229pOPaRA1HfBc86BXU5QDK-8SgvFgjLTo%22%2C2592000%5D%22%3B%7D; dark-mode=false; sidebar-collapse=false'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'
+    'LD_LIBRARY_PATH' => '/opt/lampp/lib:/opt/lampp/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.58 (Unix) OpenSSL/1.1.1w PHP/8.2.12 mod_perl/2.0.12 Perl/v5.34.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/opt/lampp/htdocs/AMS/backend/web/index.php'
+    'REMOTE_PORT' => '52106'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/AMS/backend/web/'
+    'SCRIPT_NAME' => '/AMS/backend/web/index.php'
+    'PHP_SELF' => '/AMS/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1726162805.8303
+    'REQUEST_TIME' => 1726162805
+]
+2024-09-17 16:01:49 [::1][-][-][error][yii\base\ErrorException:2] yii\base\ErrorException: Attempt to read property "username" on null in /opt/lampp/htdocs/AMS/backend/views/layouts/sidebar.php:12
+Stack trace:
+#0 /opt/lampp/htdocs/AMS/backend/views/layouts/sidebar.php(12): yii\base\ErrorHandler->handleError(2, 'Attempt to read...', '/opt/lampp/htdo...', 12)
+#1 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(348): require('/opt/lampp/htdo...')
+#2 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(258): yii\base\View->renderPhpFile('/opt/lampp/htdo...', Array)
+#3 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(157): yii\base\View->renderFile('/opt/lampp/htdo...', Array, NULL)
+#4 /opt/lampp/htdocs/AMS/backend/views/layouts/main.php(47): yii\base\View->render('sidebar', Array)
+#5 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(348): require('/opt/lampp/htdo...')
+#6 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(258): yii\base\View->renderPhpFile('/opt/lampp/htdo...', Array)
+#7 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(422): yii\base\View->renderFile('/opt/lampp/htdo...', Array, Object(backend\controllers\AssignmentController))
+#8 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(408): yii\base\Controller->renderContent('<div class="ass...')
+#9 /opt/lampp/htdocs/AMS/backend/controllers/AssignmentController.php(44): yii\base\Controller->render('index', Array)
+#10 [internal function]: backend\controllers\AssignmentController->actionIndex()
+#11 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#12 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#13 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('', Array)
+#14 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('assignment/', Array)
+#15 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /opt/lampp/htdocs/AMS/backend/web/index.php(18): yii\base\Application->run()
+#17 {main}
+2024-09-17 16:01:42 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'layout-fixed' => 'true'
+    'sidebar-mini-xs' => 'false'
+    'nav-flat' => 'true'
+    'nav-child-indent' => 'true'
+    'nav-collapse-hide-child' => 'true'
+    'sidebar-no-expand' => 'true'
+    'sidebar-mini' => 'false'
+    'sidebar-mini-md' => 'false'
+    'nav-compact' => 'false'
+    'dark-mode' => 'false'
+    'AMS-frontend' => 'vo6gs9t0dmncl0kcnkbnae8ueg'
+    '_csrf-frontend' => 'd6f5f617a38cb5ca330d9d0810e1de62c8b4e3840a0ae09ecffdc1b562822ed0a:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"_wq7njhXMl5b_h6eybLvenNKxonqIEN3\";}'
+    'sidebar-collapse' => 'false'
+]
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'ZumLxoKBjNF8huO1735RqgAAAAc'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'ZumLxoKBjNF8huO1735RqgAAAAc'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Microsoft Edge\";v=\"128\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Linux\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'layout-fixed=true; sidebar-mini-xs=false; nav-flat=true; nav-child-indent=true; nav-collapse-hide-child=true; sidebar-no-expand=true; sidebar-mini=false; sidebar-mini-md=false; nav-compact=false; dark-mode=false; AMS-frontend=vo6gs9t0dmncl0kcnkbnae8ueg; _csrf-frontend=d6f5f617a38cb5ca330d9d0810e1de62c8b4e3840a0ae09ecffdc1b562822ed0a%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22_wq7njhXMl5b_h6eybLvenNKxonqIEN3%22%3B%7D; sidebar-collapse=false'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'
+    'LD_LIBRARY_PATH' => '/opt/lampp/lib:/opt/lampp/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.58 (Unix) OpenSSL/1.1.1w PHP/8.2.12 mod_perl/2.0.12 Perl/v5.34.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/opt/lampp/htdocs/AMS/backend/web/index.php'
+    'REMOTE_PORT' => '49380'
+    'REDIRECT_URL' => '/AMS/backend/web/assignment/'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/AMS/backend/web/assignment/'
+    'SCRIPT_NAME' => '/AMS/backend/web/index.php'
+    'PHP_SELF' => '/AMS/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1726581702.2744
+    'REQUEST_TIME' => 1726581702
+]
+2024-09-18 19:17:29 [::1][-][-][error][yii\base\ErrorException:2] yii\base\ErrorException: Attempt to read property "username" on null in /opt/lampp/htdocs/AMS/backend/views/layouts/sidebar.php:12
+Stack trace:
+#0 /opt/lampp/htdocs/AMS/backend/views/layouts/sidebar.php(12): yii\base\ErrorHandler->handleError(2, 'Attempt to read...', '/opt/lampp/htdo...', 12)
+#1 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(348): require('/opt/lampp/htdo...')
+#2 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(258): yii\base\View->renderPhpFile('/opt/lampp/htdo...', Array)
+#3 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(157): yii\base\View->renderFile('/opt/lampp/htdo...', Array, NULL)
+#4 /opt/lampp/htdocs/AMS/backend/views/layouts/main.php(47): yii\base\View->render('sidebar', Array)
+#5 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(348): require('/opt/lampp/htdo...')
+#6 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(258): yii\base\View->renderPhpFile('/opt/lampp/htdo...', Array)
+#7 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(422): yii\base\View->renderFile('/opt/lampp/htdo...', Array, Object(backend\controllers\CourseController))
+#8 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(408): yii\base\Controller->renderContent('<div class="pan...')
+#9 /opt/lampp/htdocs/AMS/backend/controllers/CourseController.php(46): yii\base\Controller->render('index', Array)
+#10 [internal function]: backend\controllers\CourseController->actionIndex()
+#11 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#12 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#13 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('index', Array)
+#14 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('course/index', Array)
+#15 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /opt/lampp/htdocs/AMS/backend/web/index.php(18): yii\base\Application->run()
+#17 {main}
+2024-09-18 19:17:29 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'AMS-frontend' => 'q0nl0q1r9emtl7s940i9mh4p66'
+    '_csrf-frontend' => 'faa74a1f14bcd6a8e01d0feb6d5488d38ff55780c11de6a75ce4d74fee9e195ca:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"L8-XbmczpBuNmuAPsPo0ta14XhlQGi8j\";}'
+    'dark-mode' => 'false'
+]
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'ZusLKbbjt8jyTaSdP21b5wAAAAg'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'ZusLKbbjt8jyTaSdP21b5wAAAAg'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Microsoft Edge\";v=\"128\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Linux\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/AMS/backend/web/course/view?courseCode=ASU07210'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'AMS-frontend=q0nl0q1r9emtl7s940i9mh4p66; _csrf-frontend=faa74a1f14bcd6a8e01d0feb6d5488d38ff55780c11de6a75ce4d74fee9e195ca%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22L8-XbmczpBuNmuAPsPo0ta14XhlQGi8j%22%3B%7D; dark-mode=false'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'
+    'LD_LIBRARY_PATH' => '/opt/lampp/lib:/opt/lampp/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.58 (Unix) OpenSSL/1.1.1w PHP/8.2.12 mod_perl/2.0.12 Perl/v5.34.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/opt/lampp/htdocs/AMS/backend/web/index.php'
+    'REMOTE_PORT' => '45438'
+    'REDIRECT_URL' => '/AMS/backend/web/course/index'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/AMS/backend/web/course/index'
+    'SCRIPT_NAME' => '/AMS/backend/web/index.php'
+    'PHP_SELF' => '/AMS/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1726679849.1338
+    'REQUEST_TIME' => 1726679849
+]
+2024-09-18 19:17:47 [::1][-][-][error][yii\base\ErrorException:2] yii\base\ErrorException: Attempt to read property "username" on null in /opt/lampp/htdocs/AMS/backend/views/layouts/sidebar.php:12
+Stack trace:
+#0 /opt/lampp/htdocs/AMS/backend/views/layouts/sidebar.php(12): yii\base\ErrorHandler->handleError(2, 'Attempt to read...', '/opt/lampp/htdo...', 12)
+#1 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(348): require('/opt/lampp/htdo...')
+#2 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(258): yii\base\View->renderPhpFile('/opt/lampp/htdo...', Array)
+#3 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(157): yii\base\View->renderFile('/opt/lampp/htdo...', Array, NULL)
+#4 /opt/lampp/htdocs/AMS/backend/views/layouts/main.php(47): yii\base\View->render('sidebar', Array)
+#5 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(348): require('/opt/lampp/htdo...')
+#6 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(258): yii\base\View->renderPhpFile('/opt/lampp/htdo...', Array)
+#7 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(422): yii\base\View->renderFile('/opt/lampp/htdo...', Array, Object(backend\controllers\CourseController))
+#8 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(408): yii\base\Controller->renderContent('<div class="car...')
+#9 /opt/lampp/htdocs/AMS/backend/controllers/CourseController.php(60): yii\base\Controller->render('view', Array)
+#10 [internal function]: backend\controllers\CourseController->actionView('ASU07210')
+#11 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#12 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#13 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('view', Array)
+#14 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('course/view', Array)
+#15 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /opt/lampp/htdocs/AMS/backend/web/index.php(18): yii\base\Application->run()
+#17 {main}
+2024-09-18 19:17:47 [::1][-][-][info][application] $_GET = [
+    'courseCode' => 'ASU07210'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'AMS-frontend' => 'q0nl0q1r9emtl7s940i9mh4p66'
+    '_csrf-frontend' => 'faa74a1f14bcd6a8e01d0feb6d5488d38ff55780c11de6a75ce4d74fee9e195ca:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"L8-XbmczpBuNmuAPsPo0ta14XhlQGi8j\";}'
+    'dark-mode' => 'false'
+    '_csrf-backend' => 'f5e3d20b15d6568afd5c995da6a7ba092888a865ad1707ad3c4d9fc23ddb8c03a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"lwGr-owqavy2yk_r-tRoPhEMjhC8JKHy\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'ZusLO3pG3K-ffzz06JOOXgAAAAk'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'ZusLO3pG3K-ffzz06JOOXgAAAAk'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Microsoft Edge\";v=\"128\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Linux\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/AMS/backend/web/course/update?courseCode=ASU07210'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'AMS-frontend=q0nl0q1r9emtl7s940i9mh4p66; _csrf-frontend=faa74a1f14bcd6a8e01d0feb6d5488d38ff55780c11de6a75ce4d74fee9e195ca%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22L8-XbmczpBuNmuAPsPo0ta14XhlQGi8j%22%3B%7D; dark-mode=false; _csrf-backend=f5e3d20b15d6568afd5c995da6a7ba092888a865ad1707ad3c4d9fc23ddb8c03a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22lwGr-owqavy2yk_r-tRoPhEMjhC8JKHy%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'
+    'LD_LIBRARY_PATH' => '/opt/lampp/lib:/opt/lampp/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.58 (Unix) OpenSSL/1.1.1w PHP/8.2.12 mod_perl/2.0.12 Perl/v5.34.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/opt/lampp/htdocs/AMS/backend/web/index.php'
+    'REMOTE_PORT' => '45446'
+    'REDIRECT_URL' => '/AMS/backend/web/course/view'
+    'REDIRECT_QUERY_STRING' => 'courseCode=ASU07210'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'courseCode=ASU07210'
+    'REQUEST_URI' => '/AMS/backend/web/course/view?courseCode=ASU07210'
+    'SCRIPT_NAME' => '/AMS/backend/web/index.php'
+    'PHP_SELF' => '/AMS/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1726679867.104
+    'REQUEST_TIME' => 1726679867
+]
+2024-09-18 19:17:49 [::1][-][-][error][yii\base\ErrorException:2] yii\base\ErrorException: Attempt to read property "username" on null in /opt/lampp/htdocs/AMS/backend/views/layouts/sidebar.php:12
+Stack trace:
+#0 /opt/lampp/htdocs/AMS/backend/views/layouts/sidebar.php(12): yii\base\ErrorHandler->handleError(2, 'Attempt to read...', '/opt/lampp/htdo...', 12)
+#1 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(348): require('/opt/lampp/htdo...')
+#2 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(258): yii\base\View->renderPhpFile('/opt/lampp/htdo...', Array)
+#3 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(157): yii\base\View->renderFile('/opt/lampp/htdo...', Array, NULL)
+#4 /opt/lampp/htdocs/AMS/backend/views/layouts/main.php(47): yii\base\View->render('sidebar', Array)
+#5 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(348): require('/opt/lampp/htdo...')
+#6 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(258): yii\base\View->renderPhpFile('/opt/lampp/htdo...', Array)
+#7 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(422): yii\base\View->renderFile('/opt/lampp/htdo...', Array, Object(backend\controllers\CourseController))
+#8 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(408): yii\base\Controller->renderContent('<div class="con...')
+#9 /opt/lampp/htdocs/AMS/backend/controllers/CourseController.php(109): yii\base\Controller->render('update', Array)
+#10 [internal function]: backend\controllers\CourseController->actionUpdate('ASU07210')
+#11 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#12 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#13 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('update', Array)
+#14 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('course/update', Array)
+#15 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /opt/lampp/htdocs/AMS/backend/web/index.php(18): yii\base\Application->run()
+#17 {main}
+2024-09-18 19:17:49 [::1][-][-][info][application] $_GET = [
+    'courseCode' => 'ASU07210'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'AMS-frontend' => 'q0nl0q1r9emtl7s940i9mh4p66'
+    '_csrf-frontend' => 'faa74a1f14bcd6a8e01d0feb6d5488d38ff55780c11de6a75ce4d74fee9e195ca:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"L8-XbmczpBuNmuAPsPo0ta14XhlQGi8j\";}'
+    'dark-mode' => 'false'
+    '_csrf-backend' => 'f5e3d20b15d6568afd5c995da6a7ba092888a865ad1707ad3c4d9fc23ddb8c03a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"lwGr-owqavy2yk_r-tRoPhEMjhC8JKHy\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'ZusLPQiPFtkYG0TDMvN-vQAAAAU'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'ZusLPQiPFtkYG0TDMvN-vQAAAAU'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Microsoft Edge\";v=\"128\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Linux\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/AMS/backend/web/course'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'AMS-frontend=q0nl0q1r9emtl7s940i9mh4p66; _csrf-frontend=faa74a1f14bcd6a8e01d0feb6d5488d38ff55780c11de6a75ce4d74fee9e195ca%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22L8-XbmczpBuNmuAPsPo0ta14XhlQGi8j%22%3B%7D; dark-mode=false; _csrf-backend=f5e3d20b15d6568afd5c995da6a7ba092888a865ad1707ad3c4d9fc23ddb8c03a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22lwGr-owqavy2yk_r-tRoPhEMjhC8JKHy%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'
+    'LD_LIBRARY_PATH' => '/opt/lampp/lib:/opt/lampp/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.58 (Unix) OpenSSL/1.1.1w PHP/8.2.12 mod_perl/2.0.12 Perl/v5.34.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/opt/lampp/htdocs/AMS/backend/web/index.php'
+    'REMOTE_PORT' => '41566'
+    'REDIRECT_URL' => '/AMS/backend/web/course/update'
+    'REDIRECT_QUERY_STRING' => 'courseCode=ASU07210'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'courseCode=ASU07210'
+    'REQUEST_URI' => '/AMS/backend/web/course/update?courseCode=ASU07210'
+    'SCRIPT_NAME' => '/AMS/backend/web/index.php'
+    'PHP_SELF' => '/AMS/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1726679869.3816
+    'REQUEST_TIME' => 1726679869
+]
+2024-09-18 19:17:50 [::1][-][-][error][yii\base\ErrorException:2] yii\base\ErrorException: Attempt to read property "username" on null in /opt/lampp/htdocs/AMS/backend/views/layouts/sidebar.php:12
+Stack trace:
+#0 /opt/lampp/htdocs/AMS/backend/views/layouts/sidebar.php(12): yii\base\ErrorHandler->handleError(2, 'Attempt to read...', '/opt/lampp/htdo...', 12)
+#1 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(348): require('/opt/lampp/htdo...')
+#2 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(258): yii\base\View->renderPhpFile('/opt/lampp/htdo...', Array)
+#3 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(157): yii\base\View->renderFile('/opt/lampp/htdo...', Array, NULL)
+#4 /opt/lampp/htdocs/AMS/backend/views/layouts/main.php(47): yii\base\View->render('sidebar', Array)
+#5 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(348): require('/opt/lampp/htdo...')
+#6 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(258): yii\base\View->renderPhpFile('/opt/lampp/htdo...', Array)
+#7 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(422): yii\base\View->renderFile('/opt/lampp/htdo...', Array, Object(backend\controllers\CourseController))
+#8 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(408): yii\base\Controller->renderContent('<div class="pan...')
+#9 /opt/lampp/htdocs/AMS/backend/controllers/CourseController.php(46): yii\base\Controller->render('index', Array)
+#10 [internal function]: backend\controllers\CourseController->actionIndex()
+#11 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#12 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#13 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('', Array)
+#14 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('course', Array)
+#15 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /opt/lampp/htdocs/AMS/backend/web/index.php(18): yii\base\Application->run()
+#17 {main}
+2024-09-18 19:17:50 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'AMS-frontend' => 'q0nl0q1r9emtl7s940i9mh4p66'
+    '_csrf-frontend' => 'faa74a1f14bcd6a8e01d0feb6d5488d38ff55780c11de6a75ce4d74fee9e195ca:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"L8-XbmczpBuNmuAPsPo0ta14XhlQGi8j\";}'
+    'dark-mode' => 'false'
+    '_csrf-backend' => 'f5e3d20b15d6568afd5c995da6a7ba092888a865ad1707ad3c4d9fc23ddb8c03a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"lwGr-owqavy2yk_r-tRoPhEMjhC8JKHy\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'ZusLPgoQlK9fmJakeMJGdwAAAAo'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'ZusLPgoQlK9fmJakeMJGdwAAAAo'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Microsoft Edge\";v=\"128\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Linux\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/AMS/backend/web/user?Users%5Busername%5D=&Users%5Brole%5D=&Users%5Bemail%5D=&Users%5Bcreated_at%5D='
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'AMS-frontend=q0nl0q1r9emtl7s940i9mh4p66; _csrf-frontend=faa74a1f14bcd6a8e01d0feb6d5488d38ff55780c11de6a75ce4d74fee9e195ca%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22L8-XbmczpBuNmuAPsPo0ta14XhlQGi8j%22%3B%7D; dark-mode=false; _csrf-backend=f5e3d20b15d6568afd5c995da6a7ba092888a865ad1707ad3c4d9fc23ddb8c03a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22lwGr-owqavy2yk_r-tRoPhEMjhC8JKHy%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'
+    'LD_LIBRARY_PATH' => '/opt/lampp/lib:/opt/lampp/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.58 (Unix) OpenSSL/1.1.1w PHP/8.2.12 mod_perl/2.0.12 Perl/v5.34.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/opt/lampp/htdocs/AMS/backend/web/index.php'
+    'REMOTE_PORT' => '41574'
+    'REDIRECT_URL' => '/AMS/backend/web/course'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/AMS/backend/web/course'
+    'SCRIPT_NAME' => '/AMS/backend/web/index.php'
+    'PHP_SELF' => '/AMS/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1726679870.6856
+    'REQUEST_TIME' => 1726679870
+]
+2024-09-18 19:17:52 [::1][-][-][error][yii\base\ErrorException:2] yii\base\ErrorException: Attempt to read property "username" on null in /opt/lampp/htdocs/AMS/backend/views/layouts/sidebar.php:12
+Stack trace:
+#0 /opt/lampp/htdocs/AMS/backend/views/layouts/sidebar.php(12): yii\base\ErrorHandler->handleError(2, 'Attempt to read...', '/opt/lampp/htdo...', 12)
+#1 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(348): require('/opt/lampp/htdo...')
+#2 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(258): yii\base\View->renderPhpFile('/opt/lampp/htdo...', Array)
+#3 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(157): yii\base\View->renderFile('/opt/lampp/htdo...', Array, NULL)
+#4 /opt/lampp/htdocs/AMS/backend/views/layouts/main.php(47): yii\base\View->render('sidebar', Array)
+#5 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(348): require('/opt/lampp/htdo...')
+#6 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(258): yii\base\View->renderPhpFile('/opt/lampp/htdo...', Array)
+#7 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(422): yii\base\View->renderFile('/opt/lampp/htdo...', Array, Object(backend\controllers\UserController))
+#8 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(408): yii\base\Controller->renderContent('<div class="use...')
+#9 /opt/lampp/htdocs/AMS/backend/controllers/UserController.php(44): yii\base\Controller->render('index', Array)
+#10 [internal function]: backend\controllers\UserController->actionIndex()
+#11 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#12 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#13 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('', Array)
+#14 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('user', Array)
+#15 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /opt/lampp/htdocs/AMS/backend/web/index.php(18): yii\base\Application->run()
+#17 {main}
+2024-09-18 19:17:52 [::1][-][-][info][application] $_GET = [
+    'Users' => [
+        'username' => ''
+        'role' => ''
+        'email' => ''
+        'created_at' => ''
+    ]
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'AMS-frontend' => 'q0nl0q1r9emtl7s940i9mh4p66'
+    '_csrf-frontend' => 'faa74a1f14bcd6a8e01d0feb6d5488d38ff55780c11de6a75ce4d74fee9e195ca:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"L8-XbmczpBuNmuAPsPo0ta14XhlQGi8j\";}'
+    'dark-mode' => 'false'
+    '_csrf-backend' => 'f5e3d20b15d6568afd5c995da6a7ba092888a865ad1707ad3c4d9fc23ddb8c03a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"lwGr-owqavy2yk_r-tRoPhEMjhC8JKHy\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'ZusLQKeaTEMPCmk-AVpqRQAAAAE'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'ZusLQKeaTEMPCmk-AVpqRQAAAAE'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Microsoft Edge\";v=\"128\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Linux\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/AMS/backend/web/site/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'AMS-frontend=q0nl0q1r9emtl7s940i9mh4p66; _csrf-frontend=faa74a1f14bcd6a8e01d0feb6d5488d38ff55780c11de6a75ce4d74fee9e195ca%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22L8-XbmczpBuNmuAPsPo0ta14XhlQGi8j%22%3B%7D; dark-mode=false; _csrf-backend=f5e3d20b15d6568afd5c995da6a7ba092888a865ad1707ad3c4d9fc23ddb8c03a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22lwGr-owqavy2yk_r-tRoPhEMjhC8JKHy%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'
+    'LD_LIBRARY_PATH' => '/opt/lampp/lib:/opt/lampp/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.58 (Unix) OpenSSL/1.1.1w PHP/8.2.12 mod_perl/2.0.12 Perl/v5.34.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/opt/lampp/htdocs/AMS/backend/web/index.php'
+    'REMOTE_PORT' => '41588'
+    'REDIRECT_URL' => '/AMS/backend/web/user'
+    'REDIRECT_QUERY_STRING' => 'Users%5Busername%5D=&Users%5Brole%5D=&Users%5Bemail%5D=&Users%5Bcreated_at%5D='
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'Users%5Busername%5D=&Users%5Brole%5D=&Users%5Bemail%5D=&Users%5Bcreated_at%5D='
+    'REQUEST_URI' => '/AMS/backend/web/user?Users%5Busername%5D=&Users%5Brole%5D=&Users%5Bemail%5D=&Users%5Bcreated_at%5D='
+    'SCRIPT_NAME' => '/AMS/backend/web/index.php'
+    'PHP_SELF' => '/AMS/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1726679872.1902
+    'REQUEST_TIME' => 1726679872
+]
+2024-09-18 19:18:04 [::1][-][-][error][yii\base\ErrorException:2] yii\base\ErrorException: Attempt to read property "username" on null in /opt/lampp/htdocs/AMS/backend/views/layouts/sidebar.php:12
+Stack trace:
+#0 /opt/lampp/htdocs/AMS/backend/views/layouts/sidebar.php(12): yii\base\ErrorHandler->handleError(2, 'Attempt to read...', '/opt/lampp/htdo...', 12)
+#1 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(348): require('/opt/lampp/htdo...')
+#2 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(258): yii\base\View->renderPhpFile('/opt/lampp/htdo...', Array)
+#3 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(157): yii\base\View->renderFile('/opt/lampp/htdo...', Array, NULL)
+#4 /opt/lampp/htdocs/AMS/backend/views/layouts/main.php(47): yii\base\View->render('sidebar', Array)
+#5 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(348): require('/opt/lampp/htdo...')
+#6 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/View.php(258): yii\base\View->renderPhpFile('/opt/lampp/htdo...', Array)
+#7 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(422): yii\base\View->renderFile('/opt/lampp/htdo...', Array, Object(backend\controllers\UserController))
+#8 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(408): yii\base\Controller->renderContent('<div class="use...')
+#9 /opt/lampp/htdocs/AMS/backend/controllers/UserController.php(44): yii\base\Controller->render('index', Array)
+#10 [internal function]: backend\controllers\UserController->actionIndex()
+#11 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#12 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#13 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('', Array)
+#14 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('user', Array)
+#15 /opt/lampp/htdocs/AMS/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#16 /opt/lampp/htdocs/AMS/backend/web/index.php(18): yii\base\Application->run()
+#17 {main}
+2024-09-18 19:18:04 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'AMS-frontend' => 'q0nl0q1r9emtl7s940i9mh4p66'
+    '_csrf-frontend' => 'faa74a1f14bcd6a8e01d0feb6d5488d38ff55780c11de6a75ce4d74fee9e195ca:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"L8-XbmczpBuNmuAPsPo0ta14XhlQGi8j\";}'
+    'dark-mode' => 'false'
+    '_csrf-backend' => 'f5e3d20b15d6568afd5c995da6a7ba092888a865ad1707ad3c4d9fc23ddb8c03a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"lwGr-owqavy2yk_r-tRoPhEMjhC8JKHy\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_UNIQUE_ID' => 'ZusLTKblvkojlU48l5kfWgAAAAY'
+    'REDIRECT_STATUS' => '200'
+    'UNIQUE_ID' => 'ZusLTKblvkojlU48l5kfWgAAAAY'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Microsoft Edge\";v=\"128\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Linux\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Edg/128.0.0.0'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/AMS/backend/web/site/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'AMS-frontend=q0nl0q1r9emtl7s940i9mh4p66; _csrf-frontend=faa74a1f14bcd6a8e01d0feb6d5488d38ff55780c11de6a75ce4d74fee9e195ca%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22L8-XbmczpBuNmuAPsPo0ta14XhlQGi8j%22%3B%7D; dark-mode=false; _csrf-backend=f5e3d20b15d6568afd5c995da6a7ba092888a865ad1707ad3c4d9fc23ddb8c03a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22lwGr-owqavy2yk_r-tRoPhEMjhC8JKHy%22%3B%7D'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin'
+    'LD_LIBRARY_PATH' => '/opt/lampp/lib:/opt/lampp/lib'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.58 (Unix) OpenSSL/1.1.1w PHP/8.2.12 mod_perl/2.0.12 Perl/v5.34.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/opt/lampp/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/opt/lampp/htdocs/AMS/backend/web/index.php'
+    'REMOTE_PORT' => '44432'
+    'REDIRECT_URL' => '/AMS/backend/web/user'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/AMS/backend/web/user'
+    'SCRIPT_NAME' => '/AMS/backend/web/index.php'
+    'PHP_SELF' => '/AMS/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1726679884.2324
+    'REQUEST_TIME' => 1726679884
+]
